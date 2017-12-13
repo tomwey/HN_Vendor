@@ -127,7 +127,7 @@
         [self.dataSource addObject:@{
                                      @"data_type": @"10",
                                      @"datatype_c": @"多行文本",
-                                     @"describe": @"签字意见",
+                                     @"describe": @"说明",
                                      @"field_name": @"opinion",
                                      @"item_name": @"",
                                      @"item_value": @"",

@@ -614,6 +614,16 @@
 		995547171FDFDBCD00DC0134 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995544BD1FDFDBCC00DC0134 /* YearMonthPickerView.m */; };
 		9955471B1FE0F96500DC0134 /* icon_help@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547191FE0F96400DC0134 /* icon_help@3x.png */; };
 		9955471C1FE0F96500DC0134 /* icon_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9955471A1FE0F96400DC0134 /* icon_help@2x.png */; };
+		995547231FE0FF8E00DC0134 /* work_icon_hetong@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9955471D1FE0FF8C00DC0134 /* work_icon_hetong@3x.png */; };
+		995547241FE0FF8E00DC0134 /* work_icon_biangeng@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9955471E1FE0FF8C00DC0134 /* work_icon_biangeng@2x.png */; };
+		995547251FE0FF8E00DC0134 /* work_icon_pay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9955471F1FE0FF8D00DC0134 /* work_icon_pay@2x.png */; };
+		995547261FE0FF8E00DC0134 /* work_icon_pay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547201FE0FF8D00DC0134 /* work_icon_pay@3x.png */; };
+		995547271FE0FF8E00DC0134 /* work_icon_biangeng@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547211FE0FF8D00DC0134 /* work_icon_biangeng@3x.png */; };
+		995547281FE0FF8E00DC0134 /* work_icon_hetong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547221FE0FF8E00DC0134 /* work_icon_hetong@2x.png */; };
+		9955472B1FE1010A00DC0134 /* ReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955472A1FE1010A00DC0134 /* ReportVC.m */; };
+		9955472E1FE1012200DC0134 /* PaymentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955472D1FE1012200DC0134 /* PaymentsVC.m */; };
+		995547311FE1013B00DC0134 /* ContractListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995547301FE1013B00DC0134 /* ContractListVC.m */; };
+		995547341FE1014E00DC0134 /* DeclareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995547331FE1014E00DC0134 /* DeclareListVC.m */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
@@ -1661,6 +1671,20 @@
 		995544BD1FDFDBCC00DC0134 /* YearMonthPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearMonthPickerView.m; sourceTree = "<group>"; };
 		995547191FE0F96400DC0134 /* icon_help@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_help@3x.png"; sourceTree = "<group>"; };
 		9955471A1FE0F96400DC0134 /* icon_help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_help@2x.png"; sourceTree = "<group>"; };
+		9955471D1FE0FF8C00DC0134 /* work_icon_hetong@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_hetong@3x.png"; sourceTree = "<group>"; };
+		9955471E1FE0FF8C00DC0134 /* work_icon_biangeng@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_biangeng@2x.png"; sourceTree = "<group>"; };
+		9955471F1FE0FF8D00DC0134 /* work_icon_pay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_pay@2x.png"; sourceTree = "<group>"; };
+		995547201FE0FF8D00DC0134 /* work_icon_pay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_pay@3x.png"; sourceTree = "<group>"; };
+		995547211FE0FF8D00DC0134 /* work_icon_biangeng@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_biangeng@3x.png"; sourceTree = "<group>"; };
+		995547221FE0FF8E00DC0134 /* work_icon_hetong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work_icon_hetong@2x.png"; sourceTree = "<group>"; };
+		995547291FE1010A00DC0134 /* ReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportVC.h; sourceTree = "<group>"; };
+		9955472A1FE1010A00DC0134 /* ReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportVC.m; sourceTree = "<group>"; };
+		9955472C1FE1012200DC0134 /* PaymentsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentsVC.h; sourceTree = "<group>"; };
+		9955472D1FE1012200DC0134 /* PaymentsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentsVC.m; sourceTree = "<group>"; };
+		9955472F1FE1013B00DC0134 /* ContractListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractListVC.h; sourceTree = "<group>"; };
+		995547301FE1013B00DC0134 /* ContractListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractListVC.m; sourceTree = "<group>"; };
+		995547321FE1014E00DC0134 /* DeclareListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListVC.h; sourceTree = "<group>"; };
+		995547331FE1014E00DC0134 /* DeclareListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListVC.m; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
@@ -2769,6 +2793,14 @@
 				995542BD1FDFDBCC00DC0134 /* UploadImageControl.m */,
 				995542BE1FDFDBCC00DC0134 /* WorkVC.h */,
 				995542BF1FDFDBCC00DC0134 /* WorkVC.m */,
+				995547291FE1010A00DC0134 /* ReportVC.h */,
+				9955472A1FE1010A00DC0134 /* ReportVC.m */,
+				9955472C1FE1012200DC0134 /* PaymentsVC.h */,
+				9955472D1FE1012200DC0134 /* PaymentsVC.m */,
+				9955472F1FE1013B00DC0134 /* ContractListVC.h */,
+				995547301FE1013B00DC0134 /* ContractListVC.m */,
+				995547321FE1014E00DC0134 /* DeclareListVC.h */,
+				995547331FE1014E00DC0134 /* DeclareListVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3112,6 +3144,12 @@
 		9955439D1FDFDBCC00DC0134 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9955471E1FE0FF8C00DC0134 /* work_icon_biangeng@2x.png */,
+				995547211FE0FF8D00DC0134 /* work_icon_biangeng@3x.png */,
+				995547221FE0FF8E00DC0134 /* work_icon_hetong@2x.png */,
+				9955471D1FE0FF8C00DC0134 /* work_icon_hetong@3x.png */,
+				9955471F1FE0FF8D00DC0134 /* work_icon_pay@2x.png */,
+				995547201FE0FF8D00DC0134 /* work_icon_pay@3x.png */,
 				9955439E1FDFDBCC00DC0134 /* btn_back@2x.png */,
 				9955439F1FDFDBCC00DC0134 /* btn_back@3x.png */,
 				9955471A1FE0F96400DC0134 /* icon_help@2x.png */,
@@ -3512,6 +3550,7 @@
 				995546831FDFDBCD00DC0134 /* icon_ppt@2x.png in Resources */,
 				9955464A1FDFDBCD00DC0134 /* contact_icon_normal@3x.png in Resources */,
 				9955463E1FDFDBCD00DC0134 /* btn_close@3x.png in Resources */,
+				995547281FE0FF8E00DC0134 /* work_icon_hetong@2x.png in Resources */,
 				9955469F1FDFDBCD00DC0134 /* msg_icon_document@2x.png in Resources */,
 				995546311FDFDBCD00DC0134 /* 76.png in Resources */,
 				995546561FDFDBCD00DC0134 /* hud_success@2x.png in Resources */,
@@ -3562,6 +3601,7 @@
 				9955466E1FDFDBCD00DC0134 /* icon_done@2x.png in Resources */,
 				995546771FDFDBCD00DC0134 /* icon_folder@3x.png in Resources */,
 				995546841FDFDBCD00DC0134 /* icon_pptx@2x.png in Resources */,
+				995547251FE0FF8E00DC0134 /* work_icon_pay@2x.png in Resources */,
 				995546671FDFDBCD00DC0134 /* icon_checkbox_click@3x.png in Resources */,
 				995545D11FDFDBCD00DC0134 /* LICENSE in Resources */,
 				9955463F1FDFDBCD00DC0134 /* btn_reset@2x.png in Resources */,
@@ -3622,6 +3662,7 @@
 				995544DD1FDFDBCC00DC0134 /* Info.plist in Resources */,
 				995544E01FDFDBCC00DC0134 /* octicons.ttf in Resources */,
 				995546491FDFDBCD00DC0134 /* contact_icon_normal@2x.png in Resources */,
+				995547231FE0FF8E00DC0134 /* work_icon_hetong@3x.png in Resources */,
 				995546631FDFDBCD00DC0134 /* icon_caret@3x.png in Resources */,
 				995546431FDFDBCD00DC0134 /* btn_search@2x.png in Resources */,
 				995546821FDFDBCD00DC0134 /* icon_pdf@2x.png in Resources */,
@@ -3671,6 +3712,7 @@
 				995546B21FDFDBCD00DC0134 /* tab_plan@2x.png in Resources */,
 				9955464F1FDFDBCD00DC0134 /* hnapp-qrcode.png in Resources */,
 				995546881FDFDBCD00DC0134 /* icon_read1@3x.png in Resources */,
+				995547241FE0FF8E00DC0134 /* work_icon_biangeng@2x.png in Resources */,
 				995546781FDFDBCD00DC0134 /* icon_force_done@2x.png in Resources */,
 				995546B51FDFDBCD00DC0134 /* tab_plan_click@3x.png in Resources */,
 				995546851FDFDBCD00DC0134 /* icon_qrcode@2x.png in Resources */,
@@ -3680,6 +3722,8 @@
 				995546D11FDFDBCD00DC0134 /* work_icon_plan@2x.png in Resources */,
 				995546681FDFDBCD00DC0134 /* icon_checkbox_disabled@2x.png in Resources */,
 				995546211FDFDBCD00DC0134 /* Settings.plist in Resources */,
+				995547261FE0FF8E00DC0134 /* work_icon_pay@3x.png in Resources */,
+				995547271FE0FF8E00DC0134 /* work_icon_biangeng@3x.png in Resources */,
 				9955466F1FDFDBCD00DC0134 /* icon_done@3x.png in Resources */,
 				995546AC1FDFDBCD00DC0134 /* tab_message_click@2x.png in Resources */,
 				9955465D1FDFDBCD00DC0134 /* icon_attachment@3x.png in Resources */,
@@ -3713,6 +3757,7 @@
 				995546E71FDFDBCD00DC0134 /* BIChartView.m in Sources */,
 				995545B11FDFDBCC00DC0134 /* ParamUtil.m in Sources */,
 				995545F61FDFDBCD00DC0134 /* DGActivityIndicatorThreeDotsAnimation.m in Sources */,
+				9955472E1FE1012200DC0134 /* PaymentsVC.m in Sources */,
 				995545B31FDFDBCC00DC0134 /* PlanAdjustVC.m in Sources */,
 				9955452B1FDFDBCC00DC0134 /* APIEntityReformer.m in Sources */,
 				9955456B1FDFDBCC00DC0134 /* DMButton.m in Sources */,
@@ -3772,6 +3817,7 @@
 				995544FA1FDFDBCC00DC0134 /* JTSImageViewController.m in Sources */,
 				995545B91FDFDBCD00DC0134 /* RelatedFlowListVC.m in Sources */,
 				995546F01FDFDBCD00DC0134 /* EmployCell.m in Sources */,
+				995547311FE1013B00DC0134 /* ContractListVC.m in Sources */,
 				995545271FDFDBCC00DC0134 /* AppDelegate.m in Sources */,
 				995545951FDFDBCC00DC0134 /* MeetingOrderedView.m in Sources */,
 				995545261FDFDBCC00DC0134 /* TYViewStorage.m in Sources */,
@@ -3816,6 +3862,7 @@
 				995546F41FDFDBCD00DC0134 /* FormControl.m in Sources */,
 				995547111FDFDBCD00DC0134 /* SettingTableHeader.m in Sources */,
 				995545EE1FDFDBCD00DC0134 /* DGActivityIndicatorLineScaleAnimation.m in Sources */,
+				995547341FE1014E00DC0134 /* DeclareListVC.m in Sources */,
 				995545FE1FDFDBCD00DC0134 /* SVIndefiniteAnimatedView.m in Sources */,
 				995546E01FDFDBCD00DC0134 /* VersionCheckService.m in Sources */,
 				9955456F1FDFDBCC00DC0134 /* DocumentVC.m in Sources */,
@@ -3859,6 +3906,7 @@
 				995545E11FDFDBCD00DC0134 /* DGActivityIndicatorBallPulseAnimation.m in Sources */,
 				995544CE1FDFDBCC00DC0134 /* CTPersistanceTable+Delete.m in Sources */,
 				995544DA1FDFDBCC00DC0134 /* FAKZocial.m in Sources */,
+				9955472B1FE1010A00DC0134 /* ReportVC.m in Sources */,
 				995545071FDFDBCC00DC0134 /* PNLineChart.m in Sources */,
 				995545011FDFDBCC00DC0134 /* PNBar.m in Sources */,
 				995545FA1FDFDBCD00DC0134 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */,

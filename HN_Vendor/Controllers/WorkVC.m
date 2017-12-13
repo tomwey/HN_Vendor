@@ -72,77 +72,32 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     
     NSArray *sections = @[@{
-                              @"label": @"流程",
-                              @"icon": @"work_icon_flow.png",
-                              @"action": @"gotoFlow",
+                              @"label": @"变更申报",
+                              @"icon": @"work_icon_biangeng.png",
+                              @"action": @"gotoDeclare",
                               @"has_badge": @(YES),
-                              @"badge_name": @"flows",
+                              @"badge_name": @"declares",
                               },
                           @{
-                              @"label": @"会议",
-                              @"icon": @"work_icon_meeting.png",
-                              @"action": @"gotoMeeting",
+                              @"label": @"合同执行",
+                              @"icon": @"work_icon_hetong.png",
+                              @"action": @"gotoContract",
                               @"has_badge": @(YES),
-                              @"badge_name": @"meetings",
+                              @"badge_name": @"contracts",
                               },
                           @{
-                              @"label": @"公文",
-                              @"icon": @"work_icon_document.png",
-                              @"action": @"gotoDocument",
+                              @"label": @"支付查询",
+                              @"icon": @"work_icon_pay.png",
+                              @"action": @"gotoPayments",
                               @"has_badge": @(YES),
-                              @"badge_name": @"documents",
+                              @"badge_name": @"payments",
                               },
                           @{
-                              @"label": @"计划",
+                              @"label": @"投诉建议",
                               @"icon": @"work_icon_plan.png",
-                              @"action": @"gotoPlan",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"plans",
-                              },
-                          @{
-                              @"label": @"经营分析",
-                              @"icon": @"work_icon_bi.png",
-                              @"action": @"gotoBI",
+                              @"action": @"gotoReport",
                               @"has_badge": @(NO),
-                              },
-                          @{
-                              @"label": @"城市指标分析",
-                              @"icon": @"work_icon_map_bi.png",
-                              @"action": @"gotoMapBI",
-                              @"has_badge": @(NO),
-                              },
-                          @{
-                              @"label": @"产值确认",
-                              @"icon": @"work_icon_chanzhi.png",
-                              @"action": @"gotoChanzhi",
-                              @"has_badge": @(NO),
-                              },
-                          @{
-                              @"label": @"土地信息",
-                              @"icon": @"work_icon_land.png",
-                              @"action": @"gotoLand",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"lands",
-                              },
-                          @{
-                              @"label": @"知识库",
-                              @"icon": @"work_icon_rule.png",
-                              @"action": @"gotoRules",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"knowledges",
-                              },
-                          @{
-                              @"label": @"新闻",
-                              @"icon": @"work_icon_news.png",
-                              @"action": @"gotoNews",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"news",
-                              },
-                          @{
-                              @"label": @"意见反馈",
-                              @"icon": @"work_icon_feedback.png",
-                              @"action": @"gotoFeedback",
-                              @"has_badge": @(NO),
+                              @"badge_name": @"",
                               },
                           ];
     
@@ -150,17 +105,43 @@
     
     self.tempModules = [NSMutableArray array];
     
+    [self initModules];
+    
 //    self.scrollView.hidden = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadManPower)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    
-    [self loadManPower];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loadManPower)
+//                                                 name:UIApplicationWillEnterForegroundNotification
+//                                               object:nil];
+//
+//    [self loadManPower];
     
     // 获取新的待办流程
 //    [self fetchNewFlowCounts];
+}
+
+- (void)gotoDeclare
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareListVC" params:nil];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
+}
+
+- (void)gotoContract
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractListVC" params:nil];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
+}
+
+- (void)gotoPayments
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"PaymentsVC" params:nil];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
+}
+
+- (void)gotoReport
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ReportVC" params:nil];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 
 - (void)initModules
@@ -169,7 +150,7 @@
         [view removeFromSuperview];
     }
     
-    NSUInteger numberOfCell = 3;
+    NSUInteger numberOfCell = 2;
     CGFloat dtw = ceilf(( self.contentView.width ) / numberOfCell);
     
     CGFloat maxY = 0;
@@ -180,11 +161,11 @@
         
         [self.tempModules addObject:container];
         
-        int m = i % 3;
-        int n = i / 3;
+        int m = i % numberOfCell;
+        int n = i / numberOfCell;
         
         CGFloat dtx = (dtw) * m;
-        CGFloat dty = /*header.bottom + */15 + (dtw) * n;
+        CGFloat dty = /*header.bottom + */(dtw) * n;
         container.position = CGPointMake(dtx, dty);
         
         id item = self.modules[i];
