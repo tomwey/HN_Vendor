@@ -5,29 +5,19 @@
 	<array>
 		<dict>
 			<key>icon</key>
-			<string>icon_kaoqing.png</string>
-			<key>label</key>
-			<string>考勤</string>
-			<key>action</key>
-			<string>gotoKQ</string>
-		</dict>
-		<dict>
-			<key>icon</key>
-			<string>icon_invest.png</string>
-			<key>label</key>
-			<string>跟投</string>
-			<key>action</key>
-			<string>gotoInvest</string>
-		</dict>
-	</array>
-	<array>
-		<dict>
-			<key>icon</key>
 			<string>icon_update_pass.png</string>
 			<key>label</key>
 			<string>修改密码</string>
 			<key>action</key>
 			<string>updatePassword</string>
+		</dict>
+		<dict>
+			<key>icon</key>
+			<string>icon_help.png</string>
+			<key>label</key>
+			<string>操作指南</string>
+			<key>action</key>
+			<string>gotoHelp</string>
 		</dict>
 		<dict>
 			<key>icon</key>

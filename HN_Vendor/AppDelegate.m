@@ -38,7 +38,7 @@
     
     [self.window makeKeyAndVisible];
     
-    [[VersionCheckService sharedInstance] startCheckWithSilent:YES];
+//    [[VersionCheckService sharedInstance] startCheckWithSilent:YES];
     
     if ( !canShow ) {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
@@ -81,12 +81,12 @@
         self.appTabBarController.delegate = self;
         
         UIViewController *workVC = [UIViewController createControllerWithName:@"WorkVC"];
-        UIViewController *oaVC = [UIViewController createControllerWithName:@"OAListVC"];
-        UIViewController *messageVC = [UIViewController createControllerWithName:@"PlanListVC"];
-        UIViewController *contactsVC = [UIViewController createControllerWithName:@"ContactVC"];
+//        UIViewController *oaVC = [UIViewController createControllerWithName:@"OAListVC"];
+        UIViewController *messageVC = [UIViewController createControllerWithName:@"MessageVC"];
+//        UIViewController *contactsVC = [UIViewController createControllerWithName:@"ContactVC"];
         UIViewController *settingVC = [UIViewController createControllerWithName:@"SettingVC"];
         
-        self.appTabBarController.viewControllers = @[workVC, oaVC, messageVC, contactsVC, settingVC];
+        self.appTabBarController.viewControllers = @[workVC, messageVC, settingVC];
         
         self.appTabBarController.selectedIndex = 0;
     }

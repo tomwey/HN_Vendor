@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBar.title = @"使用帮助";
+    self.navBar.title = @"操作指南";
     
     UILabel *coomingSoon = AWCreateLabel(CGRectZero,
                                          @"尽请期待...",
