@@ -9,13 +9,17 @@
 #import "WorkVC.h"
 #import "Defines.h"
 
-@interface WorkVC () <UIAlertViewDelegate>
+@interface WorkVC () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 //@property (nonatomic, strong) HNBadge *badge;
 @property (nonatomic, strong) NSMutableArray *modules;
 
 @property (nonatomic, strong) NSMutableArray *tempModules;
+
+@property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) NSArray *dataSource;
 
 @end
 
@@ -47,7 +51,7 @@
     
 //    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.contentView.backgroundColor = [UIColor whiteColor];//AWColorFromRGB(239, 239, 239);
+    self.contentView.backgroundColor = AWColorFromRGB(239, 239, 239);
     
     UIImageView *header = AWCreateImageView(nil);
     header.image = AWImageNoCached(@"work-header.jpg");
@@ -60,52 +64,84 @@
     //    header.contentMode = UIViewContentModeScaleAspectFill
     [self.contentView addSubview:header];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, header.height,
-                                                                     self.contentView.width, self.contentView.height - 49 - header.height)];
-    [self.contentView addSubview:self.scrollView];
-//    self.scrollView.backgroundColor = [UIColor redColor];
+    self.dataSource = @[
+                        @{
+                            @"icon": @"icon_declare.png",
+                            @"name": @"变更申报",
+                            @"page": @"DeclareListVC",
+                            },
+                        @{
+                            @"icon": @"icon_constract.png",
+                            @"name": @"合同执行",
+                            @"page": @"ContractListVC",
+                            },
+                        @{
+                            @"icon": @"icon_report.png",
+                            @"name": @"投诉建议",
+                            @"page": @"ReportVC",
+                            }
+                        ];
     
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, header.bottom + 10,
+                                                                   self.contentView.width,
+                                                                   self.contentView.height - 10 - header.height)
+                                                  style:UITableViewStylePlain];
+    [self.contentView addSubview:self.tableView];
     
-//    self.scrollView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    self.tableView.dataSource = self;
     
-    self.scrollView.backgroundColor = [UIColor clearColor];
-    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.tableView.delegate   = self;
     
-    NSArray *sections = @[@{
-                              @"label": @"变更申报",
-                              @"icon": @"work_icon_biangeng.png",
-                              @"action": @"gotoDeclare",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"declares",
-                              },
-                          @{
-                              @"label": @"合同执行",
-                              @"icon": @"work_icon_hetong.png",
-                              @"action": @"gotoContract",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"contracts",
-                              },
-                          @{
-                              @"label": @"支付查询",
-                              @"icon": @"work_icon_pay.png",
-                              @"action": @"gotoPayments",
-                              @"has_badge": @(YES),
-                              @"badge_name": @"payments",
-                              },
-                          @{
-                              @"label": @"投诉建议",
-                              @"icon": @"work_icon_plan.png",
-                              @"action": @"gotoReport",
-                              @"has_badge": @(NO),
-                              @"badge_name": @"",
-                              },
-                          ];
+    [self.tableView removeBlankCells];
     
-    self.modules = [sections mutableCopy];
+    self.tableView.rowHeight = 50;
     
-    self.tempModules = [NSMutableArray array];
-    
-    [self initModules];
+//    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, header.height,
+//                                                                     self.contentView.width, self.contentView.height - 49 - header.height)];
+//    [self.contentView addSubview:self.scrollView];
+////    self.scrollView.backgroundColor = [UIColor redColor];
+//
+//
+////    self.scrollView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+//
+//    self.scrollView.backgroundColor = [UIColor clearColor];
+//    self.scrollView.showsVerticalScrollIndicator = NO;
+//
+//    NSArray *sections = @[@{
+//                              @"label": @"变更申报",
+//                              @"icon": @"work_icon_biangeng.png",
+//                              @"action": @"gotoDeclare",
+//                              @"has_badge": @(YES),
+//                              @"badge_name": @"declares",
+//                              },
+//                          @{
+//                              @"label": @"合同执行",
+//                              @"icon": @"work_icon_hetong.png",
+//                              @"action": @"gotoContract",
+//                              @"has_badge": @(YES),
+//                              @"badge_name": @"contracts",
+//                              },
+////                          @{
+////                              @"label": @"支付查询",
+////                              @"icon": @"work_icon_pay.png",
+////                              @"action": @"gotoPayments",
+////                              @"has_badge": @(YES),
+////                              @"badge_name": @"payments",
+////                              },
+//                          @{
+//                              @"label": @"投诉建议",
+//                              @"icon": @"work_icon_plan.png",
+//                              @"action": @"gotoReport",
+//                              @"has_badge": @(NO),
+//                              @"badge_name": @"",
+//                              },
+//                          ];
+//
+//    self.modules = [sections mutableCopy];
+//
+//    self.tempModules = [NSMutableArray array];
+//
+//    [self initModules];
     
 //    self.scrollView.hidden = YES;
     
@@ -118,6 +154,37 @@
     
     // 获取新的待办流程
 //    [self fetchNewFlowCounts];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataSource.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell.id"];
+    if ( !cell ) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:@"cell.id"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    id item = self.dataSource[indexPath.row];
+    
+    cell.imageView.image = [UIImage imageNamed:item[@"icon"]];
+    cell.textLabel.text  = item[@"name"];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString *vcName = self.dataSource[indexPath.row][@"page"];
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:vcName params:nil];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 
 - (void)gotoDeclare
@@ -150,7 +217,7 @@
         [view removeFromSuperview];
     }
     
-    NSUInteger numberOfCell = 2;
+    NSUInteger numberOfCell = 3;
     CGFloat dtw = ceilf(( self.contentView.width ) / numberOfCell);
     
     CGFloat maxY = 0;

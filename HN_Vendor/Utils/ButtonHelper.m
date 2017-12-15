@@ -38,6 +38,36 @@ UIButton * HNCloseButton(CGFloat btnSize, id target, SEL action)
     return closeBtn;
 }
 
+UIButton * HNAddButton(CGFloat btnSize, id target, SEL action)
+{
+    FAKIonIcons *closeIcon = [FAKIonIcons androidAddIconWithSize:btnSize];
+    [closeIcon addAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor] }];
+    UIImage  *closeImage = [closeIcon imageWithSize:CGSizeMake(37, 37)];
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    closeBtn.backgroundColor = [UIColor redColor];
+    [closeBtn setImage:closeImage forState:UIControlStateNormal];
+    [closeBtn sizeToFit];
+    [closeBtn addTarget:target
+                 action:action
+       forControlEvents:UIControlEventTouchUpInside];
+    return closeBtn;
+}
+
+UIButton * HNSearchButton(CGFloat btnSize, id target, SEL action)
+{
+    FAKIonIcons *closeIcon = [FAKIonIcons iosSearchIconWithSize:btnSize];
+    [closeIcon addAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor] }];
+    UIImage  *closeImage = [closeIcon imageWithSize:CGSizeMake(37, 37)];
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    closeBtn.backgroundColor = [UIColor redColor];
+    [closeBtn setImage:closeImage forState:UIControlStateNormal];
+    [closeBtn sizeToFit];
+    [closeBtn addTarget:target
+                 action:action
+       forControlEvents:UIControlEventTouchUpInside];
+    return closeBtn;
+}
+
 UIButton * HNCloseButtonWithSize(CGFloat iconSize, CGSize btnSize, id target, SEL action)
 {
     FAKIonIcons *closeIcon = [FAKIonIcons iosCloseEmptyIconWithSize:iconSize];

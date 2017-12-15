@@ -624,6 +624,9 @@
 		9955472E1FE1012200DC0134 /* PaymentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955472D1FE1012200DC0134 /* PaymentsVC.m */; };
 		995547311FE1013B00DC0134 /* ContractListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995547301FE1013B00DC0134 /* ContractListVC.m */; };
 		995547341FE1014E00DC0134 /* DeclareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995547331FE1014E00DC0134 /* DeclareListVC.m */; };
+		995547391FE3A25400DC0134 /* icon_report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547361FE3A25300DC0134 /* icon_report@2x.png */; };
+		9955473A1FE3A25400DC0134 /* icon_declare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547371FE3A25300DC0134 /* icon_declare@2x.png */; };
+		9955473B1FE3A25400DC0134 /* icon_constract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547381FE3A25400DC0134 /* icon_constract@2x.png */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
@@ -1685,6 +1688,9 @@
 		995547301FE1013B00DC0134 /* ContractListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractListVC.m; sourceTree = "<group>"; };
 		995547321FE1014E00DC0134 /* DeclareListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListVC.h; sourceTree = "<group>"; };
 		995547331FE1014E00DC0134 /* DeclareListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListVC.m; sourceTree = "<group>"; };
+		995547361FE3A25300DC0134 /* icon_report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_report@2x.png"; sourceTree = "<group>"; };
+		995547371FE3A25300DC0134 /* icon_declare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_declare@2x.png"; sourceTree = "<group>"; };
+		995547381FE3A25400DC0134 /* icon_constract@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_constract@2x.png"; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
@@ -3144,6 +3150,9 @@
 		9955439D1FDFDBCC00DC0134 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				995547381FE3A25400DC0134 /* icon_constract@2x.png */,
+				995547371FE3A25300DC0134 /* icon_declare@2x.png */,
+				995547361FE3A25300DC0134 /* icon_report@2x.png */,
 				9955471E1FE0FF8C00DC0134 /* work_icon_biangeng@2x.png */,
 				995547211FE0FF8D00DC0134 /* work_icon_biangeng@3x.png */,
 				995547221FE0FF8E00DC0134 /* work_icon_hetong@2x.png */,
@@ -3541,6 +3550,7 @@
 				995546A01FDFDBCD00DC0134 /* msg_icon_todo@2x.png in Resources */,
 				995546BB1FDFDBCD00DC0134 /* tab_work@3x.png in Resources */,
 				995546B11FDFDBCD00DC0134 /* tab_oa_click@3x.png in Resources */,
+				9955473B1FE3A25400DC0134 /* icon_constract@2x.png in Resources */,
 				995546461FDFDBCD00DC0134 /* contact_icon_add@3x.png in Resources */,
 				9955468D1FDFDBCD00DC0134 /* icon_unread1@2x.png in Resources */,
 				995546761FDFDBCD00DC0134 /* icon_folder@2x.png in Resources */,
@@ -3574,6 +3584,7 @@
 				9955462B1FDFDBCD00DC0134 /* 57@2x.png in Resources */,
 				9955468A1FDFDBCD00DC0134 /* icon_read@3x.png in Resources */,
 				995546A41FDFDBCD00DC0134 /* tab_contact_click@2x.png in Resources */,
+				995547391FE3A25400DC0134 /* icon_report@2x.png in Resources */,
 				995546231FDFDBCD00DC0134 /* 29.png in Resources */,
 				995546B71FDFDBCD00DC0134 /* tab_setting@3x.png in Resources */,
 				9955467B1FDFDBCD00DC0134 /* icon_invest@3x.png in Resources */,
@@ -3650,6 +3661,7 @@
 				995546321FDFDBCD00DC0134 /* 76@2x.png in Resources */,
 				995546661FDFDBCD00DC0134 /* icon_checkbox_click@2x.png in Resources */,
 				995546B91FDFDBCD00DC0134 /* tab_setting_click@3x.png in Resources */,
+				9955473A1FE3A25400DC0134 /* icon_declare@2x.png in Resources */,
 				9955467D1FDFDBCD00DC0134 /* icon_kaoqing@3x.png in Resources */,
 				995546961FDFDBCD00DC0134 /* icon_user@3x.png in Resources */,
 				995544E11FDFDBCC00DC0134 /* zocial-regular-webfont.ttf in Resources */,

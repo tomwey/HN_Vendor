@@ -9,7 +9,7 @@
 #import "MessageVC.h"
 #import "Defines.h"
 
-@interface MessageVC ()
+@interface MessageVC () <UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) AWTableViewDataSource *dataSource;
@@ -37,23 +37,29 @@
     [self addLeftItemWithView:nil];
     
     NSArray *data = @[@{ @"icon": @"msg_icon_todo.png",
-                           @"name": @"待办",
-                           @"body": @"今天您没有待审批和待办事项",
-                           @"time": @"09:21",
-                           @"count": @"3",
+                           @"name": @"1、2、9楼B户型增加1个厨房插座",
+                           @"proj_name": @"枫丹三",
+                           @"time": @"2017-01-01",
+                           @"state": @"0",
                            },
                         @{ @"icon": @"msg_icon_ann.png",
-                           @"name": @"公告",
-                           @"body": @"公告消息",
-                           @"time": @"09:21",
-                           @"count": @"0",
+                           @"name": @"增加样板间找平施工",
+                           @"proj_name": @"枫丹三",
+                           @"time": @"2017-01-01",
+                           @"state": @"1",
                            },
                         @{ @"icon": @"msg_icon_document.png",
-                           @"name": @"文档",
-                           @"body": @"文档通知",
-                           @"time": @"09:21",
-                           @"count": @"101",
+                           @"name": @"【进度款】5#楼3-8层",
+                           @"proj_name": @"枫丹三",
+                           @"time": @"2017-01-01",
+                           @"state": @"2",
                            },
+                      @{ @"icon": @"msg_icon_document.png",
+                         @"name": @"【进度款】6#楼5-10层",
+                         @"proj_name": @"枫丹三",
+                         @"time": @"2017-01-01",
+                         @"state": @"3",
+                         },
                         ];
     
     self.dataSource = AWTableViewDataSourceCreate(data, @"MessageCell", @"msg.cell");
@@ -63,6 +69,7 @@
     [self.contentView addSubview:self.tableView];
     
     self.tableView.dataSource = self.dataSource;
+    self.tableView.delegate   = self;
     
     self.tableView.rowHeight = 80;
     
@@ -70,6 +77,12 @@
 //    self.tableView.backgroundColor = [UIColor redColor];
     
     [self.tableView removeBlankCells];
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
