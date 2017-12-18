@@ -207,7 +207,10 @@
     self.tabIndicator.hidden = !self.allowShowingIndicator;
     if ( !animated ) {
         if ( self.allowShowingIndicator ) {
-            self.tabIndicator.frame = frame;
+//                self.tabIndicator.frame = frame;
+            self.tabIndicator.frame = CGRectMake(0, 0, 18, 2);
+            self.tabIndicator.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+            
             self.tabIndicator.backgroundColor = selectedColor;
         }
         
@@ -219,7 +222,10 @@
         [UIView animateWithDuration:.3 animations:^{
             
             if (self.allowShowingIndicator) {
-                self.tabIndicator.frame = frame;
+//                self.tabIndicator.frame = frame;
+                self.tabIndicator.frame = CGRectMake(0, 0, 18, 2);
+                self.tabIndicator.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+                
                 self.tabIndicator.backgroundColor = self.selectedTitleAttributes[NSForegroundColorAttributeName];
             }
             

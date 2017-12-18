@@ -60,6 +60,8 @@
 #define LOADING_REFRESH_NO_RESULT @"<无数据显示>"
 #define LOADING_MORE_NO_RESULT    @"没有更多数据了"
 
+#define NB_KEY        @"@H^N"
+
 ////// API接口
 #define API_HOST      @"http://erp20-app.heneng.cn:16681"
 #define H5_HOST       @"http://erp20.heneng.cn:16669"//@"http://erp2017-mobile.heneng.cn:8088" // @"https://erp20.heneng.cn:16669"

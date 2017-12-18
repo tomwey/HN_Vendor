@@ -59,8 +59,8 @@
 //    NSURL *url = !!currentUser.avatar ? [NSURL URLWithString:currentUser.avatar] : nil;
 //    [self.avatarView setImageWithURL:currentUser[@"avatar"] placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     
-    [HNImageHelper imageForName:currentUser[@"man_name"]
-                          manID:[currentUser[@"man_id"] integerValue]
+    [HNImageHelper imageForName:currentUser[@"supname"]
+                          manID:[currentUser[@"supid"] integerValue]
                            size:CGSizeMake(60, 60)
                 completionBlock:^(UIImage *anImage, NSError *error) {
                     if ( anImage ) {
@@ -69,7 +69,7 @@
                 }];
     
     
-    self.nickname.text = currentUser[@"man_name"];
+    self.nickname.text = currentUser[@"supname"];
     //currentUser ? [currentUser formatUsername] : @"唐伟";
 }
 

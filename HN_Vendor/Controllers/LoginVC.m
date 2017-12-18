@@ -186,15 +186,29 @@
         [self.contentView showHUDWithText:@"密码不能为空" offset:CGPointMake(0, 0)];
         return;
     }
+    
+    if ( self.passField.text.length < 6 || self.passField.text.length > 20 ) {
+        //        [self.contentView makeToast:@"密码不能为空"
+        //                           duration:2.0
+        //                           position:CSToastPositionCenter];
+        [self.contentView showHUDWithText:@"密码为6-20位" offset:CGPointMake(0, 0)];
+        return;
+    }
 
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
     [[self apiServiceWithName:@"APIService"]
-     POST:nil params:@{ @"dotype": @"login",
-                        @"username": [[self.userField.text trim] lowercaseString],
-                        @"password": self.passField.text//[[self.passField.text md5Hash] uppercaseString]
-                        }
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商登录APP",
+              @"param1": [[self.userField.text trim] lowercaseString],
+              @"param2": [[NSString stringWithFormat:@"%@%@", self.passField.text, NB_KEY] md5Hash],
+              @"param3": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
+              }
      completion:^(id result, NSError *error) {
          [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+         
          if ( !error ) {
              
              // 保存登录信息
@@ -202,8 +216,8 @@
              
              if ( [result[@"rowcount"] integerValue] > 0 ) {
                  id item = [result[@"data"] firstObject];
-                 if ( item[@"code"] && [item[@"code"] integerValue] != 0 ) {
-                     [self.contentView showHUDWithText:@"账号或密码不正确" succeed:NO];
+                 if ( item[@"hinttype"] && [item[@"hinttype"] integerValue] == 0 ) {
+                     [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
                      return;
                  }
              }
