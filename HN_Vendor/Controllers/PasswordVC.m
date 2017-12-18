@@ -119,8 +119,20 @@
         return;
     }
     
+    if ( self.nPassword1Field.text.length < 6 || self.nPassword1Field.text.length > 20 ) {
+        [self.contentView showHUDWithText:@"密码长度为6-20位"
+                                   offset:CGPointMake(0, 20)];
+        return;
+    }
+    
     if ( self.nPassword2Field.text.length == 0 ) {
         [self.contentView showHUDWithText:@"确认密码不能为空"
+                                   offset:CGPointMake(0, 20)];
+        return;
+    }
+    
+    if ( self.nPassword2Field.text.length < 6 || self.nPassword2Field.text.length > 20 ) {
+        [self.contentView showHUDWithText:@"密码长度为6-20位"
                                    offset:CGPointMake(0, 20)];
         return;
     }
@@ -135,16 +147,19 @@
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
     id user = [[UserService sharedInstance] currentUser];
-    NSString *manID = [user[@"man_id"] description] ?: @"0";
+//    NSString *manID = [user[@"man_id"] description] ?: @"0";
     
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
      params:@{
-              @"dotype": @"changepwd",
-              @"manid": manID,
-              @"oldpwd": self.password1Field.text,
-              @"newpwd": self.nPassword1Field.text,
+              @"dotype": @"GetData",
+              @"funname": @"供应商修改密码APP",
+              @"param1": user[@"supid"] ?: @"",
+              @"param2": user[@"loginname"] ?: @"",
+              @"param3": user[@"symbolkeyid"] ?: @"",
+              @"param4": [[NSString stringWithFormat:@"%@%@", self.password1Field.text, NB_KEY] md5Hash],
+              @"param5": [[NSString stringWithFormat:@"%@%@", self.nPassword1Field.text, NB_KEY] md5Hash],
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
@@ -161,12 +176,14 @@
             [self.contentView showHUDWithText:@"未知原因修改密码错误" succeed:NO];
         } else {
             id item = [result[@"data"] firstObject];
-            NSInteger code = [item[@"code"] integerValue];
-            NSString *msg = [item[@"codemsg"] description];
+            NSInteger code = [item[@"hinttype"] integerValue];
+            NSString *msg = [item[@"hint"] description];
+            
+//            id resultData = result[@"data"];
             
 //            [self.contentView showHUDWithText:msg succeed:code == 0];
             
-            if ( code == 0 ) {
+            if ( code == 1 ) {
                 [self.navigationController.view showHUDWithText:msg succeed:YES];
                 
                 [self.navigationController popViewControllerAnimated:YES];

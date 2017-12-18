@@ -222,10 +222,18 @@
                  }
              }
              
+             NSMutableDictionary *userInfo = nil;
              if ( [resultData isKindOfClass:[NSArray class]] ) {
-                 [[UserService sharedInstance] saveUser:resultData[0]];
+                 userInfo = [resultData[0] mutableCopy];
+//                 [[UserService sharedInstance] saveUser:resultData[0]];
              } else if ( [resultData isKindOfClass:[NSDictionary class]] ) {
-                 [[UserService sharedInstance] saveUser:resultData];
+                 userInfo = [resultData mutableCopy];
+//                 [[UserService sharedInstance] saveUser:resultData];
+             }
+             
+             if ( userInfo ) {
+                 [userInfo setObject:[self.userField.text trim] forKey:@"loginname"];
+                 [[UserService sharedInstance] saveUser:userInfo];
              }
              
              // 显示提示信息
