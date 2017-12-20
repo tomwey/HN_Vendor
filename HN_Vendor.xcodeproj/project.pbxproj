@@ -185,7 +185,6 @@
 		995545671FDFDBCC00DC0134 /* CompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995542001FDFDBCB00DC0134 /* CompanyVC.m */; };
 		995545681FDFDBCC00DC0134 /* ContactsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995542021FDFDBCB00DC0134 /* ContactsVC.m */; };
 		995545691FDFDBCC00DC0134 /* ContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995542041FDFDBCB00DC0134 /* ContactVC.m */; };
-		9955456A1FDFDBCC00DC0134 /* ContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 995542061FDFDBCB00DC0134 /* ContractCell.m */; };
 		9955456B1FDFDBCC00DC0134 /* DMButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 995542081FDFDBCB00DC0134 /* DMButton.m */; };
 		9955456C1FDFDBCC00DC0134 /* DocAttachmentListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955420A1FDFDBCB00DC0134 /* DocAttachmentListVC.m */; };
 		9955456D1FDFDBCC00DC0134 /* DocBreadcrumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955420C1FDFDBCB00DC0134 /* DocBreadcrumbView.m */; };
@@ -565,7 +564,6 @@
 		995546E61FDFDBCD00DC0134 /* AWSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955445B1FDFDBCC00DC0134 /* AWSectionHeaderView.m */; };
 		995546E71FDFDBCD00DC0134 /* BIChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955445D1FDFDBCC00DC0134 /* BIChartView.m */; };
 		995546E81FDFDBCD00DC0134 /* Checkbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955445F1FDFDBCC00DC0134 /* Checkbox.m */; };
-		995546E91FDFDBCD00DC0134 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 995544611FDFDBCC00DC0134 /* ContactCell.m */; };
 		995546EA1FDFDBCD00DC0134 /* CustomOpinionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995544631FDFDBCC00DC0134 /* CustomOpinionView.m */; };
 		995546EB1FDFDBCD00DC0134 /* CustomSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 995544651FDFDBCC00DC0134 /* CustomSearchBar.m */; };
 		995546EC1FDFDBCD00DC0134 /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 995544671FDFDBCC00DC0134 /* DatePicker.m */; };
@@ -632,6 +630,7 @@
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
 		99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E988281FEA0F0800D48248 /* DeclareListView.m */; };
 		99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882B1FEA132500D48248 /* DeclareListCell.m */; };
+		99E9882F1FEA445500D48248 /* ContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882E1FEA445500D48248 /* ContractCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1002,8 +1001,6 @@
 		995542021FDFDBCB00DC0134 /* ContactsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsVC.m; sourceTree = "<group>"; };
 		995542031FDFDBCB00DC0134 /* ContactVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactVC.h; sourceTree = "<group>"; };
 		995542041FDFDBCB00DC0134 /* ContactVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactVC.m; sourceTree = "<group>"; };
-		995542051FDFDBCB00DC0134 /* ContractCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractCell.h; sourceTree = "<group>"; };
-		995542061FDFDBCB00DC0134 /* ContractCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractCell.m; sourceTree = "<group>"; };
 		995542071FDFDBCB00DC0134 /* DMButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMButton.h; sourceTree = "<group>"; };
 		995542081FDFDBCB00DC0134 /* DMButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMButton.m; sourceTree = "<group>"; };
 		995542091FDFDBCB00DC0134 /* DocAttachmentListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocAttachmentListVC.h; sourceTree = "<group>"; };
@@ -1580,8 +1577,6 @@
 		9955445D1FDFDBCC00DC0134 /* BIChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIChartView.m; sourceTree = "<group>"; };
 		9955445E1FDFDBCC00DC0134 /* Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkbox.h; sourceTree = "<group>"; };
 		9955445F1FDFDBCC00DC0134 /* Checkbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Checkbox.m; sourceTree = "<group>"; };
-		995544601FDFDBCC00DC0134 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCell.h; sourceTree = "<group>"; };
-		995544611FDFDBCC00DC0134 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
 		995544621FDFDBCC00DC0134 /* CustomOpinionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomOpinionView.h; sourceTree = "<group>"; };
 		995544631FDFDBCC00DC0134 /* CustomOpinionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomOpinionView.m; sourceTree = "<group>"; };
 		995544641FDFDBCC00DC0134 /* CustomSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSearchBar.h; sourceTree = "<group>"; };
@@ -1700,6 +1695,8 @@
 		99E988281FEA0F0800D48248 /* DeclareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListView.m; sourceTree = "<group>"; };
 		99E9882A1FEA132500D48248 /* DeclareListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListCell.h; sourceTree = "<group>"; };
 		99E9882B1FEA132500D48248 /* DeclareListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListCell.m; sourceTree = "<group>"; };
+		99E9882D1FEA445500D48248 /* ContractCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractCell.h; sourceTree = "<group>"; };
+		99E9882E1FEA445500D48248 /* ContractCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2620,8 +2617,6 @@
 				995542021FDFDBCB00DC0134 /* ContactsVC.m */,
 				995542031FDFDBCB00DC0134 /* ContactVC.h */,
 				995542041FDFDBCB00DC0134 /* ContactVC.m */,
-				995542051FDFDBCB00DC0134 /* ContractCell.h */,
-				995542061FDFDBCB00DC0134 /* ContractCell.m */,
 				995542071FDFDBCB00DC0134 /* DMButton.h */,
 				995542081FDFDBCB00DC0134 /* DMButton.m */,
 				995542091FDFDBCB00DC0134 /* DocAttachmentListVC.h */,
@@ -3374,8 +3369,6 @@
 				9955445D1FDFDBCC00DC0134 /* BIChartView.m */,
 				9955445E1FDFDBCC00DC0134 /* Checkbox.h */,
 				9955445F1FDFDBCC00DC0134 /* Checkbox.m */,
-				995544601FDFDBCC00DC0134 /* ContactCell.h */,
-				995544611FDFDBCC00DC0134 /* ContactCell.m */,
 				995544621FDFDBCC00DC0134 /* CustomOpinionView.h */,
 				995544631FDFDBCC00DC0134 /* CustomOpinionView.m */,
 				995544641FDFDBCC00DC0134 /* CustomSearchBar.h */,
@@ -3472,6 +3465,8 @@
 				99E988281FEA0F0800D48248 /* DeclareListView.m */,
 				99E9882A1FEA132500D48248 /* DeclareListCell.h */,
 				99E9882B1FEA132500D48248 /* DeclareListCell.m */,
+				99E9882D1FEA445500D48248 /* ContractCell.h */,
+				99E9882E1FEA445500D48248 /* ContractCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3772,6 +3767,7 @@
 				995545691FDFDBCC00DC0134 /* ContactVC.m in Sources */,
 				995545451FDFDBCC00DC0134 /* UIScrollView+AWRefresh.m in Sources */,
 				995545191FDFDBCC00DC0134 /* TYBaseAnimation.m in Sources */,
+				99E9882F1FEA445500D48248 /* ContractCell.m in Sources */,
 				995545E71FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleRippleMultipleAnimation.m in Sources */,
 				995546051FDFDBCD00DC0134 /* TZAssetModel.m in Sources */,
 				995545591FDFDBCC00DC0134 /* ApplyLeaveVC.m in Sources */,
@@ -4069,7 +4065,6 @@
 				995545341FDFDBCC00DC0134 /* NSObject+AWDeallocBlock.m in Sources */,
 				995545901FDFDBCC00DC0134 /* MeetingListView.m in Sources */,
 				995545611FDFDBCC00DC0134 /* BaseNavBarVC.m in Sources */,
-				995546E91FDFDBCD00DC0134 /* ContactCell.m in Sources */,
 				995545491FDFDBCC00DC0134 /* UITableView+CompatibilityHandle.m in Sources */,
 				995545B01FDFDBCC00DC0134 /* OutputValueConfirmVC.m in Sources */,
 				995545521FDFDBCC00DC0134 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
@@ -4121,7 +4116,6 @@
 				995546DB1FDFDBCD00DC0134 /* HNNewFlowCountService.m in Sources */,
 				995545E91FDFDBCD00DC0134 /* DGActivityIndicatorBallZigZagAnimation.m in Sources */,
 				9955470E1FDFDBCD00DC0134 /* SalaryPasswordView.m in Sources */,
-				9955456A1FDFDBCC00DC0134 /* ContractCell.m in Sources */,
 				995546191FDFDBCD00DC0134 /* ContactInsertHistoryTable.m in Sources */,
 				9955458E1FDFDBCC00DC0134 /* MeetingDateRange.m in Sources */,
 				9955450E1FDFDBCC00DC0134 /* PNScatterChart.m in Sources */,
