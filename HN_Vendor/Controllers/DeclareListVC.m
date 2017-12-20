@@ -9,12 +9,16 @@
 #import "DeclareListVC.h"
 #import "Defines.h"
 
-@interface DeclareListVC () <AWPagerTabStripDataSource>
+@interface DeclareListVC () <AWPagerTabStripDataSource, SwipeViewDelegate, SwipeViewDataSource>
 
 @property (nonatomic, strong) UIView *subHeader;
 @property (nonatomic, strong) AWPagerTabStrip *tabStrip;
 
 @property (nonatomic, strong) NSArray *tabTitles;
+
+@property (nonatomic, strong) SwipeView *swipeView;
+
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
@@ -40,12 +44,12 @@
 - (void)addSegmentControls
 {
     self.tabTitles = @[@{
-                           @"name": @"已申报",
+                           @"name": @"待申报",
                            @"type": @"0",
                            @"page": @"",
                            },
                        @{
-                           @"name": @"待申报",
+                           @"name": @"已申报",
                            @"type": @"1",
                            @"page": @"",
                            },
@@ -68,13 +72,31 @@
     __weak typeof(self) weakSelf = self;
     self.tabStrip.didSelectBlock = ^(AWPagerTabStrip* stripper, NSUInteger index) {
         //        weakSelf.swipeView.currentPage = index;
-//        __strong CityMapBIVC *strongSelf = weakSelf;
-//        if ( strongSelf ) {
-//            // 如果duration设置为大于0.0的值，动画滚动，tab stripper动画会有bug
-//            [strongSelf.swipeView scrollToPage:index duration:0.0f]; // 0.35f
-//            [strongSelf swipeViewDidEndDecelerating:strongSelf.swipeView];
-//        }
+        __strong DeclareListVC *strongSelf = weakSelf;
+        if ( strongSelf ) {
+            // 如果duration设置为大于0.0的值，动画滚动，tab stripper动画会有bug
+            [strongSelf.swipeView scrollToPage:index duration:0.0f]; // 0.35f
+            [strongSelf swipeViewDidEndDecelerating:strongSelf.swipeView];
+        }
     };
+    
+    if ( !self.swipeView ) {
+        self.swipeView = [[SwipeView alloc] init];
+        [self.contentView addSubview:self.swipeView];
+        self.swipeView.frame = CGRectMake(0,
+                                          self.tabStrip.bottom,
+                                          self.tabStrip.width,
+                                          self.contentView.height - self.tabStrip.bottom);
+        
+        self.swipeView.delegate = self;
+        self.swipeView.dataSource = self;
+        
+        self.swipeView.backgroundColor = self.contentView.backgroundColor;
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self startLoadingData];
+    });
 }
 
 - (NSInteger)numberOfTabs:(AWPagerTabStrip *)tabStrip
@@ -85,6 +107,69 @@
 - (NSString *)pagerTabStrip:(AWPagerTabStrip *)tabStrip titleForIndex:(NSInteger)index
 {
     return self.tabTitles[index][@"name"];
+}
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return self.tabTitles.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if ( !view ) {
+        DeclareListView *dView = [[DeclareListView alloc] init];
+        dView.frame = CGRectMake(0, 0, self.contentView.width, self.swipeView.height);
+        
+        view = dView;
+    }
+    
+    return view;
+}
+
+- (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
+{
+    //    NSLog(@"index: %d", swipeView.currentPage);
+    
+    // 更新标签状态
+    [self.tabStrip setSelectedIndex:swipeView.currentPage animated:YES];
+    
+    //    [self pageStartLoadingData];
+}
+
+- (void)swipeViewWillBeginDragging:(SwipeView *)swipeView
+{
+    self.currentPage = self.swipeView.currentPage;
+}
+
+- (void)swipeViewDidEndDecelerating:(SwipeView *)swipeView
+{
+    NSLog(@"end decelerate");
+    if ( self.currentPage != self.swipeView.currentPage ) {
+        self.currentPage = self.swipeView.currentPage;
+        
+        [self startLoadingData];
+    }
+}
+
+- (void)startLoadingData
+{
+    DeclareListView *listView = (DeclareListView *)self.swipeView.currentItemView;
+    listView.userData = self.tabTitles[self.swipeView.currentPage];
+    [listView startLoading:^(BOOL succeed, NSError *error) {
+        
+    }];
+//    UIView <BIViewProtocol> *view = [self swipePageForIndex:self.swipeView.currentPage];
+    //        [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+//    view.userData = @{ @"cityID": self.areaSelect.cityID ?: @"0",
+//                       @"platID": self.areaSelect.platID ?: @"0",
+//                       @"bYear": [self beginYear] ?: @"",
+//                       @"bMonth": [self beginMonth] ?: @"",
+//                       @"eYear": [self endYear] ?: @"",
+//                       @"eMonth": [self endMonth] ?: @"",
+//                       };
+//    [view startLoadingData:^(BOOL succeed, NSError *error) {
+//        //            [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//    }];
 }
 
 - (void)search:(id)sender

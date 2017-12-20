@@ -630,6 +630,8 @@
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
+		99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E988281FEA0F0800D48248 /* DeclareListView.m */; };
+		99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882B1FEA132500D48248 /* DeclareListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1694,6 +1696,10 @@
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		99E988271FEA0F0800D48248 /* DeclareListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListView.h; sourceTree = "<group>"; };
+		99E988281FEA0F0800D48248 /* DeclareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListView.m; sourceTree = "<group>"; };
+		99E9882A1FEA132500D48248 /* DeclareListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListCell.h; sourceTree = "<group>"; };
+		99E9882B1FEA132500D48248 /* DeclareListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3462,6 +3468,10 @@
 				995544BB1FDFDBCC00DC0134 /* UIView+MBProgressHUD.m */,
 				995544BC1FDFDBCC00DC0134 /* YearMonthPickerView.h */,
 				995544BD1FDFDBCC00DC0134 /* YearMonthPickerView.m */,
+				99E988271FEA0F0800D48248 /* DeclareListView.h */,
+				99E988281FEA0F0800D48248 /* DeclareListView.m */,
+				99E9882A1FEA132500D48248 /* DeclareListCell.h */,
+				99E9882B1FEA132500D48248 /* DeclareListCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3922,6 +3932,7 @@
 				995545071FDFDBCC00DC0134 /* PNLineChart.m in Sources */,
 				995545011FDFDBCC00DC0134 /* PNBar.m in Sources */,
 				995545FA1FDFDBCD00DC0134 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */,
+				99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */,
 				995545A21FDFDBCC00DC0134 /* OADetailVC.m in Sources */,
 				995545EF1FDFDBCD00DC0134 /* DGActivityIndicatorLineScalePartyAnimation.m in Sources */,
 				995544CD1FDFDBCC00DC0134 /* CTPersistanceRecord.m in Sources */,
@@ -4048,6 +4059,7 @@
 				995546071FDFDBCD00DC0134 /* TZImageCropManager.m in Sources */,
 				995545721FDFDBCC00DC0134 /* FeedbackVC.m in Sources */,
 				995546FB1FDFDBCD00DC0134 /* LandCell.m in Sources */,
+				99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */,
 				9955461B1FDFDBCD00DC0134 /* Employ.m in Sources */,
 				995545BD1FDFDBCD00DC0134 /* SearchConditionVC.m in Sources */,
 				995545B81FDFDBCD00DC0134 /* PlanVC.m in Sources */,

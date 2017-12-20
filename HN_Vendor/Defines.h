@@ -168,6 +168,8 @@
 #import "HNLoadingView.h"
 #import "DMButton.h"
 
+#import "DeclareListView.h"
+
 #import "PlanListView.h"
 #import "PlanDocView.h"
 #import "PlanProjectView.h"
