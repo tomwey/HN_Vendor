@@ -627,6 +627,8 @@
 		9955473B1FE3A25400DC0134 /* icon_constract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547381FE3A25400DC0134 /* icon_constract@2x.png */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43001FEB5A220040E013 /* MessageDetailVC.m */; };
+		998E43031FEB64640040E013 /* msg.tpl in Resources */ = {isa = PBXBuildFile; fileRef = 998E43021FEB64640040E013 /* msg.tpl */; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
 		99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E988281FEA0F0800D48248 /* DeclareListView.m */; };
 		99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882B1FEA132500D48248 /* DeclareListCell.m */; };
@@ -1690,6 +1692,9 @@
 		995547381FE3A25400DC0134 /* icon_constract@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_constract@2x.png"; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		998E42FF1FEB5A220040E013 /* MessageDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageDetailVC.h; sourceTree = "<group>"; };
+		998E43001FEB5A220040E013 /* MessageDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageDetailVC.m; sourceTree = "<group>"; };
+		998E43021FEB64640040E013 /* msg.tpl */ = {isa = PBXFileReference; lastKnownFileType = text; path = msg.tpl; sourceTree = "<group>"; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		99E988271FEA0F0800D48248 /* DeclareListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListView.h; sourceTree = "<group>"; };
 		99E988281FEA0F0800D48248 /* DeclareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListView.m; sourceTree = "<group>"; };
@@ -2808,6 +2813,8 @@
 				995547301FE1013B00DC0134 /* ContractListVC.m */,
 				995547321FE1014E00DC0134 /* DeclareListVC.h */,
 				995547331FE1014E00DC0134 /* DeclareListVC.m */,
+				998E42FF1FEB5A220040E013 /* MessageDetailVC.h */,
+				998E43001FEB5A220040E013 /* MessageDetailVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3080,6 +3087,7 @@
 				995544381FDFDBCC00DC0134 /* map_bak.html */,
 				995544391FDFDBCC00DC0134 /* news_style */,
 				9955443A1FDFDBCC00DC0134 /* opinion.tpl */,
+				998E43021FEB64640040E013 /* msg.tpl */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3701,6 +3709,7 @@
 				995546A11FDFDBCD00DC0134 /* setting-header.png in Resources */,
 				995546CE1FDFDBCD00DC0134 /* work_icon_meeting@3x.png in Resources */,
 				9955467F1FDFDBCD00DC0134 /* icon_more@3x.png in Resources */,
+				998E43031FEB64640040E013 /* msg.tpl in Resources */,
 				995546CA1FDFDBCD00DC0134 /* work_icon_land@3x.png in Resources */,
 				995544DF1FDFDBCC00DC0134 /* Material-Design-Iconic-Font.ttf in Resources */,
 				995546341FDFDBCD00DC0134 /* guide_2.png in Resources */,
@@ -3941,6 +3950,7 @@
 				9955455A1FDFDBCC00DC0134 /* AppQrcodeVC.m in Sources */,
 				995545041FDFDBCC00DC0134 /* PNCircleChart.m in Sources */,
 				995546171FDFDBCD00DC0134 /* ContactInfo.m in Sources */,
+				998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */,
 				995545631FDFDBCC00DC0134 /* BaseVC.m in Sources */,
 				995545FB1FDFDBCD00DC0134 /* DGActivityIndicatorView.m in Sources */,
 				995545881FDFDBCC00DC0134 /* LandSearchVC.m in Sources */,

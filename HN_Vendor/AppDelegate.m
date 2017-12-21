@@ -44,7 +44,57 @@
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
     }
     
+    [self loadUnreadMessage];
+    
     return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [self loadUnreadMessage];
+}
+
+- (void)loadUnreadMessage
+{
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    if (!userInfo) {
+        return;
+    }
+    
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商获取未读消息数APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": userInfo[@"loginname"] ?: @"",
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              } completion:^(id result, NSError *error) {
+                  [me handleResult:result error:error];
+              }];
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    if ( !error && [result[@"rowcount"] integerValue] > 0 ) {
+        id item = [result[@"data"] firstObject];
+        
+        NSInteger count = [item[@"unreadmsgnum"] integerValue];
+        
+        if (count > 0) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
+                                                                object:nil
+                                                              userInfo:nil];
+            
+            if (self.appTabBarController.viewControllers.count > 1) {
+                UIViewController *vc = self.appTabBarController.viewControllers[1];
+                
+                vc.tabBarItem.badgeValue = [@(count) description];
+            }
+        }
+    }
 }
 
 - (void)showGuide:(BOOL)yesOrNo

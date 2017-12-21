@@ -36,7 +36,21 @@
     
     [self addLeftItemWithView:nil];
     
-    [self loadData];
+//    [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.tableView
+                                             selector:@selector(triggerPullToRefresh)
+                                                 name:@"kHasNewMessageNotification"
+                                               object:nil];
+    
+    [self.tableView triggerPullToRefresh];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarItem.badgeValue = nil;
 }
 
 - (void)loadData
@@ -60,32 +74,6 @@
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
-    
-//    NSArray *data = @[@{ @"icon": @"msg_icon_todo.png",
-//                         @"name": @"1、2、9楼B户型增加1个厨房插座",
-//                         @"proj_name": @"枫丹三",
-//                         @"time": @"2017-01-01",
-//                         @"state": @"0",
-//                         },
-//                      @{ @"icon": @"msg_icon_ann.png",
-//                         @"name": @"增加样板间找平施工",
-//                         @"proj_name": @"枫丹三",
-//                         @"time": @"2017-01-01",
-//                         @"state": @"1",
-//                         },
-//                      @{ @"icon": @"msg_icon_document.png",
-//                         @"name": @"【进度款】5#楼3-8层",
-//                         @"proj_name": @"枫丹三",
-//                         @"time": @"2017-01-01",
-//                         @"state": @"2",
-//                         },
-//                      @{ @"icon": @"msg_icon_document.png",
-//                         @"name": @"【进度款】6#楼5-10层",
-//                         @"proj_name": @"枫丹三",
-//                         @"time": @"2017-01-01",
-//                         @"state": @"3",
-//                         },
-//                      ];
 }
 
 - (void)handleResult:(id)result error:(NSError *)error
@@ -169,6 +157,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"MessageDetailVC" params:self.dataSource.dataSource[indexPath.row]];
+    [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 
 @end
