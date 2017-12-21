@@ -23,58 +23,100 @@
 {
     [HNProgressHUDHelper showHUDAddedTo:AWAppWindow() animated:YES];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.dataSource.dataSource = @[
-                                       @{
-                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
-                                           @"data": @[
-                                                   @{
-                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
-                                                       @"money1": @"200000",
-                                                       @"money2": @"150000",
-                                                       @"time": @"2017-10-26",
-                                                       @"state": @"0",
-                                                       },
-                                                   @{
-                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
-                                                       @"money1": @"200000",
-                                                       @"money2": @"150000",
-                                                       @"time": @"2017-10-26",
-                                                       @"state": @"1",
-                                                       },
-                                                   @{
-                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
-                                                       @"money1": @"200000",
-                                                       @"money2": @"150000",
-                                                       @"time": @"2017-10-26",
-                                                       @"state": @"2",
-                                                       },
-                                                   ],
-                                           },
-                                       @{
-                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
-                                           @"data": @[
-                                                   @{
-                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
-                                                       @"money1": @"200000",
-                                                       @"money2": @"150000",
-                                                       @"time": @"2017-10-26",
-                                                       @"state": @"0",
-                                                       },
-                                                   @{
-                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
-                                                       @"money1": @"200000",
-                                                       @"money2": @"150000",
-                                                       @"time": @"2017-10-26",
-                                                       @"state": @"1",
-                                                       }
-                                                   ],
-                                           },
-                                       ];
-        [HNProgressHUDHelper hideHUDForView:AWAppWindow() animated:YES];
+    [self.tableView removeErrorOrEmptyTips];
+    
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    NSDictionary *params = self.userData;
+    
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil params:@{
+                       @"dotype": @"GetData",
+                       @"funname": @"供应商查询变更指令列表APP",
+                       @"param1": [userInfo[@"supid"] ?: @"0" description],
+                       @"param2": [userInfo[@"loginname"] ?: @"" description],
+                       @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                       @"param4": params[@"keyword"] ?: @"",
+                       @"param5": [params[@"state"] ?: @"-1" description],
+                       @"param6": params[@"begin_time"] ?: @"",
+                       @"param7": params[@"end_time"] ?: @"",
+                       } completion:^(id result, NSError *error) {
+                           [me handleResult: result error:error];
+                       }];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.dataSource.dataSource = @[
+//                                       @{
+//                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
+//                                           @"data": @[
+//                                                   @{
+//                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
+//                                                       @"money1": @"200000",
+//                                                       @"money2": @"150000",
+//                                                       @"time": @"2017-10-26",
+//                                                       @"state": @"0",
+//                                                       },
+//                                                   @{
+//                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
+//                                                       @"money1": @"200000",
+//                                                       @"money2": @"150000",
+//                                                       @"time": @"2017-10-26",
+//                                                       @"state": @"1",
+//                                                       },
+//                                                   @{
+//                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
+//                                                       @"money1": @"200000",
+//                                                       @"money2": @"150000",
+//                                                       @"time": @"2017-10-26",
+//                                                       @"state": @"2",
+//                                                       },
+//                                                   ],
+//                                           },
+//                                       @{
+//                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
+//                                           @"data": @[
+//                                                   @{
+//                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
+//                                                       @"money1": @"200000",
+//                                                       @"money2": @"150000",
+//                                                       @"time": @"2017-10-26",
+//                                                       @"state": @"0",
+//                                                       },
+//                                                   @{
+//                                                       @"name": @"1、2、9楼B户型增加一个厨房插座",
+//                                                       @"money1": @"200000",
+//                                                       @"money2": @"150000",
+//                                                       @"time": @"2017-10-26",
+//                                                       @"state": @"1",
+//                                                       }
+//                                                   ],
+//                                           },
+//                                       ];
+//        [HNProgressHUDHelper hideHUDForView:AWAppWindow() animated:YES];
+//
+//        [self.tableView reloadData];
+//    });
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:AWAppWindow() animated:YES];
+    
+    if ( error ) {
+        [self.tableView showErrorOrEmptyMessage:error.localizedDescription reloadDelegate:nil];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+            
+            self.dataSource.dataSource = nil;
+        } else {
+            [self.tableView removeErrorOrEmptyTips];
+            
+            self.dataSource.dataSource = result[@"data"];
+        }
         
         [self.tableView reloadData];
-    });
+    }
 }
 
 - (void)layoutSubviews

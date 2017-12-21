@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) NSInteger currentPage;
 
+@property (nonatomic, strong) NSMutableDictionary *searchConditions;
+
 @end
 
 @implementation DeclareListVC
@@ -28,6 +30,8 @@
     [super viewDidLoad];
     
     self.navBar.title = @"变更申报";
+    
+    self.searchConditions = [@{} mutableCopy];
     
     self.navBar.rightMarginOfRightItem = 5;
     self.navBar.marginOfFluidItem = 0;
@@ -154,27 +158,18 @@
 - (void)startLoadingData
 {
     DeclareListView *listView = (DeclareListView *)self.swipeView.currentItemView;
-    listView.userData = self.tabTitles[self.swipeView.currentPage];
+    NSString *state = self.swipeView.currentPage == 0 ? @"0" : @"10";
+    listView.userData = @{ @"state": state };
     [listView startLoading:^(BOOL succeed, NSError *error) {
         
     }];
-//    UIView <BIViewProtocol> *view = [self swipePageForIndex:self.swipeView.currentPage];
-    //        [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
-//    view.userData = @{ @"cityID": self.areaSelect.cityID ?: @"0",
-//                       @"platID": self.areaSelect.platID ?: @"0",
-//                       @"bYear": [self beginYear] ?: @"",
-//                       @"bMonth": [self beginMonth] ?: @"",
-//                       @"eYear": [self endYear] ?: @"",
-//                       @"eMonth": [self endMonth] ?: @"",
-//                       };
-//    [view startLoadingData:^(BOOL succeed, NSError *error) {
-//        //            [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
-//    }];
 }
 
 - (void)search:(id)sender
 {
-    
+    UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"DeclareSearchVC"
+                                                                   params:nil];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)add:(id)sender

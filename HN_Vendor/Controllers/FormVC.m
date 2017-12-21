@@ -568,7 +568,7 @@
                                       self.contentView.width - 15 - label.right, label.height);
             
             UITextField *textField = [[UITextField alloc] initWithFrame:frame];
-            textField.placeholder = [NSString stringWithFormat:@"请输入%@", item[@"describe"]];
+            textField.placeholder = item[@"placeholder"] ?: [NSString stringWithFormat:@"请输入%@", item[@"describe"]];
             [cell.contentView addSubview:textField];
             textField.tag = 1002;
             textField.returnKeyType = UIReturnKeyDone;
