@@ -24,12 +24,12 @@
 
 - (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *, id))selectBlock
 {
-    self.noLabel.text = data[@"_no"];
+    self.noLabel.text = data[@"contractphyno"];
     
-    self.nameLabel.text = data[@"name"];
+    self.nameLabel.text = data[@"contractname"];
     
     // 设置金额
-    NSString *money = HNFormatMoney2(data[@"money"], nil);
+    NSString *money = HNFormatMoney2(data[@"contractmoney"], nil);
     NSString *string = [@"签约金额: " stringByAppendingString:money];
     
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:string];
@@ -43,19 +43,22 @@
     NSString *stateName = nil;
     UIColor *color = nil;
     
-    if ( [data[@"state"] integerValue] == 1 ) {
+    if ( [data[@"appstatus"] integerValue] == 40 ) {
         stateName = @"执行中";
         color = MAIN_THEME_COLOR;
-    } else if ([data[@"state"] integerValue] == 2) {
+    } else if ([data[@"appstatus"] integerValue] == 50) {
         stateName = @"已结算";
-        color = AWColorFromRGB(33, 142, 4);
+        color = AWColorFromRGB(116, 182, 102);
+    } else if ([data[@"appstatus"] integerValue] == 70) {
+        stateName = @"已解除";
+        color = AWColorFromRGB(201, 92, 84);
     }
-    self.stateLabel.text = stateName;
+    self.stateLabel.text = data[@"appstatusdesc"];
     self.stateLabel.textColor = color;
     self.stateLabel.layer.borderColor = color.CGColor;
     
-    self.timeLabel.text = data[@"time"];
-    self.projNameNoLabel.text = data[@"proj_name"];
+    self.timeLabel.text = HNDateFromObject(data[@"signdate"], @"T");
+    self.projNameNoLabel.text = data[@"project_name"];
 }
 
 - (void)layoutSubviews

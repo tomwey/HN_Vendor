@@ -31,38 +31,73 @@
 {
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
-        
-        self.dataSource.dataSource = @[
-                                       @{
-                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
-                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
-                                           @"proj_name": @"枫丹铂麓一期",
-                                           @"time": @"2017-10-10",
-                                           @"state": @"1",
-                                           @"money": @"170142375",
-                                           },
-                                       @{
-                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
-                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
-                                           @"proj_name": @"四季康城",
-                                           @"time": @"2017-09-01",
-                                           @"state": @"2",
-                                           @"money": @"90142375",
-                                           },
-                                       @{
-                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
-                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
-                                           @"proj_name": @"枫丹铂麓一期",
-                                           @"time": @"2017-10-10",
-                                           @"state": @"1",
-                                           @"money": @"170142375",
-                                           },
-                                       ];
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    __weak typeof(self) me = self;
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil params:@{
+                       @"dotype": @"GetData",
+                       @"funname": @"供应商查询合同列表APP",
+                       @"param1": [userInfo[@"supid"] ?: @"0" description],
+                       @"param2": userInfo[@"loginname"] ?: @"",
+                       @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                       } completion:^(id result, NSError *error) {
+                           [me handleResult:result error:error];
+                       }];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//
+//        self.dataSource.dataSource = @[
+//                                       @{
+//                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
+//                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
+//                                           @"proj_name": @"枫丹铂麓一期",
+//                                           @"time": @"2017-10-10",
+//                                           @"state": @"1",
+//                                           @"money": @"170142375",
+//                                           },
+//                                       @{
+//                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
+//                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
+//                                           @"proj_name": @"四季康城",
+//                                           @"time": @"2017-09-01",
+//                                           @"state": @"2",
+//                                           @"money": @"90142375",
+//                                           },
+//                                       @{
+//                                           @"_no": @"合同编号：合(WA)-E211-2015-004",
+//                                           @"name": @"幸福麓山一期(1-3、7-10#楼)建设工程施工合同",
+//                                           @"proj_name": @"枫丹铂麓一期",
+//                                           @"time": @"2017-10-10",
+//                                           @"state": @"1",
+//                                           @"money": @"170142375",
+//                                           },
+//                                       ];
+//
+//        [self.tableView reloadData];
+//    });
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    if ( error ) {
+        [self.tableView showErrorOrEmptyMessage:error.localizedDescription reloadDelegate:nil];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+            self.dataSource.dataSource = nil;
+        } else {
+            self.dataSource.dataSource = result[@"data"];
+            
+            [self.tableView removeErrorOrEmptyTips];
+        }
         
         [self.tableView reloadData];
-    });
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
