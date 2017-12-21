@@ -40,6 +40,27 @@
     [webView loadHTMLString:html baseURL:nil];
     
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
+    [self markViewMsg];
+}
+
+- (void)markViewMsg
+{
+    if ( [self.params[@"islook"] boolValue] == NO ) {
+        id userInfo = [[UserService sharedInstance] currentUser];
+        [[self apiServiceWithName:@"APIService"]
+         POST:nil params:@{
+                           @"dotype": @"GetData",
+                           @"funname": @"供应商查看消息APP",
+                           @"param1": [userInfo[@"supid"] ?: @"0" description],
+                           @"param2": userInfo[@"loginname"] ?: @"",
+                           @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                           @"param4": [self.params[@"supmsgid"] ?: @"0" description],
+                           } completion:^(id result, NSError *error) {
+                               [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
+                                                                                   object:nil];
+                           }];
+    }
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
