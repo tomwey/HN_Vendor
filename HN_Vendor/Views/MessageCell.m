@@ -18,9 +18,8 @@
 @property (nonatomic, strong) UILabel *stateLabel;
 
 @property (nonatomic, strong) id state;
-//@property (nonatomic, strong) UILabel *timeLabel;
-//
-//@property (nonatomic, strong) UILabel *badge;
+
+@property (nonatomic, strong) UIView *dotView;
 
 @end
 
@@ -36,87 +35,33 @@
 
 - (void)configData:(id)data selectBlock:(void (^)(UIView <AWTableDataConfig> *sender, id selectedData))selectBlock
 {
-    self.iconView.image = [UIImage imageNamed:data[@"icon"]];
-    self.titleLabel.text = data[@"name"];
-    self.bodyLabel.text = [NSString stringWithFormat:@"%@ %@", data[@"proj_name"], data[@"time"]];
+    self.titleLabel.text = data[@"contractname"];
+    self.bodyLabel.text = [NSString stringWithFormat:@"%@ %@", data[@"project_name"], HNDateFromObject(data[@"validbegindate"], @"T")];
     
-    self.state = data[@"state"];
+    self.state = data;
     
-    self.stateLabel.text = [self stateNameForState:data[@"state"]];
-    self.stateLabel.backgroundColor = [self stateColorForState:data[@"state"]];
-//    self.timeLabel.text = data[@"time"];
-//
-//    if ( [data[@"count"] integerValue] > 0) {
-//        self.badge.text = [data[@"count"] integerValue] > 99 ?
-//                           @"99+" : data[@"count"];
-//        self.badge.hidden = NO;
-//    } else {
-//        self.badge.hidden = YES;
-//    }
-}
-
-- (NSString *)stateNameForState:(id)state
-{
-    NSInteger ss = [state integerValue];
-    switch (ss) {
-        case 0:
-            return @"变更审批";
-            break;
-        case 1:
-            return @"签证审批";
-            break;
-        case 2:
-            return @"已请款";
-            break;
-        case 3:
-            return @"已支付";
-            break;
-            
-        default:
-            return @"未知状态";
-            break;
-    }
-    return nil;
-}
-
-- (UIColor *)stateColorForState:(id)state
-{
-    NSInteger ss = [state integerValue];
-    switch (ss) {
-        case 0:
-            return AWColorFromRGB(103, 171, 229);
-            break;
-        case 1:
-            return AWColorFromRGB(200, 120, 62);
-            break;
-        case 2:
-            return AWColorFromRGB(103, 171, 100);
-            break;
-        case 3:
-            return AWColorFromRGB(107, 140, 202);
-            break;
-            
-        default:
-            return nil;
-            break;
-    }
-    return nil;
+    self.stateLabel.text = data[@"msgtypename"];
+    self.stateLabel.backgroundColor = AWColorFromHex(data[@"msgcolor"]);
+    
+    self.dotView.hidden = [data[@"islook"] boolValue];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
     
-    self.stateLabel.backgroundColor = [self stateColorForState:self.state];
-//    self.badge.backgroundColor = [UIColor redColor];
-//    self.badge.textColor = [UIColor whiteColor];
+    self.stateLabel.backgroundColor = AWColorFromHex(self.state[@"msgcolor"]);
+    
+    self.dotView.backgroundColor = AWColorFromHex(@"#f53d3d");
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     [super setHighlighted:highlighted animated:animated];
     
-    self.stateLabel.backgroundColor = [self stateColorForState:self.state];
+    self.stateLabel.backgroundColor = AWColorFromHex(self.state[@"msgcolor"]);
+    
+    self.dotView.backgroundColor = AWColorFromHex(@"#f53d3d");
     
 //    self.badge.backgroundColor = [UIColor redColor];
 //    self.badge.textColor = [UIColor whiteColor];
@@ -126,34 +71,24 @@
 {
     [super layoutSubviews];
     
-    self.iconView.center = CGPointMake(15 + self.iconView.width / 2,
-                                       self.height / 2);
+//    self.iconView.center = CGPointMake(15 + self.iconView.width / 2,
+//                                       self.height / 2);
     
     self.stateLabel.center = CGPointMake(self.width - 15 - self.stateLabel.width / 2.0,
                                          self.height / 2);
     
-    self.titleLabel.frame = CGRectMake(self.iconView.right + 15,
-                                       self.iconView.top - 10,
-                                       self.stateLabel.left - self.iconView.right - 15 - 10, 37);
-    self.bodyLabel.frame = self.titleLabel.frame;
-    self.bodyLabel.top = self.iconView.bottom - self.bodyLabel.height + 10;
+    self.titleLabel.frame = CGRectMake(15,
+                                       10,
+                                       self.stateLabel.left - 15 - 10, 50);
     
-//    self.timeLabel.frame = CGRectMake(self.width - 15 - 60,
-//                                      self.titleLabel.top,
-//                                      60, 37);
-//
-//    CGSize size = [self.badge.text sizeWithAttributes:@{ NSFontAttributeName: self.badge.font }];
-//
-//    if ( size.width > 24 ) {
-//        self.badge.width = 40;
-//    } else {
-//        self.badge.width = 24;
-//    }
-////    self.badge.width = size.width + 6;
-//
-//    self.badge.center = CGPointMake(self.timeLabel.right - self.badge.width / 2,
-//
-//                                    self.timeLabel.bottom + self.badge.height / 2);
+    [self.titleLabel sizeToFit];
+    
+    self.bodyLabel.frame = self.titleLabel.frame;
+    self.bodyLabel.height = 30;
+    self.bodyLabel.width  = self.stateLabel.left - 15 - 10;
+    self.bodyLabel.top = self.height - self.bodyLabel.height - 5;
+    
+    self.dotView.center = CGPointMake(8, 18);
 }
 
 - (UIImageView *)iconView
@@ -176,6 +111,8 @@
                                     AWSystemFontWithSize(15, NO),
                                     [UIColor blackColor]);
         [self.contentView addSubview:_titleLabel];
+        
+        _titleLabel.numberOfLines = 2;
     }
     return _titleLabel;
 }
@@ -208,32 +145,18 @@
     return _stateLabel;
 }
 
-//- (UILabel *)timeLabel
-//{
-//    if ( !_timeLabel ) {
-//        _timeLabel = AWCreateLabel(CGRectZero,
-//                                   nil,
-//                                   NSTextAlignmentRight,
-//                                   AWSystemFontWithSize(13, NO),
-//                                   AWColorFromRGB(181,181,181));
-//        [self.contentView addSubview:_timeLabel];
-//    }
-//    return _timeLabel;
-//}
-//
-//- (UILabel *)badge
-//{
-//    if ( !_badge ) {
-//        _badge = AWCreateLabel(CGRectMake(0, 0, 24, 24),
-//                                   nil,
-//                                   NSTextAlignmentCenter,
-//                                   AWSystemFontWithSize(13, NO),
-//                                   [UIColor whiteColor]);
-//        [self.contentView addSubview:_badge];
-//        _badge.cornerRadius = _badge.height / 2;
-//        _badge.backgroundColor = [UIColor redColor];
-//    }
-//    return _badge;
-//}
+- (UIView *)dotView
+{
+    if ( !_dotView ) {
+        _dotView = [[UIView alloc] init];
+        [self.contentView addSubview:_dotView];
+        
+        _dotView.frame = CGRectMake(0, 0, 6, 6);
+        _dotView.cornerRadius = _dotView.height / 2.0;
+        
+        _dotView.backgroundColor = AWColorFromHex(@"#f53d3d");
+    }
+    return _dotView;
+}
 
 @end

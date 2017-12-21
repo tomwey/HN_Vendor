@@ -36,48 +36,133 @@
     
     [self addLeftItemWithView:nil];
     
-    NSArray *data = @[@{ @"icon": @"msg_icon_todo.png",
-                           @"name": @"1、2、9楼B户型增加1个厨房插座",
-                           @"proj_name": @"枫丹三",
-                           @"time": @"2017-01-01",
-                           @"state": @"0",
-                           },
-                        @{ @"icon": @"msg_icon_ann.png",
-                           @"name": @"增加样板间找平施工",
-                           @"proj_name": @"枫丹三",
-                           @"time": @"2017-01-01",
-                           @"state": @"1",
-                           },
-                        @{ @"icon": @"msg_icon_document.png",
-                           @"name": @"【进度款】5#楼3-8层",
-                           @"proj_name": @"枫丹三",
-                           @"time": @"2017-01-01",
-                           @"state": @"2",
-                           },
-                      @{ @"icon": @"msg_icon_document.png",
-                         @"name": @"【进度款】6#楼5-10层",
-                         @"proj_name": @"枫丹三",
-                         @"time": @"2017-01-01",
-                         @"state": @"3",
-                         },
-                        ];
+    [self loadData];
+}
+
+- (void)loadData
+{
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
-    self.dataSource = AWTableViewDataSourceCreate(data, @"MessageCell", @"msg.cell");
+    [self.tableView removeErrorOrEmptyTips];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.contentView.bounds
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商获取消息列表APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": userInfo[@"loginname"] ?: @"",
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": @"0",
+              } completion:^(id result, NSError *error) {
+                  [me handleResult:result error:error];
+              }];
+    
+//    NSArray *data = @[@{ @"icon": @"msg_icon_todo.png",
+//                         @"name": @"1、2、9楼B户型增加1个厨房插座",
+//                         @"proj_name": @"枫丹三",
+//                         @"time": @"2017-01-01",
+//                         @"state": @"0",
+//                         },
+//                      @{ @"icon": @"msg_icon_ann.png",
+//                         @"name": @"增加样板间找平施工",
+//                         @"proj_name": @"枫丹三",
+//                         @"time": @"2017-01-01",
+//                         @"state": @"1",
+//                         },
+//                      @{ @"icon": @"msg_icon_document.png",
+//                         @"name": @"【进度款】5#楼3-8层",
+//                         @"proj_name": @"枫丹三",
+//                         @"time": @"2017-01-01",
+//                         @"state": @"2",
+//                         },
+//                      @{ @"icon": @"msg_icon_document.png",
+//                         @"name": @"【进度款】6#楼5-10层",
+//                         @"proj_name": @"枫丹三",
+//                         @"time": @"2017-01-01",
+//                         @"state": @"3",
+//                         },
+//                      ];
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    [self.tableView.pullToRefreshView stopAnimating];
+    
+    if ( error ) {
+        [self.contentView showHUDWithText:error.localizedDescription succeed:NO];
+    } else {
+        if ([result[@"rowcount"] integerValue] == 0) {
+            [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+            
+            self.dataSource.dataSource = nil;
+        } else {
+            self.dataSource.dataSource = result[@"data"];
+        }
+        
+        [self.tableView reloadData];
+    }
+}
+
+- (UITableView *)tableView
+{
+    if ( !_tableView ) {
+        _tableView = [[UITableView alloc] initWithFrame:self.contentView.bounds
                                                   style:UITableViewStylePlain];
-    [self.contentView addSubview:self.tableView];
-    
-    self.tableView.dataSource = self.dataSource;
-    self.tableView.delegate   = self;
-    
-    self.tableView.rowHeight = 80;
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
-//    self.tableView.backgroundColor = [UIColor redColor];
-    
-    [self.tableView removeBlankCells];
-    
+        [self.contentView addSubview:_tableView];
+        
+        _tableView.dataSource = self.dataSource;
+        _tableView.delegate   = self;
+        
+        _tableView.rowHeight  = 80;
+        
+        _tableView.separatorInset = UIEdgeInsetsZero;
+        
+//        _tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+        
+        [_tableView removeBlankCells];
+        
+        _tableView.backgroundColor = [UIColor clearColor];
+        
+        // 添加下拉刷新
+        __weak MessageVC *weakSelf = self;
+        [_tableView addPullToRefreshWithActionHandler:^{
+            __strong MessageVC *strongSelf = weakSelf;
+            if ( strongSelf ) {
+                [strongSelf loadData];
+            }
+        }];
+        
+        // 配置下拉刷新功能
+        HNRefreshView *stopView = [[HNRefreshView alloc] init];
+        stopView.text = @"下拉刷新";
+        
+        HNRefreshView *loadingView = [[HNRefreshView alloc] init];
+        loadingView.text = @"加载中...";
+        loadingView.animated = YES;
+        
+        HNRefreshView *triggerView = [[HNRefreshView alloc] init];
+        triggerView.text = @"松开刷新";
+        triggerView.animated = YES;
+        
+        [_tableView.pullToRefreshView setCustomView:triggerView forState:SVPullToRefreshStateTriggered];
+        [_tableView.pullToRefreshView setCustomView:loadingView forState:SVPullToRefreshStateLoading];
+        [_tableView.pullToRefreshView setCustomView:stopView forState:SVPullToRefreshStateStopped];
+    }
+    return _tableView;
+}
+
+- (AWTableViewDataSource *)dataSource
+{
+    if ( !_dataSource ) {
+        _dataSource = AWTableViewDataSourceCreate(nil, @"MessageCell", @"msg.cell");
+    }
+    return _dataSource;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
