@@ -632,6 +632,7 @@
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
+		99E87FA21FECA8C600D6FC5F /* ContractDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */; };
 		99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E988281FEA0F0800D48248 /* DeclareListView.m */; };
 		99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882B1FEA132500D48248 /* DeclareListCell.m */; };
 		99E9882F1FEA445500D48248 /* ContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882E1FEA445500D48248 /* ContractCell.m */; };
@@ -1702,6 +1703,8 @@
 		998E43071FEBA1C80040E013 /* DeclareSearchResultVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareSearchResultVC.h; sourceTree = "<group>"; };
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		99E87FA01FECA8C600D6FC5F /* ContractDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailVC.h; sourceTree = "<group>"; };
+		99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailVC.m; sourceTree = "<group>"; };
 		99E988271FEA0F0800D48248 /* DeclareListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListView.h; sourceTree = "<group>"; };
 		99E988281FEA0F0800D48248 /* DeclareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListView.m; sourceTree = "<group>"; };
 		99E9882A1FEA132500D48248 /* DeclareListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListCell.h; sourceTree = "<group>"; };
@@ -2825,6 +2828,8 @@
 				998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */,
 				998E43071FEBA1C80040E013 /* DeclareSearchResultVC.h */,
 				998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */,
+				99E87FA01FECA8C600D6FC5F /* ContractDetailVC.h */,
+				99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4100,6 +4105,7 @@
 				995544D41FDFDBCC00DC0134 /* FAKFontAwesome.m in Sources */,
 				995546EB1FDFDBCD00DC0134 /* CustomSearchBar.m in Sources */,
 				995545811FDFDBCC00DC0134 /* LandAnnexListVC.m in Sources */,
+				99E87FA21FECA8C600D6FC5F /* ContractDetailVC.m in Sources */,
 				995544D81FDFDBCC00DC0134 /* FAKMaterialIcons.m in Sources */,
 				9955453F1FDFDBCC00DC0134 /* AWLoadingStateBaseView.m in Sources */,
 				995545B71FDFDBCD00DC0134 /* PlanListVC.m in Sources */,

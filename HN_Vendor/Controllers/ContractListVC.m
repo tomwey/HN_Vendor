@@ -103,6 +103,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
+                                                                params:
+                            self.dataSource.dataSource[indexPath.row]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (UITableView *)tableView
