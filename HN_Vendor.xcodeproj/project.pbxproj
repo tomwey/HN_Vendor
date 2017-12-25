@@ -632,6 +632,9 @@
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
+		99E1550E1FF0D8FC006CD1A3 /* ContractDetailBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */; };
+		99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */; };
+		99E155141FF0D91B006CD1A3 /* ContractDetailDeclareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */; };
 		99E87FA21FECA8C600D6FC5F /* ContractDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */; };
 		99E988291FEA0F0800D48248 /* DeclareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E988281FEA0F0800D48248 /* DeclareListView.m */; };
 		99E9882C1FEA132500D48248 /* DeclareListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E9882B1FEA132500D48248 /* DeclareListCell.m */; };
@@ -1703,6 +1706,12 @@
 		998E43071FEBA1C80040E013 /* DeclareSearchResultVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareSearchResultVC.h; sourceTree = "<group>"; };
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		99E1550C1FF0D8FC006CD1A3 /* ContractDetailBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailBaseView.h; sourceTree = "<group>"; };
+		99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailBaseView.m; sourceTree = "<group>"; };
+		99E1550F1FF0D90D006CD1A3 /* ContractDetailPayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailPayView.h; sourceTree = "<group>"; };
+		99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailPayView.m; sourceTree = "<group>"; };
+		99E155121FF0D91B006CD1A3 /* ContractDetailDeclareView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailDeclareView.h; sourceTree = "<group>"; };
+		99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailDeclareView.m; sourceTree = "<group>"; };
 		99E87FA01FECA8C600D6FC5F /* ContractDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailVC.h; sourceTree = "<group>"; };
 		99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailVC.m; sourceTree = "<group>"; };
 		99E988271FEA0F0800D48248 /* DeclareListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareListView.h; sourceTree = "<group>"; };
@@ -3490,6 +3499,12 @@
 				99E9882B1FEA132500D48248 /* DeclareListCell.m */,
 				99E9882D1FEA445500D48248 /* ContractCell.h */,
 				99E9882E1FEA445500D48248 /* ContractCell.m */,
+				99E1550C1FF0D8FC006CD1A3 /* ContractDetailBaseView.h */,
+				99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */,
+				99E1550F1FF0D90D006CD1A3 /* ContractDetailPayView.h */,
+				99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */,
+				99E155121FF0D91B006CD1A3 /* ContractDetailDeclareView.h */,
+				99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3892,6 +3907,7 @@
 				995545D61FDFDBCD00DC0134 /* UIButton+AFNetworking.m in Sources */,
 				995545A61FDFDBCC00DC0134 /* OutputCatalog.m in Sources */,
 				995544E51FDFDBCC00DC0134 /* FSCalendarCalculator.m in Sources */,
+				99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */,
 				995545031FDFDBCC00DC0134 /* PNChartLabel.m in Sources */,
 				995544EF1FDFDBCC00DC0134 /* FSCalendarStickyHeader.m in Sources */,
 				995544C11FDFDBCC00DC0134 /* NSString+SQL.m in Sources */,
@@ -3909,6 +3925,7 @@
 				995545FE1FDFDBCD00DC0134 /* SVIndefiniteAnimatedView.m in Sources */,
 				995546E01FDFDBCD00DC0134 /* VersionCheckService.m in Sources */,
 				9955456F1FDFDBCC00DC0134 /* DocumentVC.m in Sources */,
+				99E155141FF0D91B006CD1A3 /* ContractDetailDeclareView.m in Sources */,
 				995545F51FDFDBCD00DC0134 /* DGActivityIndicatorRotatingTrigonAnimation.m in Sources */,
 				995546EA1FDFDBCD00DC0134 /* CustomOpinionView.m in Sources */,
 				9955460E1FDFDBCD00DC0134 /* TZProgressView.m in Sources */,
@@ -4156,6 +4173,7 @@
 				9955450F1FDFDBCC00DC0134 /* PNScatterChartData.m in Sources */,
 				9955459B1FDFDBCC00DC0134 /* NewMeetingOrderVC.m in Sources */,
 				995545F71FDFDBCD00DC0134 /* DGActivityIndicatorTriangleSkewSpinAnimation.m in Sources */,
+				99E1550E1FF0D8FC006CD1A3 /* ContractDetailBaseView.m in Sources */,
 				9955455B1FDFDBCC00DC0134 /* AttachmentPreviewVC.m in Sources */,
 				995545F21FDFDBCD00DC0134 /* DGActivityIndicatorNineDotsAnimation.m in Sources */,
 				995546E31FDFDBCD00DC0134 /* HNAlertHelper.m in Sources */,

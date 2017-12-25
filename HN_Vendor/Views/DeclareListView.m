@@ -37,10 +37,11 @@
                        @"param1": [userInfo[@"supid"] ?: @"0" description],
                        @"param2": [userInfo[@"loginname"] ?: @"" description],
                        @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-                       @"param4": params[@"keyword"] ?: @"",
-                       @"param5": [params[@"state"] ?: @"-1" description],
-                       @"param6": params[@"begin_time"] ?: @"",
-                       @"param7": params[@"end_time"] ?: @"",
+                       @"param4": @"0",
+                       @"param5": params[@"keyword"] ?: @"",
+                       @"param6": [params[@"state"] ?: @"-1" description],
+                       @"param7": params[@"begin_time"] ?: @"",
+                       @"param8": params[@"end_time"] ?: @"",
                        } completion:^(id result, NSError *error) {
                            [me handleResult: result error:error];
                        }];
