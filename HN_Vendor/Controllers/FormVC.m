@@ -579,7 +579,7 @@
             
             textField.data = item[@"field_name"];
             
-            if ([[item[@"item_value"] description] length] > 0 && [item[@"item_value"] integerValue] == 0) {
+            if (item[@"readonly"] && [item[@"readonly"] boolValue]) {
                 textField.enabled = NO;
                 textField.textColor = AWColorFromRGB(168, 168, 168);
             } else {
@@ -695,7 +695,7 @@
                 id currentItem = self.formObjects[key];
                 detailLabel.text = currentItem[@"name"];
             } else {
-                detailLabel.text = [NSString stringWithFormat:@"选择%@", item[@"describe"]];
+                detailLabel.text = item[@"placeholder"] ?: [NSString stringWithFormat:@"选择%@", item[@"describe"]];
             }
         }
             break;
@@ -770,7 +770,7 @@
                 id currentItem = self.formObjects[key];
                 detailLabel.text = currentItem[@"name"];
             } else {
-                detailLabel.text = [NSString stringWithFormat:@"选择%@", item[@"describe"]];
+                detailLabel.text = item[@"placeholder"] ?: [NSString stringWithFormat:@"选择%@", item[@"describe"]];
                 
                 // 特殊处理
                 if ( [key isEqualToString:@"backdid"] ) {
