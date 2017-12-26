@@ -185,7 +185,7 @@
     
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:string];
     [attrStr addAttributes:@{
-                              NSFontAttributeName: AWCustomFont(@"PingFang SC", 20),
+                              NSFontAttributeName: AWCustomFont(@"PingFang SC", 16),
                               NSForegroundColorAttributeName: color,
                               } range:[string rangeOfString:moneyStr]];
     
