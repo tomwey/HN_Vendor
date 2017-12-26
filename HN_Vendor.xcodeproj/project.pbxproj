@@ -18,6 +18,7 @@
 		97CF18A61DC075C300ED8A73 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18A51DC075C300ED8A73 /* SystemConfiguration.framework */; };
 		97CF18D51DC0851400ED8A73 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18D41DC0851400ED8A73 /* libicucore.tbd */; };
 		97CF18D71DC088E100ED8A73 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18D61DC088E100ED8A73 /* JavaScriptCore.framework */; };
+		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
 		995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */; };
 		995544BF1FDFDBCC00DC0134 /* NSArray+CTPersistanceRecordTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406B1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.m */; };
 		995544C01FDFDBCC00DC0134 /* NSString+ReqularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406F1FDFDBCB00DC0134 /* NSString+ReqularExpression.m */; };
@@ -668,6 +669,8 @@
 		97CF18D41DC0851400ED8A73 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		97CF18D61DC088E100ED8A73 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		97F12FEA1DAB15AA00806E8A /* HN_Vendor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HN_Vendor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractPayCell.h; sourceTree = "<group>"; };
+		9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell.m; sourceTree = "<group>"; };
 		995540651FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPersistanceAsyncExecutor.h; sourceTree = "<group>"; };
 		995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTPersistanceAsyncExecutor.m; sourceTree = "<group>"; };
 		9955406A1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CTPersistanceRecordTransform.h"; sourceTree = "<group>"; };
@@ -3505,6 +3508,8 @@
 				99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */,
 				99E155121FF0D91B006CD1A3 /* ContractDetailDeclareView.h */,
 				99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */,
+				9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */,
+				9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3869,6 +3874,7 @@
 				9955460A1FDFDBCD00DC0134 /* TZImagePickerController.m in Sources */,
 				995546DE1FDFDBCD00DC0134 /* StoreService.m in Sources */,
 				9955451A1FDFDBCC00DC0134 /* TYShowAlertView.m in Sources */,
+				9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */,
 				995544D31FDFDBCC00DC0134 /* CTPersistanceTransaction.m in Sources */,
 				995544E31FDFDBCC00DC0134 /* FSCalendar.m in Sources */,
 				995546F31FDFDBCD00DC0134 /* FlowSubmitAlert.m in Sources */,

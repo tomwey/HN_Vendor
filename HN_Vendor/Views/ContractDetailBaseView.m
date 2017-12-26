@@ -21,7 +21,7 @@
 
 - (void)startLoadingData
 {
-    [HNProgressHUDHelper showHUDAddedTo:AWAppWindow() animated:YES];
+    [HNProgressHUDHelper showHUDAddedTo:self.superview animated:YES];
     
     id userInfo = [[UserService sharedInstance] currentUser];
     
@@ -42,7 +42,7 @@
 
 - (void)handleResult:(id)result error:(NSError *)error
 {
-    [HNProgressHUDHelper hideHUDForView:AWAppWindow() animated:YES];
+    [HNProgressHUDHelper hideHUDForView:self.superview animated:YES];
     
     if ( error ) {
         [self showHUDWithText:error.localizedDescription succeed:NO];
