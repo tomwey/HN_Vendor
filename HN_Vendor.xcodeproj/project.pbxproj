@@ -20,6 +20,7 @@
 		97CF18D71DC088E100ED8A73 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18D61DC088E100ED8A73 /* JavaScriptCore.framework */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
 		9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */; };
+		9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB421FF1EAC50091A2AD /* PayListVC.m */; };
 		995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */; };
 		995544BF1FDFDBCC00DC0134 /* NSArray+CTPersistanceRecordTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406B1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.m */; };
 		995544C01FDFDBCC00DC0134 /* NSString+ReqularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406F1FDFDBCB00DC0134 /* NSString+ReqularExpression.m */; };
@@ -674,6 +675,8 @@
 		9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell.m; sourceTree = "<group>"; };
 		9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDeclareCell.h; sourceTree = "<group>"; };
 		9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDeclareCell.m; sourceTree = "<group>"; };
+		9947AB411FF1EAC50091A2AD /* PayListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayListVC.h; sourceTree = "<group>"; };
+		9947AB421FF1EAC50091A2AD /* PayListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayListVC.m; sourceTree = "<group>"; };
 		995540651FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPersistanceAsyncExecutor.h; sourceTree = "<group>"; };
 		995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTPersistanceAsyncExecutor.m; sourceTree = "<group>"; };
 		9955406A1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CTPersistanceRecordTransform.h"; sourceTree = "<group>"; };
@@ -2845,6 +2848,8 @@
 				998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */,
 				99E87FA01FECA8C600D6FC5F /* ContractDetailVC.h */,
 				99E87FA11FECA8C600D6FC5F /* ContractDetailVC.m */,
+				9947AB411FF1EAC50091A2AD /* PayListVC.h */,
+				9947AB421FF1EAC50091A2AD /* PayListVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3878,6 +3883,7 @@
 				995544CB1FDFDBCC00DC0134 /* CTPersistanceQueryCommand+Status.m in Sources */,
 				9955460A1FDFDBCD00DC0134 /* TZImagePickerController.m in Sources */,
 				995546DE1FDFDBCD00DC0134 /* StoreService.m in Sources */,
+				9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */,
 				9955451A1FDFDBCC00DC0134 /* TYShowAlertView.m in Sources */,
 				9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */,
 				995544D31FDFDBCC00DC0134 /* CTPersistanceTransaction.m in Sources */,

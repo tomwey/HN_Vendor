@@ -265,7 +265,8 @@
 - (void)startLoadingData
 {
     UIView *view = [self swipeViewForIndex:self.swipeView.currentPage];
-    view.userData = @{ @"contractid": self.params[@"contractid"] };
+    __weak typeof(self) weakSelf = self;
+    view.userData = @{ @"contractid": self.params[@"contractid"], @"owner": weakSelf };
     if ( [view respondsToSelector:@selector(startLoadingData)] ) {
         [view performSelector:@selector(startLoadingData) withObject:nil];
     }
