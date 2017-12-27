@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 #import "TZImagePickerController.h"
+#import "UIButton+AFNetworking.h"
 
 //#import <PhotosUI/PhotosUI.h>
 
@@ -22,11 +23,11 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperation *uploadOperation;
 
-@property (nonatomic, strong) NSMutableArray *uploadImages;
+@property (nonatomic, strong) NSArray *uploadImages;
 
 @property (nonatomic, strong) NSArray *currentUploadedIDs;
 
-@property (nonatomic, strong) NSMutableArray *totalUploadedIDs;
+@property (nonatomic, strong) NSMutableArray *totalUploadImages;
 
 @end
 
@@ -38,17 +39,32 @@
 
 @implementation UploadImageControl
 
-- (instancetype)initWithFrame:(CGRect)frame
+//- (instancetype)initWithFrame:(CGRect)frame
+//{
+//    if ( self = [super initWithFrame:frame] ) {
+//        [self.imageButtons addObject:self.addButton];
+//
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(deleteImage:)
+//                                                     name:@"kUploadedImageDidDeleteNotification"
+//                                                   object:nil];
+//    }
+//    return self;
+//}
+
+- (instancetype)initWithAttachments:(NSArray *)attachments
 {
-    if ( self = [super initWithFrame:frame] ) {
+    if (self = [super init]) {
         [self.imageButtons addObject:self.addButton];
-        
-        self.totalUploadedIDs = [@[] mutableCopy];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(deleteImage:)
                                                      name:@"kUploadedImageDidDeleteNotification"
                                                    object:nil];
+        
+        self.uploadImages = attachments;
+        
+        [self addImages];
     }
     return self;
 }
@@ -113,10 +129,11 @@
         NSMutableArray *tempArray = [NSMutableArray array];
         for (id asset in assets) {
             if ( [asset isKindOfClass:[PHAsset class]] ) {
-                [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename) {
+                [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename, NSURL *imageURL) {
                     if ( data && filename ) {
                         [tempArray addObject:@{ @"imageData": data,
-                                                @"imageName": filename
+                                                @"imageName": filename,
+//                                                @"imageURL": imageURL ?: @"",
                                                 }];
                     }
                 }];
@@ -151,6 +168,10 @@
 - (void)uploadFile:(NSDictionary *)params
      formDataBlock:( void (^)(id<AFMultipartFormData>  _Nonnull formData) )formDataBlock
 {
+    if (!self.annexTableName || !self.annexFieldName) {
+        return;
+    }
+    
     [self cancelUpload];
     
     id user = [[UserService sharedInstance] currentUser];
@@ -164,8 +185,8 @@
     hud.progress = 0.0f;
     hud.label.text = @"上传中...";
     
-    NSString *tableName = @"H_OPM_OutValue_Month_Fact_Annex";
-    NSString *fieldname = @"MonthFactAnnexID";
+    NSString *tableName = self.annexTableName;//@"H_APP_Supplier_Contract_Change_Annex";
+    NSString *fieldname = self.annexFieldName;//@"AnnexKeyID";
     NSString *mid = @"0";//self.params[@"mid"] ?: @"0";
 //    if (self.currentAttachmentFormControl) {
 //        //        id val = self.formObjects[self.currentAttachmentFieldName];
@@ -240,6 +261,8 @@
 
 - (void)addImages
 {
+    if (self.uploadImages.count == 0) return;
+    
     CGFloat width = ( self.width - (kButtonCountPerRow - 1) * 5 ) / kButtonCountPerRow;
     
     int i=0;
@@ -249,7 +272,7 @@
         if (i < self.currentUploadedIDs.count) {
             id_ = [self.currentUploadedIDs[i] description];
         }
-        
+
         NSMutableDictionary *item = [data mutableCopy];
         [item setObject:id_ forKey:@"id"];
         
@@ -259,7 +282,30 @@
         
         btn.userData = item;
         
-        [btn setBackgroundImage:[UIImage imageWithData:data[@"imageData"]] forState:UIControlStateNormal];
+        if ( data[@"imageURL"] ) {
+            [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:data[@"imageURL"]]];
+        } else {
+            [btn setBackgroundImage:[UIImage imageWithData:data[@"imageData"]] forState:UIControlStateNormal];
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                UIImage *image = [UIImage imageWithData:data[@"imageData"]];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [btn setBackgroundImage:image forState:UIControlStateNormal];
+//                });
+//            });
+//            [btn setBackgroundImageForState:UIControlStateNormal withData:data[@"imageData"]];
+        }
+//        [btn setBackgroundImageForState:UIControlStateNormal withURL:data[@"imageURL"]];
+        
+//        if ( data[@"imageData"] ) {
+//            [btn setBackgroundImage:[UIImage imageWithData:data[@"imageData"]] forState:UIControlStateNormal];
+//        } else {
+//            NSString *imageURL = [data[@"imageURL"] description];
+//            if ( [imageURL hasPrefix:@"file:"] ) {
+//                [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL fileURLWithPath:imageURL]];
+//            } else {
+//                [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:imageURL]];
+//            }
+//        }
         
         i++;
     }
@@ -272,6 +318,13 @@
     if ( self.didUploadedImagesBlock ) {
         self.didUploadedImagesBlock(self);
     }
+}
+
+- (void)updateHeight
+{
+    CGFloat width = ( self.width - (kButtonCountPerRow - 1) * 5 ) / kButtonCountPerRow;
+    NSInteger row = (self.imageButtons.count + kButtonCountPerRow - 1) / kButtonCountPerRow;
+    self.height = row * ( width + 5 ) - 5;
 }
 
 - (void)deleteImage:(NSNotification *)noti
@@ -322,8 +375,11 @@
        }];
 }
 
-+ (void)getImageFromPHAsset:(PHAsset *)asset completion:(void (^)(NSData *data, NSString *filename) ) result {
++ (void)getImageFromPHAsset:(PHAsset *)asset completion:(void (^)(NSData *data,
+                                                                NSString *filename,
+                                                                  NSURL *imageURL) ) result {
     __block NSData *data;
+    __block NSURL *imageURL;
     PHAssetResource *resource = [[PHAssetResource assetResourcesForAsset:asset] firstObject];
     if (asset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -338,14 +394,29 @@
            UIImageOrientation orientation,
            NSDictionary *info) {
              data = [NSData dataWithData:imageData];
+             imageURL = info[@"PHImageFileURLKey"];
+//             NSLog(@"%@, %@", info[@"PHImageFileURLKey"], [info[@"PHImageFileURLKey"] class]);
+//             NSLog(@"data uri: %@, info: %@", dataUTI, info);
+             // info
+//             PHImageFileDataKey = <PLXPCShMemData: 0x189d3220> bufferLength=188416 dataLength=185665;
+//             PHImageFileOrientationKey = 0;
+//             PHImageFileSandboxExtensionTokenKey = "d98ef2d84a8655072f9c5be9b4cd1718fe2c60b7;00000000;00000000;0000001a;com.apple.app-sandbox.read;00000001;01000003;00000000007fe4f7;/private/var/mobile/Media/DCIM/100APPLE/IMG_0295.PNG";
+//             PHImageFileURLKey = "file:///var/mobile/Media/DCIM/100APPLE/IMG_0295.PNG";
+//             PHImageFileUTIKey = "public.png";
+//             PHImageResultDeliveredImageFormatKey = 9999;
+//             PHImageResultIsDegradedKey = 0;
+//             PHImageResultIsInCloudKey = 0;
+//             PHImageResultIsPlaceholderKey = 0;
+//             PHImageResultOptimizedForSharing = 0;
+//             PHImageResultWantedImageFormatKey = 9999;
          }];
     }
     
     if (result) {
         if (data.length <= 0) {
-            result(nil, nil);
+            result(nil, nil, nil);
         } else {
-            result(data, resource.originalFilename);
+            result(data, resource.originalFilename, imageURL);
         }
     }
 }
@@ -366,6 +437,16 @@
         [IDs addObject:sender.userData[@"id"] ?: @""];
     }
     return [IDs copy];
+}
+
+- (NSArray *)attachments
+{
+    NSMutableArray *temp = [NSMutableArray array];
+    for (int i=0; i<self.imageButtons.count - 1;i++) {
+        UIButton *sender = self.imageButtons[i];
+        [temp addObject:sender.userData ?: @{}];
+    }
+    return [temp copy];
 }
 
 @end
@@ -404,7 +485,11 @@
     
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    imageView.image = [UIImage imageWithData:data[@"imageData"]];
+    if (data[@"imageURL"]) {
+        [imageView setImageWithURL:[NSURL URLWithString:data[@"imageURL"]]];
+    } else {
+        imageView.image = [UIImage imageWithData:data[@"imageData"]];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

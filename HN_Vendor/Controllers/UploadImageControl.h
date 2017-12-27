@@ -13,8 +13,17 @@
 
 @property (nonatomic, strong, readonly) NSArray *attachmentIDs;
 
+@property (nonatomic, strong, readonly) NSArray *attachments;
+
 @property (nonatomic, weak) UIViewController *owner;
 
+@property (nonatomic, copy) NSString *annexTableName;
+@property (nonatomic, copy) NSString *annexFieldName;
+
 @property (nonatomic, copy) void (^didUploadedImagesBlock)(UploadImageControl *sender);
+
+- (instancetype)initWithAttachments:(NSArray *)attachments;
+
+- (void)updateHeight;
 
 @end

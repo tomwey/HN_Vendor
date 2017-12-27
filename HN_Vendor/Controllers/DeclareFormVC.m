@@ -119,6 +119,16 @@
           @"item_name": @"",
           @"item_value": @"",
           },
+      @{
+          @"data_type": @"20",
+          @"datatype_c": @"上传组件",
+          @"describe": @"照片",
+          @"field_name": @"photos",
+          @"item_name": @"",
+          @"item_value": @"",
+          @"annex_table_name": @"H_APP_Supplier_Contract_Change_Annex",
+          @"annex_field_name": @"AnnexKeyID",
+          },
       ] mutableCopy];
     
     [super viewDidLoad];

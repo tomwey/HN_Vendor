@@ -16,6 +16,7 @@
 #import <Photos/Photos.h>
 #import "TZImagePickerController.h"
 #import "RadioButton.h"
+#import "UploadImageControl.h"
 
 #import "UIView+TYAlertView.h"
 // if you want blur efffect contain this
@@ -1398,6 +1399,33 @@
             }
         }
             break;
+        
+        case FormControlTypeUploadImageControl:
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            
+            UploadImageControl *uploadControl = [[UploadImageControl alloc] initWithAttachments:self.formObjects[item[@"field_name"]]];
+            uploadControl.tag = 1002;
+            uploadControl.owner = self;
+            
+            uploadControl.annexTableName = item[@"annex_table_name"];
+            uploadControl.annexFieldName = item[@"annex_field_name"];
+            
+            [cell.contentView addSubview:uploadControl];
+            
+            uploadControl.frame = CGRectMake(label.right, 10,
+                                             self.contentView.width - label.right - 10 - 15,
+                                             60);
+            
+            [uploadControl updateHeight];
+            
+            uploadControl.didUploadedImagesBlock = ^(UploadImageControl *sender) {
+//                self.formObjects[item[@"field_name"]] = sender.attachmentIDs;
+                self.formObjects[item[@"field_name"]] = sender.attachments;
+                [self.tableView reloadData];
+            };
+        }
+            break;
             
         default:
             break;
@@ -2105,12 +2133,28 @@
                 return 50;
             }
             return 50 + [self calcuHeightForContacts:contacts] + 20;
+        } else if ([item[@"data_type"] integerValue] == FormControlTypeUploadImageControl) {
+            NSString *key = item[@"field_name"];
+            NSArray *images = self.formObjects[key];
+            if ( [images count] == 0 ) {
+                return 64;
+            } else {
+                return 10 + [self calcHeightForUploadImages:images] + 6;
+            }
         } else {
             return 50;
         }
     } else {
         return height;
     }
+}
+
+- (CGFloat)calcHeightForUploadImages:(NSArray *)images
+{
+    NSInteger numberOfImagesPerRow = 4;
+    CGFloat width = ( AWFullScreenWidth() - 100 - 15 * 2 - (numberOfImagesPerRow - 1) * 5 ) / numberOfImagesPerRow;
+    NSInteger row = (images.count + 1 + numberOfImagesPerRow - 1) / numberOfImagesPerRow;
+    return row * ( width + 5 ) - 5;
 }
 
 - (CGFloat)calcuHeightForContacts:(NSArray *)contacts
