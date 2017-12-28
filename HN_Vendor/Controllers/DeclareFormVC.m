@@ -118,6 +118,7 @@
           @"field_name": @"money2",
           @"item_name": @"",
           @"item_value": @"",
+          @"keyboard_type": @(UIKeyboardTypeNumberPad),
           },
       @{
           @"data_type": @"20",
@@ -386,14 +387,160 @@
     }
 }
 
+//@iSupID bigint,
+//@sLoginName varchar(30),
+//@iSymbolKeyID bigint,
+//@iOperateType int, --1保存草稿  2-提交   3--删除   4-取消
+//@iChangeID bigint,--变更/指令ID  新建的变更/指令则为0
+//@sChangeType varchar(20), --变更/指令
+//@iContractID bigint,--合同ID
+//@sTheme varchar(500), --主题
+//@sProgress varchar(30),--事项当前进展
+//@iChangeReasonID bigint,--变更/指令原因
+//@dChangeMoney decimal(18,2),--变更金额
+//@sContentDesc varchar(8000),--变更内容
+//@sAnnexIDs varchar(500)='',--附件/图片ID
+
+- (void)sendReqForType:(NSInteger)type
+{
+    // 合同
+    NSString *contractID = @"";
+    if ( self.formObjects[@"contract_name"] ) {
+        contractID = [self.formObjects[@"contract_name"][@"value"] description];
+    }
+    if ( contractID.length == 0 ) {
+        [self.contentView showHUDWithText:@"必须选择合同" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 主题
+    NSString *theme = self.formObjects[@"subject"] ?: @"";
+    theme = [theme trim];
+    if ( theme.length == 0 ) {
+        [self.contentView showHUDWithText:@"变更主题不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 事项进展
+    NSString *eventType = @"";
+    if ( self.formObjects[@"event_type"] ) {
+        eventType = [self.formObjects[@"event_type"][@"value"] description];
+    }
+    if ( eventType.length == 0 ) {
+        [self.contentView showHUDWithText:@"必须选择事项进展" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 变更原因
+    NSString *reasonID = @"";
+    if ( self.formObjects[@"event_reason"] ) {
+        reasonID = [self.formObjects[@"event_reason"][@"value"] description];
+    }
+    
+    if ( reasonID.length == 0 ) {
+        [self.contentView showHUDWithText:@"必须选择变更原因" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 变更金额
+    NSString *money = [self.formObjects[@"money2"] ?: @"" description];
+    if ( money.length == 0 ) {
+        [self.contentView showHUDWithText:@"变更金额不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 变更内容
+    NSString *opinion = [[self.formObjects[@"opinion"] ?: @"" description] trim];
+    if ( opinion.length == 0 ) {
+        [self.contentView showHUDWithText:@"变更内容不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 附件
+    NSArray *photos = self.formObjects[@"photos"] ?: @[];
+    if ( photos.count == 0 ) {
+        [self.contentView showHUDWithText:@"至少需要上传一张图片" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    NSMutableArray *temp = [NSMutableArray array];
+    for (id p in photos) {
+        [temp addObject:[p[@"id"] ?: @"" description]];
+    }
+    
+    NSString *IDs = [temp componentsJoinedByString:@","];
+    
+    // 发请求
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    NSString *changeID = [self.params[@"change_id"] ?: @"0" description];
+    
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商变更指令操作APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": [userInfo[@"loginname"] ?: @"" description],
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": [@(type) description],
+              @"param5": changeID,
+              @"param6": @"变更",
+              @"param7": contractID,
+              @"param8": theme,
+              @"param9": eventType,
+              @"param10": reasonID,
+              @"param11": money,
+              @"param12": opinion,
+              @"param13": IDs,
+              } completion:^(id result, NSError *error) {
+                  [me handleResult:result error:error];
+              }];
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    if ( error ) {
+//        NSLog(@"error: %@", error);
+        [self.contentView showHUDWithText:error.localizedDescription succeed:NO];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            
+        } else {
+//            hint = "\U4fdd\U5b58\U6210\U529f\Uff01";
+//            hinttype = 1;
+//            supchangeid = 6;
+            
+//            {
+//                code = 0;
+//            }
+            
+            id item = [result[@"data"] firstObject];
+            if ( [item[@"hinttype"] integerValue] == 1 ) {
+                [self.navigationController.view showHUDWithText:item[@"hint"] succeed:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
+            }
+        }
+    }
+}
+
 - (void)commit
 {
-    
+//    NSLog(@"%@", self.formObjects);
+    [self sendReqForType:2];
 }
 
 - (void)save
 {
-    
+//    NSLog(@"%@", self.formObjects)
+    [self sendReqForType:1];
 }
 
 - (void)keyboardWillShow:(NSNotification *)noti

@@ -575,6 +575,8 @@
             textField.returnKeyType = UIReturnKeyDone;
             textField.tintColor = MAIN_THEME_COLOR;
             
+            textField.keyboardType = [item[@"keyboard_type"] ?: @"0" integerValue];
+            
             NSString *key = [item[@"field_name"] description];
             textField.text = [self.formObjects[key] description];
             
