@@ -267,14 +267,14 @@
     
     CGFloat width = ( self.width - (kButtonCountPerRow - 1) * 5 ) / kButtonCountPerRow;
     
-    int i=0;
-    for (id data in self.uploadImages) {
-        
+    for (int i=self.uploadImages.count - 1; i>=0; i--) {
         NSString *id_ = @"";
         if (i < self.currentUploadedIDs.count) {
             id_ = [self.currentUploadedIDs[i] description];
         }
-
+        
+        id data = self.uploadImages[i];
+        
         NSMutableDictionary *item = [data mutableCopy];
         [item setObject:id_ forKey:@"id"];
         
@@ -291,8 +291,6 @@
                                imageUTI:data[@"imageUTI"]
                                forState:UIControlStateNormal];
         }
-        
-        i++;
     }
     
     [self setNeedsLayout];
