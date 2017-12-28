@@ -12,6 +12,7 @@
 #import <Photos/Photos.h>
 #import "TZImagePickerController.h"
 #import "UIButton+AFNetworking.h"
+#import <objc/runtime.h>
 
 //#import <PhotosUI/PhotosUI.h>
 
@@ -129,10 +130,11 @@
         NSMutableArray *tempArray = [NSMutableArray array];
         for (id asset in assets) {
             if ( [asset isKindOfClass:[PHAsset class]] ) {
-                [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename, NSURL *imageURL) {
+                [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename, NSString *imageUTI) {
                     if ( data && filename ) {
                         [tempArray addObject:@{ @"imageData": data,
                                                 @"imageName": filename,
+                                                @"imageUTI": imageUTI,
 //                                                @"imageURL": imageURL ?: @"",
                                                 }];
                     }
@@ -285,27 +287,10 @@
         if ( data[@"imageURL"] ) {
             [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:data[@"imageURL"]]];
         } else {
-            [btn setBackgroundImage:[UIImage imageWithData:data[@"imageData"]] forState:UIControlStateNormal];
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                UIImage *image = [UIImage imageWithData:data[@"imageData"]];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [btn setBackgroundImage:image forState:UIControlStateNormal];
-//                });
-//            });
-//            [btn setBackgroundImageForState:UIControlStateNormal withData:data[@"imageData"]];
+            [btn setBackgroundImageData:data[@"imageData"]
+                               imageUTI:data[@"imageUTI"]
+                               forState:UIControlStateNormal];
         }
-//        [btn setBackgroundImageForState:UIControlStateNormal withURL:data[@"imageURL"]];
-        
-//        if ( data[@"imageData"] ) {
-//            [btn setBackgroundImage:[UIImage imageWithData:data[@"imageData"]] forState:UIControlStateNormal];
-//        } else {
-//            NSString *imageURL = [data[@"imageURL"] description];
-//            if ( [imageURL hasPrefix:@"file:"] ) {
-//                [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL fileURLWithPath:imageURL]];
-//            } else {
-//                [btn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:imageURL]];
-//            }
-//        }
         
         i++;
     }
@@ -377,9 +362,9 @@
 
 + (void)getImageFromPHAsset:(PHAsset *)asset completion:(void (^)(NSData *data,
                                                                 NSString *filename,
-                                                                  NSURL *imageURL) ) result {
+                                                                  NSString *imageUTI) ) result {
     __block NSData *data;
-    __block NSURL *imageURL;
+    __block NSString *imageUTI;
     PHAssetResource *resource = [[PHAssetResource assetResourcesForAsset:asset] firstObject];
     if (asset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -394,7 +379,7 @@
            UIImageOrientation orientation,
            NSDictionary *info) {
              data = [NSData dataWithData:imageData];
-             imageURL = info[@"PHImageFileURLKey"];
+             imageUTI = info[@"PHImageFileUTIKey"];
 //             NSLog(@"%@, %@", info[@"PHImageFileURLKey"], [info[@"PHImageFileURLKey"] class]);
 //             NSLog(@"data uri: %@, info: %@", dataUTI, info);
              // info
@@ -416,7 +401,7 @@
         if (data.length <= 0) {
             result(nil, nil, nil);
         } else {
-            result(data, resource.originalFilename, imageURL);
+            result(data, resource.originalFilename, imageUTI);
         }
     }
 }
@@ -505,6 +490,185 @@
 - (void)close
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+@implementation UIButton (ImageData)
+
+- (void)setBackgroundImageData:(NSData *)imageData
+                      imageUTI:(NSString *)uti
+                      forState:(UIControlState)state
+{
+    [self cancelImageRequestOperationForState:state];
+    
+    UIImage *cachedImage = [[[self class] sharedCache] objectForKey:[imageData md5Hash]];
+    if ( cachedImage ) {
+        [self setBackgroundImage:cachedImage forState:state];
+    } else {
+        NSInvocationOperation *operation =
+            [[NSInvocationOperation alloc] initWithTarget:self
+                                                 selector:@selector(decodeImage:)
+                                                   object:@{ @"uti": uti ?: @"public.png",
+                                                             @"data": imageData ?: [NSNull null],
+                                                             @"state": @(state),
+                                                             }];
+        [self af_setBackgroundImageOperation:operation forState:state];
+        
+        [[[self class] af_sharedImageDecodeOperationQueue] addOperation:operation];
+    }
+}
+
+- (void)decodeImage:(id)data
+{
+    CGImageRef img = YYCGImageCreateDecodedCopy(data[@"data"], data[@"uti"], YES);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImage *image = [UIImage imageWithCGImage:img];
+        [[[self class] sharedCache] setObject:image forKey:[data[@"data"] md5Hash]];
+        
+        [self setBackgroundImage:image forState:[data[@"state"] integerValue]];
+    });
+}
+
+CGColorSpaceRef YYCGColorSpaceGetDeviceRGB() {
+    static CGColorSpaceRef space;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        space = CGColorSpaceCreateDeviceRGB();
+    });
+    return space;
+}
+
+CGImageRef YYCGImageCreateDecodedCopy(NSData *imageData, NSString *imageUTI, BOOL decodeForDisplay) {
+    
+    CGImageRef imageRef = NULL;
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)imageData);
+    
+    if ([imageUTI isEqualToString:@"public.png"]) {
+        imageRef = CGImageCreateWithPNGDataProvider(dataProvider,  NULL, true, kCGRenderingIntentDefault);
+    } else if ([imageUTI isEqualToString:@"public.jpeg"] || [imageUTI isEqualToString:@"public.jpg"]) {
+        imageRef = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, true, kCGRenderingIntentDefault);
+        
+        if (imageRef) {
+            CGColorSpaceRef imageColorSpace = CGImageGetColorSpace(imageRef);
+            CGColorSpaceModel imageColorSpaceModel = CGColorSpaceGetModel(imageColorSpace);
+            
+            // CGImageCreateWithJPEGDataProvider does not properly handle CMKY, so fall back to AFImageWithDataAtScale
+            if (imageColorSpaceModel == kCGColorSpaceModelCMYK) {
+                CGImageRelease(imageRef);
+                imageRef = NULL;
+            }
+        }
+    }
+    
+    if (!imageRef) return NULL;
+    size_t width = CGImageGetWidth(imageRef);
+    size_t height = CGImageGetHeight(imageRef);
+    if (width == 0 || height == 0) return NULL;
+    
+    if (decodeForDisplay) { //decode with redraw (may lose some precision)
+        CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef) & kCGBitmapAlphaInfoMask;
+        BOOL hasAlpha = NO;
+        if (alphaInfo == kCGImageAlphaPremultipliedLast ||
+            alphaInfo == kCGImageAlphaPremultipliedFirst ||
+            alphaInfo == kCGImageAlphaLast ||
+            alphaInfo == kCGImageAlphaFirst) {
+            hasAlpha = YES;
+        }
+        // BGRA8888 (premultiplied) or BGRX8888
+        // same as UIGraphicsBeginImageContext() and -[UIView drawRect:]
+        CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Host;
+        bitmapInfo |= hasAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst;
+        CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, 0, YYCGColorSpaceGetDeviceRGB(), bitmapInfo);
+        if (!context) return NULL;
+        CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef); // decode
+        CGImageRef newImage = CGBitmapContextCreateImage(context);
+        CFRelease(context);
+        return newImage;
+        
+    } else {
+        CGColorSpaceRef space = CGImageGetColorSpace(imageRef);
+        size_t bitsPerComponent = CGImageGetBitsPerComponent(imageRef);
+        size_t bitsPerPixel = CGImageGetBitsPerPixel(imageRef);
+        size_t bytesPerRow = CGImageGetBytesPerRow(imageRef);
+        CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
+        if (bytesPerRow == 0 || width == 0 || height == 0) return NULL;
+        
+        CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
+        if (!dataProvider) return NULL;
+        CFDataRef data = CGDataProviderCopyData(dataProvider); // decode
+        if (!data) return NULL;
+        
+        CGDataProviderRef newProvider = CGDataProviderCreateWithCFData(data);
+        CFRelease(data);
+        if (!newProvider) return NULL;
+        
+        CGImageRef newImage = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, space, bitmapInfo, newProvider, NULL, false, kCGRenderingIntentDefault);
+        CFRelease(newProvider);
+        return newImage;
+    }
+}
+
++ (NSCache *)sharedCache
+{
+    static NSCache *imageCache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        imageCache = [[NSCache alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:imageCache
+                                                 selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification
+                                                   object:nil];
+    });
+    return imageCache;
+}
+
+- (void)cancelBackgroundImageOperationForState:(UIControlState)state {
+    [[self af_backgroundImageOperationForState:state] cancel];
+    [self af_setBackgroundImageOperation:nil forState:state];
+}
+
++ (NSOperationQueue *)af_sharedImageDecodeOperationQueue {
+    static NSOperationQueue *decodeOperationQueue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        decodeOperationQueue = [[NSOperationQueue alloc] init];
+        decodeOperationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    });
+    
+    return decodeOperationQueue;
+}
+
+#pragma mark -
+
+static char HNBackgroundImageRequestOperationNormal;
+static char HNBackgroundImageRequestOperationHighlighted;
+static char HNBackgroundImageRequestOperationSelected;
+static char HNBackgroundImageRequestOperationDisabled;
+
+static const char * af_backgroundImageOperationKeyForState(UIControlState state) {
+    switch (state) {
+        case UIControlStateHighlighted:
+            return &HNBackgroundImageRequestOperationHighlighted;
+        case UIControlStateSelected:
+            return &HNBackgroundImageRequestOperationSelected;
+        case UIControlStateDisabled:
+            return &HNBackgroundImageRequestOperationDisabled;
+        case UIControlStateNormal:
+        default:
+            return &HNBackgroundImageRequestOperationNormal;
+    }
+}
+
+- (NSInvocationOperation *)af_backgroundImageOperationForState:(UIControlState)state {
+    return (NSInvocationOperation *)objc_getAssociatedObject(self, af_backgroundImageOperationKeyForState(state));
+}
+
+- (void)af_setBackgroundImageOperation:(NSInvocationOperation *)imageOperation
+                                     forState:(UIControlState)state
+{
+    objc_setAssociatedObject(self, af_backgroundImageOperationKeyForState(state), imageOperation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

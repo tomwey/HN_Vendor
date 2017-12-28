@@ -27,3 +27,11 @@
 - (void)updateHeight;
 
 @end
+
+@interface UIButton (ImageData)
+
+- (void)setBackgroundImageData:(NSData *)imageData
+                      imageUTI:(NSString *)uti
+                      forState:(UIControlState)state;
+
+@end
