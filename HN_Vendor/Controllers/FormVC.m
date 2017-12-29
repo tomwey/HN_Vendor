@@ -771,7 +771,23 @@
             NSString *key = [item[@"field_name"] description];
             if ( self.formObjects[key] ) {
                 id currentItem = self.formObjects[key];
-                detailLabel.text = currentItem[@"name"];
+                
+                if ( [currentItem[@"name"] description].length == 0 ) {
+                    NSArray *names = [item[@"item_name"] componentsSeparatedByString:@","];
+                    NSArray *values = [item[@"item_value"] componentsSeparatedByString:@","];
+                    NSInteger index = [values indexOfObject:[currentItem[@"value"] description]];
+                    if ( index != NSNotFound && index < names.count ) {
+                        detailLabel.text = names[index];
+                        
+                        self.formObjects[key] = @{
+                                                  @"name": detailLabel.text,
+                                                  @"value": currentItem[@"value"]
+                                                  };
+                    }
+                } else {
+                    detailLabel.text = currentItem[@"name"];
+                }
+                
             } else {
                 detailLabel.text = item[@"placeholder"] ?: [NSString stringWithFormat:@"选择%@", item[@"describe"]];
                 

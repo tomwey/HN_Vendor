@@ -84,6 +84,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC" params:self.dataSource.dataSource[indexPath.row]];
+    
+    UIViewController *owner = self.userData[@"owner"];
+    [owner presentViewController:vc animated:YES completion:nil];
 }
 
 - (AWTableViewDataSource *)dataSource

@@ -144,6 +144,65 @@
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
+    if (!self.params[@"state_num"]) {
+        // 新建
+        self.disableFormInputs = NO;
+        [self addToolButtons];
+    } else {
+        // 添加状态显示
+        
+        if ([self.params[@"state_num"] integerValue] == 0) {
+            // 待申报
+            self.disableFormInputs = NO;
+            [self addToolButtons];
+        } else if ( [self.params[@"state_num"] integerValue] == 10 ) {
+            // 已申报
+            self.disableFormInputs = YES;
+            
+            // 已申报
+            [self.inFormControls insertObject:      @{
+                                                      @"data_type": @"1",
+                                                      @"datatype_c": @"文本框",
+                                                      @"describe": @"签证金额",
+                                                      @"field_name": @"money3",
+                                                      @"item_name": @"",
+                                                      @"item_value": @"",
+//                                                      @"readonly": @"1",
+                                                      @"keyboard_type": @(UIKeyboardTypeNumberPad),
+                                                      } atIndex:self.inFormControls.count - 1];
+            [self addCancelButton];
+        } else {
+            self.disableFormInputs = YES;
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [self loadData];
+}
+
+- (void)addCancelButton
+{
+    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+                                  50),
+                       @"取消",
+                       [UIColor whiteColor],
+                       self,
+                       @selector(cancelClick));
+    [self.contentView addSubview:cancelBtn];
+    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    self.tableView.height -= cancelBtn.height;
+}
+
+- (void)addToolButtons
+{
     UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
                                                         50),
                                              @"提交",
@@ -177,15 +236,58 @@
     moreBtn.left = commitBtn.right;
     
     self.tableView.height -= moreBtn.height;
+}
+
+- (void)prepareFormObjects
+{
+    //changecontent = Sssssss;
+    //changedate = "2017-12-28T11:45:59+08:00";
+    //changemoney = 1000;
+    //changereasonid = 30;
+    //changetheme = Test;
+    //changetype = "\U53d8\U66f4";
+    //contractid = 2220761;
+    //contractmoney = 497744;
+    //contractname = "\U5173\U4e8e\U4ee5\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f\U9879\U76ee\U5546\U54c1\U623f\U4f5c\U4ef7\U652f\U4ed8\U73cd\U5b9d\U9526\U57ce\U4e00\U671f\U9879\U76ee\U5de5\U7a0b\U6b3e\U7684\U534f\U8bae\U4e66";
+    //contractphyno = "\U5408\Uff08LL\Uff09-E312-2017-004";
+    //"flow_mid" = NULL;
+    //progress = "\U672a\U5f00\U59cb";
+    //"project_id" = 1291427;
+    //"project_name" = "\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f";
+    //"state_desc" = "\U5f85\U7533\U62a5";
+    //"state_num" = 0;
+    //supchangeid = 6;
+    //visamoney = NULL;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [self loadData];
+    if ( self.params[@"supchangeid"] ) {
+        self.formObjects[@"proj_name"] = @{ @"name": self.params[@"project_name"] ?: @"",
+                                            @"value": [self.params[@"project_name"] ?: @"" description],
+                                            };
+        [self projectDidSelect:self.formObjects[@"proj_name"]];
+        
+        self.formObjects[@"contract_name"] = @{
+                                               @"name": self.params[@"contractname"] ?: @"",
+                                               @"value": [self.params[@"contractid"] ?: @"" description],
+                                               };
+        self.formObjects[@"money"] = self.params[@"contractmoney"];
+        self.formObjects[@"contract_no"] = self.params[@"contractphyno"];
+        
+        self.formObjects[@"subject"] = self.params[@"changetheme"];
+        self.formObjects[@"event_type"] = @{
+                                            @"name": self.params[@"progress"] ?: @"",
+                                            @"value": self.params[@"progress"] ?: @"",
+                                            };
+        self.formObjects[@"event_reason"] = @{
+                                              @"name": @"",
+                                              @"value": [self.params[@"changereasonid"] ?: @"" description]
+                                              };
+        self.formObjects[@"change_content"] = self.params[@"changecontent"] ?: @"";
+        self.formObjects[@"money2"] = self.params[@"changemoney"];
+        self.formObjects[@"money3"] = @([self.params[@"visamoney"] floatValue]);
+        
+    } else {
+        
+    }
 }
 
 - (void)loadData
@@ -307,6 +409,13 @@
     [self.formObjects removeObjectForKey:@"money"];
     [self.formObjects removeObjectForKey:@"contract_no"];
     
+    [self populateData:selectedItem];
+    
+    [self formControlsDidChange];
+}
+
+- (void)populateData:(id)selectedItem
+{
     NSArray *array = self.contracts[selectedItem[@"name"]];
     
     NSMutableArray *temp1 = [NSMutableArray array];
@@ -321,8 +430,6 @@
     newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
     newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
     [self.inFormControls replaceObjectAtIndex:1 withObject:newDict];
-    
-    [self formControlsDidChange];
 }
 
 - (void)contractDidSelect:(id)selectedItem
@@ -382,9 +489,10 @@
         
         [self.inFormControls replaceObjectAtIndex:6 withObject:newDict];
         
-        
         [self formControlsDidChange];
     }
+    
+    [self prepareFormObjects];
 }
 
 //@iSupID bigint,
@@ -475,7 +583,7 @@
     
     id userInfo = [[UserService sharedInstance] currentUser];
     
-    NSString *changeID = [self.params[@"change_id"] ?: @"0" description];
+    NSString *changeID = [self.params[@"supchangeid"] ?: @"0" description];
     
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
@@ -512,18 +620,13 @@
         if ( [result[@"rowcount"] integerValue] == 0 ) {
             
         } else {
-//            hint = "\U4fdd\U5b58\U6210\U529f\Uff01";
-//            hinttype = 1;
-//            supchangeid = 6;
-            
-//            {
-//                code = 0;
-//            }
-            
             id item = [result[@"data"] firstObject];
-            if ( [item[@"hinttype"] integerValue] == 1 ) {
+            if ( [item[@"hinttype"] integerValue] == 1 ||
+                (item[@"code"] && [item[@"code"] integerValue] == 0) ) {
                 [self.navigationController.view showHUDWithText:item[@"hint"] succeed:YES];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+                }];
             } else {
                 [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
             }
@@ -535,6 +638,11 @@
 {
 //    NSLog(@"%@", self.formObjects);
     [self sendReqForType:2];
+}
+
+- (void)cancelClick
+{
+    [self sendReqForType:4];
 }
 
 - (void)save

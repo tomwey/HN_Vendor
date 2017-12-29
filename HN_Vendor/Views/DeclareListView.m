@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) AWTableViewDataSource *dataSource;
 
+@property (nonatomic, strong) NSMutableDictionary *contractDeclares;
+
 @end
 
 @implementation DeclareListView
@@ -29,20 +31,22 @@
     
     NSDictionary *params = self.userData;
     
+    id reqParams = @{
+                      @"dotype": @"GetData",
+                      @"funname": @"供应商查询变更指令列表APP",
+                      @"param1": [userInfo[@"supid"] ?: @"0" description],
+                      @"param2": [userInfo[@"loginname"] ?: @"" description],
+                      @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                      @"param4": @"0",
+                      @"param5": params[@"keyword"] ?: @"",
+                      @"param6": [params[@"state"] ?: @"-1" description],
+                      @"param7": params[@"begin_time"] ?: @"",
+                      @"param8": params[@"end_time"] ?: @"",
+                      };
+    
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
-     POST:nil params:@{
-                       @"dotype": @"GetData",
-                       @"funname": @"供应商查询变更指令列表APP",
-                       @"param1": [userInfo[@"supid"] ?: @"0" description],
-                       @"param2": [userInfo[@"loginname"] ?: @"" description],
-                       @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-                       @"param4": @"0",
-                       @"param5": params[@"keyword"] ?: @"",
-                       @"param6": [params[@"state"] ?: @"-1" description],
-                       @"param7": params[@"begin_time"] ?: @"",
-                       @"param8": params[@"end_time"] ?: @"",
-                       } completion:^(id result, NSError *error) {
+     POST:nil params:reqParams completion:^(id result, NSError *error) {
                            [me handleResult: result error:error];
                        }];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -113,11 +117,49 @@
         } else {
             [self.tableView removeErrorOrEmptyTips];
             
-            self.dataSource.dataSource = result[@"data"];
+            NSMutableArray *temp = [NSMutableArray array];
+            [self.contractDeclares removeAllObjects];
+            
+//
+            for (id item in result[@"data"]) {
+//                NSString *name = item[@"contractname"];
+//                NSString *contractID = [item[@"contractid"] description];
+                NSString *contractname = [item[@"contractname"] description];
+                
+                NSMutableArray *array = (NSMutableArray *)[self.contractDeclares objectForKey:contractname];
+                if ( !array ) {
+                    array = [[NSMutableArray alloc] init];
+                    self.contractDeclares[contractname] = array;
+                    
+                    [temp addObject:contractname];
+                    [array addObject:item];
+                } else {
+                    [array addObject:item];
+                }
+            }
+            
+            NSMutableArray *temp2 = [NSMutableArray array];
+            for (id obj in temp) {
+                id dict = @{
+                            @"name": obj,
+                            @"data": self.contractDeclares[obj],
+                            };
+                [temp2 addObject:dict];
+            }
+            
+            self.dataSource.dataSource = temp2;
         }
         
         [self.tableView reloadData];
     }
+}
+
+- (NSMutableDictionary *)contractDeclares
+{
+    if ( !_contractDeclares ) {
+        _contractDeclares = [@{} mutableCopy];
+    }
+    return _contractDeclares;
 }
 
 - (void)layoutSubviews
@@ -161,6 +203,14 @@
 {
     if ( !_dataSource ) {
         _dataSource = AWTableViewDataSourceCreate(nil, @"DeclareListCell", @"cell.list.id");
+        __weak typeof(self) me = self;
+        _dataSource.itemDidSelectBlock = ^(UIView<AWTableDataConfig> *sender, id selectedData) {
+//            NSLog(@"%@", selectedData);
+            UIViewController *owner = me.userData[@"owner"];
+            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC"
+                                                                        params:selectedData];
+            [owner presentViewController:vc animated:YES completion:nil];
+        };
     }
     return _dataSource;
 }

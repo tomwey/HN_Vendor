@@ -35,22 +35,85 @@
 
 - (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *, id))selectBlock
 {
-    self.nameLabel.text  = data[@"name"];
+    self.nameLabel.text  = data[@"changetheme"];
     
-    if ( data[@"state"] ) {
-        self.stateLabel.hidden = NO;
+    if ( data[@"state_num"] ) {
+        //        self.stateLabel.hidden = NO;
         
-        [self updateStateInfo:data[@"state"]];
+        //        [self updateStateInfo:data[@"state"]];
+        self.stateLabel.text = data[@"state_desc"];
+        
+        UIColor *color = [self colorByState:data[@"state_num"]];
+        
+        self.stateLabel.textColor = color;
+        self.stateLabel.layer.borderColor = color.CGColor;
         
     } else {
         self.stateLabel.hidden = YES;
     }
     
-    self.timeLabel.text = data[@"time"];
+    self.timeLabel.text = HNDateFromObject(data[@"changedate"], @"T");
     
-    [self setLabel:self.money1Label forData:data[@"money1"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+    [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
     
-    [self setLabel:self.money2Label forData:data[@"money1"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+    [self setLabel:self.money2Label forData:data[@"visamoney"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+    
+//    self.nameLabel.text  = data[@"name"];
+//
+//    if ( data[@"state"] ) {
+//        self.stateLabel.hidden = NO;
+//
+//        [self updateStateInfo:data[@"state"]];
+//
+//    } else {
+//        self.stateLabel.hidden = YES;
+//    }
+//
+//    self.timeLabel.text = data[@"time"];
+//
+//    [self setLabel:self.money1Label forData:data[@"money1"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+//
+//    [self setLabel:self.money2Label forData:data[@"money1"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+}
+
+- (UIColor *)colorByState:(id)state
+{
+    NSInteger val = [state integerValue];
+    
+    switch (val) {
+        case 0:
+        {
+            return AWColorFromRGB(100,100,100);
+        }
+        case 5:
+        {
+            return AWColorFromRGB(230, 176, 95);
+        }
+        case 8:
+        {
+            return AWColorFromRGB(201, 92, 84);
+        }
+        case 10:
+        {
+            return AWColorFromRGB(116,182,102);
+        }
+        case 40:
+        {
+            return AWColorFromRGB(70, 121, 178);
+        }
+        case 60:
+        {
+            return AWColorFromRGB(118, 190, 219);
+        }
+        case 80:
+        {
+            return AWColorFromRGB(166, 166, 166);
+        }
+            
+        default:
+            break;
+    }
+    return nil;
 }
 
 - (void)updateStateInfo:(id)state
@@ -173,15 +236,15 @@
     [self.stateLabel sizeToFit];
     self.stateLabel.width += 6;
     self.stateLabel.height += 4;
-    self.stateLabel.position = CGPointMake(self.width - 10 - self.stateLabel.width, 5);
+    self.stateLabel.position = CGPointMake(self.width - 10 - self.stateLabel.width, 10);
     
     self.nameLabel.frame = CGRectMake(15,
-                                      5,
+                                      10,
                                       self.width - 10 - 98,
                                       50);
     [self.nameLabel sizeToFit];
     
-    self.timeLabel.frame = CGRectMake(self.width - 10 - 82, 90 - 10 - 30, 82, 30);
+    self.timeLabel.frame = CGRectMake(self.width - 10 - 82, 90 - 20 - 30, 82, 30);
     
     CGFloat width = self.timeLabel.left - 15 - 10;
     

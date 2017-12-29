@@ -40,11 +40,14 @@
     if ( self.params[@"publish_date.2"] ) {
         endTime = HNDateFromObject(self.params[@"publish_date.2"], @" ");
     }
+    
+    __weak typeof(self) me = self;
     self.listView.userData = @{
                                @"keyword" : self.params[@"keyword"] ?: @"",
                                @"state": state,
                                @"begin_time": beginTime,
                                @"end_time": endTime,
+                               @"owner": me,
                                };
     
     [self.listView startLoading:^(BOOL succeed, NSError *error) {

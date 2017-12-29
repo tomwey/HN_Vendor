@@ -13,6 +13,8 @@
 
 - (void)configData:(id)data;
 
+@property (nonatomic, copy) void (^didSelectItemBlock)(DeclareItemView *sender, id data);
+
 @end
 
 @interface DeclareListCell ()
@@ -22,6 +24,8 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 
 //@property (nonatomic, strong) DeclareItemView *itemView;
+
+@property (nonatomic, copy) void (^didSelectBlock)(UIView<AWTableDataConfig> *view, id selectedData);
 
 @end
 
@@ -38,9 +42,11 @@
     return self;
 }
 
-- (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *, id))selectBlock
+- (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *view, id selectedData))selectBlock
 {
     self.titleLabel.text = data[@"name"];
+    
+    self.didSelectBlock = selectBlock;
     
     NSArray *array = data[@"data"];
     
@@ -71,6 +77,11 @@
                                     100);
         [self.viewContainer addSubview:itemView];
         
+        [itemView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                               action:@selector(tap:)]];
+        
+        itemView.userData = data;
+        
         [itemView configData:data];
         
         AWHairlineView *line = [AWHairlineView horizontalLineWithWidth:self.viewContainer.width - 10
@@ -79,6 +90,15 @@
         line.position = CGPointMake(5, 40 + 90 * i);
         
         i++;
+    }
+}
+
+- (void)tap:(UIGestureRecognizer *)sender
+{
+    DeclareItemView *view = (DeclareItemView *)sender.view;
+//    NSLog(@"%@", view.userData);
+    if ( self.didSelectBlock ) {
+        self.didSelectBlock(self, view.userData);
     }
 }
 
@@ -133,26 +153,92 @@
 
 @implementation DeclareItemView
 
+//changecontent = Sssssss;
+//changedate = "2017-12-28T11:45:59+08:00";
+//changemoney = 1000;
+//changereasonid = 30;
+//changetheme = Test;
+//changetype = "\U53d8\U66f4";
+//contractid = 2220761;
+//"flow_mid" = NULL;
+//progress = "\U672a\U5f00\U59cb";
+//"state_desc" = "\U5f85\U7533\U62a5";
+//"state_num" = 0;
+//supchangeid = 6;
+//visamoney = NULL;
+
+//0  待申报
+//5 被驳回
+//8 已取消
+//10  已申报
+//40  已审批
+//60  已签证
+//80  已作废
+- (UIColor *)colorByState:(id)state
+{
+    NSInteger val = [state integerValue];
+    
+    switch (val) {
+        case 0:
+        {
+            return AWColorFromRGB(100,100,100);
+        }
+        case 5:
+        {
+            return AWColorFromRGB(230, 176, 95);
+        }
+        case 8:
+        {
+            return AWColorFromRGB(201, 92, 84);
+        }
+        case 10:
+        {
+            return AWColorFromRGB(116,182,102);
+        }
+        case 40:
+        {
+            return AWColorFromRGB(70, 121, 178);
+        }
+        case 60:
+        {
+            return AWColorFromRGB(118, 190, 219);
+        }
+        case 80:
+        {
+            return AWColorFromRGB(166, 166, 166);
+        }
+            
+        default:
+            break;
+    }
+    return nil;
+}
 - (void)configData:(id)data
 {
     self.orderLabel.text = data[@"order"];
     
-    self.nameLabel.text  = data[@"name"];
+    self.nameLabel.text  = data[@"changetheme"];
     
-    if ( data[@"state"] ) {
-        self.stateLabel.hidden = NO;
+    if ( data[@"state_num"] ) {
+//        self.stateLabel.hidden = NO;
         
-        [self updateStateInfo:data[@"state"]];
+//        [self updateStateInfo:data[@"state"]];
+        self.stateLabel.text = data[@"state_desc"];
+        
+        UIColor *color = [self colorByState:data[@"state_num"]];
+        
+        self.stateLabel.textColor = color;
+        self.stateLabel.layer.borderColor = color.CGColor;
         
     } else {
-        self.stateLabel.hidden = YES;
+//        self.stateLabel.hidden = YES;
     }
     
-    self.timeLabel.text = data[@"time"];
+    self.timeLabel.text = HNDateFromObject(data[@"changedate"], @"T");
     
-    [self setLabel:self.money1Label forData:data[@"money1"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+    [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
     
-    [self setLabel:self.money2Label forData:data[@"money1"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+    [self setLabel:self.money2Label forData:data[@"visamoney"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
 }
 
 - (void)updateStateInfo:(id)state

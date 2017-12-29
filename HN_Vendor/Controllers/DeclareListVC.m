@@ -159,7 +159,10 @@
 {
     DeclareListView *listView = (DeclareListView *)self.swipeView.currentItemView;
     NSString *state = self.swipeView.currentPage == 0 ? @"0" : @"10";
-    listView.userData = @{ @"state": state };
+    
+    __weak typeof(self) me = self;
+    listView.userData = @{ @"state": state, @"owner": me };
+    
     [listView startLoading:^(BOOL succeed, NSError *error) {
         
     }];
