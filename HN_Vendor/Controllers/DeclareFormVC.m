@@ -501,7 +501,7 @@
 {
     self.counter ++;
     
-    if ( self.counter == 3 ) {
+    if ( self.counter == self.totalCounter ) {
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         
         id dict = [self.inFormControls objectAtIndex:0];
