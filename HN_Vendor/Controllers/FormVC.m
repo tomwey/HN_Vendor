@@ -2155,7 +2155,7 @@
             NSString *key = item[@"field_name"];
             NSArray *images = self.formObjects[key];
             if ( [images count] == 0 ) {
-                return 64;
+                return [self calcWidthForUploadImages] + 16;
             } else {
                 return 10 + [self calcHeightForUploadImages:images] + 6;
             }
@@ -2165,6 +2165,13 @@
     } else {
         return height;
     }
+}
+
+- (CGFloat)calcWidthForUploadImages
+{
+    NSInteger numberOfImagesPerRow = 4;
+    CGFloat width = ( AWFullScreenWidth() - 100 - 15 * 2 - (numberOfImagesPerRow - 1) * 5 ) / numberOfImagesPerRow;
+    return width;
 }
 
 - (CGFloat)calcHeightForUploadImages:(NSArray *)images
