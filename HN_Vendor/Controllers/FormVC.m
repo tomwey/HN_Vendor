@@ -547,9 +547,25 @@
         label.tag = 1001;
         label.adjustsFontSizeToFitWidth = YES;
     }
-    label.text = item[@"describe"];
+    
     label.width = 100;
     label.numberOfLines = 1;
+    
+    BOOL required = YES;
+    if ( item[@"required"] ) {
+        required = [item[@"required"] boolValue];
+    }
+    
+    if (required) {
+        NSString *prefix = @"*";
+        NSString *str = [NSString stringWithFormat:@"%@%@", prefix, item[@"describe"]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:str];
+        [attr addAttributes:@{ NSForegroundColorAttributeName: MAIN_THEME_COLOR }
+                      range:[str rangeOfString:prefix]];
+        label.attributedText = attr;
+    } else {
+        label.text = item[@"describe"];
+    }
     
     [[cell.contentView viewWithTag:1002] removeFromSuperview];
     [[cell.contentView viewWithTag:1003] removeFromSuperview];

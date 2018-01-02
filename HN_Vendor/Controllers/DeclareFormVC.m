@@ -131,6 +131,7 @@
           @"item_value": @"",
           @"annex_table_name": @"H_APP_Supplier_Contract_Change_Annex",
           @"annex_field_name": @"AnnexKeyID",
+          @"required": @"0",
           },
       ] mutableCopy];
     

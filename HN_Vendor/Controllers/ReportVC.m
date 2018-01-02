@@ -60,6 +60,7 @@
                                 @"field_name": @"contract",
                                 @"item_name": @"",
                                 @"item_value": @"",
+                                @"required": @"0",
                                 },
                             @{
                                 @"data_type": @"1",
@@ -111,6 +112,7 @@
                                 @"item_value": @"",
                                 @"annex_table_name": @"H_SY_Complain_Suggest_Annex",
                                 @"annex_field_name": @"AnnexKeyID",
+                                @"required": @"0",
                                 },
                             ] mutableCopy];
     
