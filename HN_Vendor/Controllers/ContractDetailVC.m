@@ -41,6 +41,11 @@
     [self tabPagers];
     
     [self addSwipeContents];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startLoadingData)
+                                                 name:@"kReloadDeclareDataNotification"
+                                               object:nil];
 }
 
 - (void)addBaseInfo

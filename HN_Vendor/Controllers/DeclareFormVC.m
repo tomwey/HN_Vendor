@@ -30,6 +30,8 @@
 
 //@property (nonatomic, strong) NSDictionary *selectedContract;
 
+@property (nonatomic, assign) NSInteger totalCounter;
+
 @end
 
 @implementation DeclareFormVC
@@ -147,9 +149,12 @@
     if (!self.params[@"state_num"]) {
         // 新建
         self.disableFormInputs = NO;
+        self.totalCounter = 3;
+        
         [self addToolButtons];
     } else {
         // 添加状态显示
+        self.totalCounter = 4; // 加载附件
         
         if ([self.params[@"state_num"] integerValue] == 0) {
             // 待申报
@@ -330,6 +335,53 @@
                   [me loadDone3:result error: error];
               }];
     
+    if ( self.totalCounter == 4 ) { // 需要加载附件列表
+        [[self apiServiceWithName:@"APIService"]
+         POST:nil
+         params:@{
+                  @"dotype": @"GetData",
+                  @"funname": @"供应商查询变更指令附件APP",
+                  @"param1": [userInfo[@"supid"] ?: @"0" description],
+                  @"param2": [userInfo[@"loginname"] ?: @"" description],
+                  @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                  @"param4": [self.params[@"supchangeid"] ?: @"0" description],
+                  } completion:^(id result, NSError *error) {
+                      [me loadDone4:result error:error];
+                  }];
+    }
+    
+}
+
+- (void)loadDone4:(id)result error:(NSError *)error
+{
+//    annexkeyid = 285434;
+//    annextype = NULL;
+//    annexurl = "hnapp://open-file?file=http://erp20-app.heneng.cn:16681/office/erp20-annex.heneng.cn/H_APP_Supplier_Contract_Change_Annex/2017-12-29/285434/wopi/files/285434.png&filename=IMG_0295.PNG&fileid=285434&isdoc=0";
+//    "create_date" = "2017-12-29T11:05:40+08:00";
+//    "create_id" = NULL;
+//    deleted = 0;
+//    "edit_date" = NULL;
+//    "edit_id" = NULL;
+//    isvalid = 1;
+//    supchangeannexid = 24;
+//    supchangeid = 12;
+    if ( [result[@"rowcount"] integerValue] > 0 && result[@"data"] ) {
+        NSMutableArray *temp = [NSMutableArray array];
+        NSArray *array = result[@"data"];
+        for (id obj in array) {
+            id ID = obj[@"annexkeyid"] ?: @"0";
+            NSString *imageUrl = [[obj[@"annexurl"] componentsSeparatedByString:@"?"] lastObject];
+            NSDictionary *params = [imageUrl queryDictionaryUsingEncoding:NSUTF8StringEncoding];
+            imageUrl = [params[@"file"] stringByAppendingPathComponent:@"contents"];
+            
+            id item = @{ @"id": ID, @"imageURL": imageUrl };
+            [temp addObject:item];
+        }
+        
+        self.formObjects[@"photos"] = temp;
+    }
+    
+    [self loadDone];
 }
 
 - (void)loadDone1:(id)result error:(NSError *)error
@@ -558,7 +610,7 @@
     }
     
     // 变更内容
-    NSString *opinion = [[self.formObjects[@"opinion"] ?: @"" description] trim];
+    NSString *opinion = [[self.formObjects[@"change_content"] ?: @"" description] trim];
     if ( opinion.length == 0 ) {
         [self.contentView showHUDWithText:@"变更内容不能为空" offset:CGPointMake(0,20)];
         return;
@@ -622,8 +674,10 @@
         } else {
             id item = [result[@"data"] firstObject];
             if ( [item[@"hinttype"] integerValue] == 1 ||
-                (item[@"code"] && [item[@"code"] integerValue] == 0) ) {
-                [self.navigationController.view showHUDWithText:item[@"hint"] succeed:YES];
+                (item[@"code"] && [item[@"code"] integerValue] == 0) ||
+                ([[[item allValues] firstObject] integerValue] == 1) ) {
+                NSString *msg = item[@"hint"] ?: @"操作成功";
+                [self.navigationController.view showHUDWithText:msg succeed:YES];
                 [self dismissViewControllerAnimated:YES completion:^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
                 }];

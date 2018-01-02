@@ -43,6 +43,11 @@
     [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
     
     [self addSegmentControls];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startLoadingData)
+                                                 name:@"kReloadDeclareDataNotification"
+                                               object:nil];
 }
 
 - (void)addSegmentControls

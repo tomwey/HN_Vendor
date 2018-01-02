@@ -268,12 +268,16 @@
     CGFloat width = ( self.width - (kButtonCountPerRow - 1) * 5 ) / kButtonCountPerRow;
     
     for (int i=self.uploadImages.count - 1; i>=0; i--) {
-        NSString *id_ = @"";
-        if (i < self.currentUploadedIDs.count) {
-            id_ = [self.currentUploadedIDs[i] description];
-        }
-        
         id data = self.uploadImages[i];
+        
+        NSString *id_ = @"";
+        if ( self.currentUploadedIDs.count == 0 ) {
+            id_ = [data[@"id"] ?: @"" description];
+        } else {
+            if (i < self.currentUploadedIDs.count) {
+                id_ = [self.currentUploadedIDs[i] description];
+            }
+        }
         
         NSMutableDictionary *item = [data mutableCopy];
         [item setObject:id_ forKey:@"id"];
