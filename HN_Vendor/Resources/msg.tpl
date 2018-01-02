@@ -53,10 +53,10 @@ border-top: 0.88px solid #e6e6e6;
 
 <body>
 <div class="container">
-<a class="msg-box" href="hn-msg://">
+<a class="msg-box" href="hn-msg://" id="msg-box">
 <h2>${title}</h2>
 <div class="body">${content}</div>
-<div class="more">点击查看</div>
+${more}
 </a>
 </div>
 </body>

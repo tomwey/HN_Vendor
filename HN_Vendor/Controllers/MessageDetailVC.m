@@ -37,6 +37,14 @@
     html = [html stringByReplacingOccurrencesOfString:@"${title}" withString:self.params[@"msgtheme"]];
     html = [html stringByReplacingOccurrencesOfString:@"${content}" withString:content];
     
+    if ( [self.params[@"msgtypeid"] integerValue] == 10 ||
+         [self.params[@"msgtypeid"] integerValue] == 20) {
+        NSString *more = @"<div class=\"more\">点击查看</div>";
+        html = [html stringByReplacingOccurrencesOfString:@"${more}" withString:more];
+    } else {
+        html = [html stringByReplacingOccurrencesOfString:@"${more}" withString:@""];
+    }
+    
     [webView loadHTMLString:html baseURL:nil];
     
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];

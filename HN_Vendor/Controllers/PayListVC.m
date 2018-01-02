@@ -50,7 +50,7 @@
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [self.params[@"contractid"] ?: @"0" description],
               @"param5": [self.params[@"moneytypeid"] ?: @"0" description],
-              @"param6": @"",
+              @"param6": @"0",
               @"param7": @"",
               @"param8": @"",
               } completion:^(id result, NSError *error) {
