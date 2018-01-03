@@ -129,7 +129,14 @@
                            [me commit];
                        }];
     
+    [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
+    
     [self loadData];
+}
+
+- (void)close
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)commit
@@ -244,8 +251,11 @@
         } else {
             id item = [result[@"data"] firstObject];
             if ( item && [item[@"code"] integerValue] == 0 ) {
-                [self.contentView showHUDWithText:@"提交成功！" succeed:YES];
-                [self resetForm];
+                [AWAppWindow() showHUDWithText:@"提交成功！" succeed:YES];
+//                [self resetForm];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kNeedReloadReportsNotification" object:nil];
+                }];
             } else {
                 [self.contentView showHUDWithText:@"提交失败！" succeed:NO];
             }
