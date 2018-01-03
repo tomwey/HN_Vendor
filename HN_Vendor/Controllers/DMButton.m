@@ -46,6 +46,8 @@
 {
     [super layoutSubviews];
     
+    self.caretView.frame = CGRectMake(0, 0, 6, 6);
+    
     self.caretView.position = CGPointMake(self.width - 5 - self.caretView.width,
                                           self.height - 5 - self.caretView.height);
     
@@ -60,7 +62,7 @@
         _label = AWCreateLabel(CGRectZero,
                                nil,
                                NSTextAlignmentCenter,
-                               AWSystemFontWithSize(15, NO),
+                               AWSystemFontWithSize(14, NO),
                                AWColorFromRGB(88, 88, 88));
         [self addSubview:_label];
     }
@@ -72,6 +74,8 @@
 {
     if ( !_caretView ) {
         _caretView = AWCreateImageView(@"icon_caret.png");
+        _caretView.image = [[UIImage imageNamed:@"icon_caret.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _caretView.tintColor = AWColorFromHex(@"#999999");
         [self addSubview:_caretView];
     }
     return _caretView;

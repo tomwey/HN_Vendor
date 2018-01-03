@@ -14,6 +14,16 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) AWTableViewDataSource *dataSource;
 
+@property (nonatomic, strong) DMButton *moneyButton;
+@property (nonatomic, strong) DMButton *payButton;
+
+@property (nonatomic, strong) UIView *topbar;
+
+@property (nonatomic, assign) NSInteger counter;
+
+@property (nonatomic, strong) NSArray *moneyData;
+@property (nonatomic, strong) NSArray *payData;
+
 @end
 
 @implementation PayListVC
@@ -25,7 +35,223 @@
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
-    [self startLoadingData];
+    [self initHeaderCaption];
+    
+    [self loadData];
+    
+//    [self startLoadingData];
+}
+
+- (void)loadData
+{
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
+    __weak typeof(self) me = self;
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商查询合同付款列表APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": [userInfo[@"loginname"] ?: @"" description],
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": [self.params[@"contractid"] ?: @"0" description],
+              @"param5": @"0",
+              @"param6": @"0",
+              @"param7": @"",
+              @"param8": @"",
+              } completion:^(id result, NSError *error) {
+                  [me handleResult:result error:error needHideSpinner:NO];
+              }];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商取值列表数据查询APP",
+              @"param1": @"支付方式",
+              } completion:^(id result, NSError *error) {
+                  [me loadDone1:result error:error];
+              }];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商取值列表数据查询APP",
+              @"param1": @"款项类型",
+              } completion:^(id result, NSError *error) {
+                  [me loadDone2:result error:error];
+              }];
+}
+
+- (void)loadDone1:(id)result error:(NSError *)error
+{
+    if ( [result[@"rowcount"] integerValue] > 0 ) {
+        NSArray *data = result[@"data"];
+        NSMutableArray *temp = [NSMutableArray array];
+        for (id item in data) {
+            [temp addObject:@{ @"name": item[@"dic_name"] ?: @"", @"value": item[@"dic_value"] ?: @"" }];
+        }
+        
+        self.payData = [temp copy];
+    }
+    [self loadDone];
+}
+
+- (void)loadDone2:(id)result error:(NSError *)error
+{
+    if ( [result[@"rowcount"] integerValue] > 0 ) {
+//        NSArray *data = result[@"data"];
+        NSArray *data = result[@"data"];
+        NSMutableArray *temp = [NSMutableArray array];
+        for (id item in data) {
+            [temp addObject:@{ @"name": item[@"dic_name"] ?: @"", @"value": item[@"dic_value"] ?: @"" }];
+        }
+        
+        self.moneyData = [temp copy];
+    }
+    [self loadDone];
+}
+
+- (void)loadDone
+{
+    if ( ++self.counter == 3 ) {
+        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    }
+}
+
+- (void)initHeaderCaption
+{
+    self.moneyButton.frame = self.payButton.frame = CGRectMake(0, 0, self.contentView.width / 3,40);
+    self.payButton.left = self.moneyButton.right;
+    
+    AWHairlineView *line = [AWHairlineView horizontalLineWithWidth:self.contentView.width
+                                                             color:AWColorFromHex(@"#e6e6e6")
+                                                            inView:self.topbar];
+    line.position = CGPointMake(0, self.moneyButton.bottom - 1);
+    
+    line = [AWHairlineView verticalLineWithHeight:self.moneyButton.height - 10
+                                            color:AWColorFromHex(@"#e6e6e6")
+                                           inView:self.topbar];
+    line.position = CGPointMake(self.moneyButton.right, 5);
+    
+    line = [AWHairlineView verticalLineWithHeight:self.moneyButton.height - 10
+                                            color:AWColorFromHex(@"#e6e6e6")
+                                           inView:self.topbar];
+    line.position = CGPointMake(self.payButton.right, 5);
+    
+    UIButton *timeBtn = AWCreateTextButton(self.moneyButton.frame,
+                                           @"支付时间",
+                                           AWColorFromRGB(88,88,88),
+                                           self,
+                                           @selector(btnClicked:));
+    [self.topbar addSubview:timeBtn];
+    
+    timeBtn.titleLabel.font = AWSystemFontWithSize(14, NO);
+    
+    timeBtn.left = self.payButton.right;
+    
+}
+
+- (void)btnClicked:(UIButton *)sender
+{
+    
+}
+
+- (void)openPickerForData:(NSArray *)data sender:(DMButton *)sender
+{
+    if ( data.count == 0 ) {
+        return;
+    }
+    
+    UIView *superView = self.contentView;
+    
+    SelectPicker *picker = [[SelectPicker alloc] init];
+    picker.frame = superView.bounds;
+    
+    id currentOption = sender.userData;
+    
+//    NSMutableArray *temp = [[NSMutableArray alloc] initWithCapacity:data.count];
+//    for (int i=0; i<data.count; i++) {
+//        id dict = data[i];
+//        [temp addObject:@{  }];
+//    }
+    
+    picker.options = [data copy];
+    
+    picker.currentSelectedOption = currentOption;
+    
+    [picker showPickerInView:superView];
+    
+    __weak typeof(self) me = self;
+    picker.didSelectOptionBlock = ^(SelectPicker *inSender, id selectedOption, NSInteger index) {
+        
+        if ( sender == me.moneyButton ) {
+            
+            if ( ![selectedOption isEqualToDictionary:me.moneyButton.userData] ) {
+                sender.userData = data[index];
+//                me.moneyButton.title = data[index][@"name"];
+                [me startLoadingData];
+            }
+            
+        } else if ( sender == me.payButton ) {
+            
+            if ( ![selectedOption isEqualToDictionary:me.payButton.userData] ) {
+                sender.userData = data[index];
+//                me.payButton.title = data[index][@"name"];
+                [me startLoadingData];
+            }
+        }
+        
+        sender.title = selectedOption[@"name"];
+        
+    };
+}
+
+- (UIView *)topbar
+{
+    if ( !_topbar ) {
+        _topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width,
+                                                           40)];
+        [self.contentView addSubview:_topbar];
+        _topbar.backgroundColor = [UIColor whiteColor];
+    }
+    return _topbar;
+}
+
+- (DMButton *)moneyButton
+{
+    if ( !_moneyButton ) {
+        _moneyButton = [[DMButton alloc] init];
+        [self.topbar addSubview:_moneyButton];
+        
+        __weak typeof(self) me = self;
+        _moneyButton.selectBlock = ^(DMButton *sender) {
+            [me openPickerForData:me.moneyData sender:sender];
+        };
+        
+        _moneyButton.title = @"全部";
+    }
+    return _moneyButton;
+}
+
+- (DMButton *)payButton
+{
+    if ( !_payButton ) {
+        _payButton = [[DMButton alloc] init];
+        [self.topbar addSubview:_payButton];
+        
+        __weak typeof(self) me = self;
+        _payButton.selectBlock = ^(DMButton *sender) {
+            [me openPickerForData:me.payData sender:sender];
+        };
+        
+        _payButton.title = @"全部";
+    }
+    return _payButton;
 }
 
 - (void)close
@@ -49,32 +275,36 @@
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [self.params[@"contractid"] ?: @"0" description],
-              @"param5": [self.params[@"moneytypeid"] ?: @"0" description],
-              @"param6": @"0",
+              @"param5": [self.moneyButton.userData[@"value"] ?: @"0" description],
+              @"param6": [self.payButton.userData[@"value"] ?: @"0" description],
               @"param7": @"",
               @"param8": @"",
               } completion:^(id result, NSError *error) {
-                  [me handleResult:result error:error];
+                  [me handleResult:result error:error needHideSpinner:YES];
               }];
 }
 
-- (void)handleResult:(id)result error:(NSError *)error
+- (void)handleResult:(id)result error:(NSError *)error needHideSpinner:(BOOL)flag
 {
-    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    if (flag) {
+        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    }
     
-//    if ( error ) {
-//        [self.contentView showHUDWithText:error.localizedDescription succeed:NO];
-//    } else {
-//        if ( [result[@"rowcount"] integerValue] == 0 ) {
-//            [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
-//            self.dataSource.dataSource = nil;
-//        } else {
-//            [self.tableView removeErrorOrEmptyTips];
-//            self.dataSource.dataSource = result[@"data"];
-//        }
-//
-//        [self.tableView reloadData];
-//    }
+    if ( error ) {
+        [self.contentView showHUDWithText:error.localizedDescription succeed:NO];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+            self.dataSource.dataSource = nil;
+        } else {
+            [self.tableView removeErrorOrEmptyTips];
+            self.dataSource.dataSource = result[@"data"];
+        }
+
+        [self.tableView reloadData];
+    }
+    
+    [self loadDone];
 }
 
 - (UITableView *)tableView
@@ -84,6 +314,9 @@
                                                   style:UITableViewStylePlain];
         _tableView.dataSource = self.dataSource;
         _tableView.delegate   = self;
+        
+        _tableView.top = self.topbar.bottom;
+        _tableView.height -= self.topbar.height;
         
         [_tableView removeBlankCells];
         
