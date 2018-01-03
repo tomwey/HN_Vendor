@@ -8,6 +8,7 @@
 
 #import "PayListVC.h"
 #import "Defines.h"
+#import "PayTimeView.h"
 
 @interface PayListVC () <UITableViewDelegate>
 
@@ -24,6 +25,11 @@
 @property (nonatomic, strong) NSArray *moneyData;
 @property (nonatomic, strong) NSArray *payData;
 
+@property (nonatomic, strong) PayTimeView *timeView;
+
+@property (nonatomic, copy) NSString *beginDateString;
+@property (nonatomic, copy) NSString *endDateString;
+
 @end
 
 @implementation PayListVC
@@ -31,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBar.title = [self.params[@"moneytypename"] stringByAppendingString:@"明细"];
+    self.navBar.title = @"付款明细";//[self.params[@"moneytypename"] stringByAppendingString:@"明细"];
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
@@ -158,11 +164,37 @@
 
 - (void)btnClicked:(UIButton *)sender
 {
+    [self.timeView close];
     
+    self.timeView = [[PayTimeView alloc] init];
+    
+    self.timeView.beginDate = self.beginDateString;
+    self.timeView.endDate   = self.endDateString;
+    
+    [self.timeView showInView:self.contentView atPosition:CGPointMake(0, self.topbar.bottom)];
+    
+    static NSDateFormatter *df;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        df = [[NSDateFormatter alloc] init];
+        df.dateFormat = @"yyyy-MM-dd";
+    });
+    
+    __weak typeof(self) me = self;
+    self.timeView.didSelectDate = ^(PayTimeView *sender, NSDate *beginDate, NSDate *endDate) {
+        me.beginDateString = [df stringFromDate:beginDate];
+        me.endDateString   = [df stringFromDate:endDate];
+        
+        [me startLoadingData];
+    };
+    
+    [self.contentView bringSubviewToFront:self.topbar];
 }
 
 - (void)openPickerForData:(NSArray *)data sender:(DMButton *)sender
 {
+    [self.timeView close];
+    
     if ( data.count == 0 ) {
         return;
     }
@@ -277,8 +309,8 @@
               @"param4": [self.params[@"contractid"] ?: @"0" description],
               @"param5": [self.moneyButton.userData[@"value"] ?: @"0" description],
               @"param6": [self.payButton.userData[@"value"] ?: @"0" description],
-              @"param7": @"",
-              @"param8": @"",
+              @"param7": self.beginDateString ?: @"",
+              @"param8": self.endDateString ?: @"",
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error needHideSpinner:YES];
               }];

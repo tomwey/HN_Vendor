@@ -635,6 +635,7 @@
 		998E43031FEB64640040E013 /* msg.tpl in Resources */ = {isa = PBXBuildFile; fileRef = 998E43021FEB64640040E013 /* msg.tpl */; };
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
+		99D44FA51FFCAC4200EF0558 /* PayTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FA41FFCAC4200EF0558 /* PayTimeView.m */; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
 		99E1550E1FF0D8FC006CD1A3 /* ContractDetailBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */; };
 		99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */; };
@@ -1717,6 +1718,8 @@
 		998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchVC.m; sourceTree = "<group>"; };
 		998E43071FEBA1C80040E013 /* DeclareSearchResultVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareSearchResultVC.h; sourceTree = "<group>"; };
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
+		99D44FA31FFCAC4200EF0558 /* PayTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayTimeView.h; sourceTree = "<group>"; };
+		99D44FA41FFCAC4200EF0558 /* PayTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayTimeView.m; sourceTree = "<group>"; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		99E1550C1FF0D8FC006CD1A3 /* ContractDetailBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailBaseView.h; sourceTree = "<group>"; };
 		99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailBaseView.m; sourceTree = "<group>"; };
@@ -3525,6 +3528,8 @@
 				9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */,
 				9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */,
 				9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */,
+				99D44FA31FFCAC4200EF0558 /* PayTimeView.h */,
+				99D44FA41FFCAC4200EF0558 /* PayTimeView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4149,6 +4154,7 @@
 				995544D81FDFDBCC00DC0134 /* FAKMaterialIcons.m in Sources */,
 				9955453F1FDFDBCC00DC0134 /* AWLoadingStateBaseView.m in Sources */,
 				995545B71FDFDBCD00DC0134 /* PlanListVC.m in Sources */,
+				99D44FA51FFCAC4200EF0558 /* PayTimeView.m in Sources */,
 				995545C21FDFDBCD00DC0134 /* TracePlanListView.m in Sources */,
 				995545EA1FDFDBCD00DC0134 /* DGActivityIndicatorBallZigZagDeflectAnimation.m in Sources */,
 				995545C01FDFDBCD00DC0134 /* SubmitVC.m in Sources */,

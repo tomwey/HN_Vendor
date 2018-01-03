@@ -219,7 +219,7 @@
     progressLabel.center = CGPointMake(self.width - 15 - progressLabel.width / 2,
                                        progress.midY);
     
-    progressLabel.text = [NSString stringWithFormat:@"%d%%", progress.progress * 100];
+    progressLabel.text = [NSString stringWithFormat:@"%d%%", (int)(progress.progress * 100)];
     
     self.currentTop = progressLabel.bottom;
 }
