@@ -636,6 +636,8 @@
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
 		99D44FA51FFCAC4200EF0558 /* PayTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FA41FFCAC4200EF0558 /* PayTimeView.m */; };
+		99D44FA91FFCCA5E00EF0558 /* ReportListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */; };
+		99D44FAC1FFCCC5C00EF0558 /* ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */; };
 		99D484581E56EB4B00510687 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D484571E56EB4B00510687 /* libz.1.2.5.tbd */; };
 		99E1550E1FF0D8FC006CD1A3 /* ContractDetailBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */; };
 		99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */; };
@@ -1720,6 +1722,10 @@
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
 		99D44FA31FFCAC4200EF0558 /* PayTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayTimeView.h; sourceTree = "<group>"; };
 		99D44FA41FFCAC4200EF0558 /* PayTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayTimeView.m; sourceTree = "<group>"; };
+		99D44FA71FFCCA5E00EF0558 /* ReportListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportListVC.h; sourceTree = "<group>"; };
+		99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportListVC.m; sourceTree = "<group>"; };
+		99D44FAA1FFCCC5C00EF0558 /* ReportCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportCell.h; sourceTree = "<group>"; };
+		99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportCell.m; sourceTree = "<group>"; };
 		99D484571E56EB4B00510687 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		99E1550C1FF0D8FC006CD1A3 /* ContractDetailBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailBaseView.h; sourceTree = "<group>"; };
 		99E1550D1FF0D8FC006CD1A3 /* ContractDetailBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailBaseView.m; sourceTree = "<group>"; };
@@ -2858,6 +2864,8 @@
 				9947AB421FF1EAC50091A2AD /* PayListVC.m */,
 				9947AB441FF229B30091A2AD /* DeclareFormVC.h */,
 				9947AB451FF229B30091A2AD /* DeclareFormVC.m */,
+				99D44FA71FFCCA5E00EF0558 /* ReportListVC.h */,
+				99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3530,6 +3538,8 @@
 				9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */,
 				99D44FA31FFCAC4200EF0558 /* PayTimeView.h */,
 				99D44FA41FFCAC4200EF0558 /* PayTimeView.m */,
+				99D44FAA1FFCCC5C00EF0558 /* ReportCell.h */,
+				99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3861,6 +3871,7 @@
 				995544C71FDFDBCC00DC0134 /* CTPersistanceVersionRecord.m in Sources */,
 				995546ED1FDFDBCD00DC0134 /* DateSelectControl.m in Sources */,
 				995545391FDFDBCC00DC0134 /* AWHairlineView.m in Sources */,
+				99D44FAC1FFCCC5C00EF0558 /* ReportCell.m in Sources */,
 				995544D71FDFDBCC00DC0134 /* FAKIonIcons.m in Sources */,
 				995545A91FDFDBCC00DC0134 /* OutputContractListVC.m in Sources */,
 				995544EC1FDFDBCC00DC0134 /* FSCalendarExtensions.m in Sources */,
@@ -4174,6 +4185,7 @@
 				995545FC1FDFDBCD00DC0134 /* MBProgressHUD.m in Sources */,
 				995545FF1FDFDBCD00DC0134 /* SVProgressAnimatedView.m in Sources */,
 				995544E81FDFDBCC00DC0134 /* FSCalendarCollectionViewLayout.m in Sources */,
+				99D44FA91FFCCA5E00EF0558 /* ReportListVC.m in Sources */,
 				995546E11FDFDBCD00DC0134 /* UIApplication+Close.m in Sources */,
 				995545231FDFDBCC00DC0134 /* TYTextContainer+Extended.m in Sources */,
 				995545C91FDFDBCD00DC0134 /* AFHTTPRequestOperationManager.m in Sources */,

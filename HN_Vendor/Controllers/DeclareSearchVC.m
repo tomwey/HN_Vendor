@@ -43,6 +43,7 @@
                  @"placeholder": @"输入变更主题/内容",
                  @"item_name": @"",
                  @"item_value": @"",
+                 @"required": @"0",
                  },
              @{
                  @"data_type": @"9",
@@ -51,6 +52,7 @@
                  @"field_name": @"state",
                  @"item_name": @"全部,待申报,被驳回,已取消,已申报,已审批,已签证,已作废",
                  @"item_value": @"-1,0,5,8,10,40,60,80",
+                 @"required": @"0",
                  },
              @{
                  @"data_type":  @"13",
@@ -62,6 +64,7 @@
                  @"sub_describe": @"起始日期,截止日期",
                  @"split_desc": @"至",
                  @"split_symbol": @" ",
+                 @"required": @"0",
                  }];
 }
 

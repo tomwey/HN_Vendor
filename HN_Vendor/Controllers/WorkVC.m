@@ -78,7 +78,7 @@
                         @{
                             @"icon": @"icon_report.png",
                             @"name": @"投诉建议",
-                            @"page": @"ReportVC",
+                            @"page": @"ReportListVC",
                             }
                         ];
     
