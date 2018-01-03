@@ -136,6 +136,8 @@
         self.totalCounter = 3;
     } else {
         self.totalCounter = 4;
+        
+        self.disableFormInputs = YES;
     }
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
