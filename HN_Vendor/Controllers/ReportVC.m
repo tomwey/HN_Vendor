@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *inFormControls;
 
 @property (nonatomic, assign) NSInteger counter;
+@property (nonatomic, assign) NSInteger totalCounter;
 
 @property (nonatomic, strong) NSMutableArray *projects;
 @property (nonatomic, strong) NSMutableArray *contracts;
@@ -26,6 +27,8 @@
 @implementation ReportVC
 
 - (void)viewDidLoad {
+    
+    BOOL flag = !!self.params[@"comsugkeyid"];
     
     self.inFormControls = [@[
                             @{
@@ -120,14 +123,20 @@
     
     self.navBar.title = @"投诉建议";
     
-    __weak typeof(self) me = self;
-    [self addRightItemWithTitle:@"提交"
-                titleAttributes: @{ NSFontAttributeName: AWSystemFontWithSize(14, NO) }
-                           size: CGSizeMake(40, 40)
-                    rightMargin:5
-                       callback:^{
-                           [me commit];
-                       }];
+    if ( !flag ) {
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"提交"
+                    titleAttributes: @{ NSFontAttributeName: AWSystemFontWithSize(14, NO) }
+                               size: CGSizeMake(40, 40)
+                        rightMargin:5
+                           callback:^{
+                               [me commit];
+                           }];
+        
+        self.totalCounter = 3;
+    } else {
+        self.totalCounter = 4;
+    }
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
@@ -308,6 +317,21 @@
               } completion:^(id result, NSError *error) {
                   [me loadDone3:result error: error];
               }];
+    
+    if ( self.totalCounter == 4 ) {
+        [[self apiServiceWithName:@"APIService"]
+         POST:nil
+         params:@{
+                  @"dotype": @"GetData",
+                  @"funname": @"供应商查询投诉建议附件APP",
+                  @"param1": [userInfo[@"supid"] ?: @"0" description],
+                  @"param2": [userInfo[@"loginname"] ?: @"" description],
+                  @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                  @"param4": [self.params[@"comsugkeyid"] ?: @"0" description],
+                  } completion:^(id result, NSError *error) {
+                      [me loadDone4:result error:error];
+                  }];
+    }
 }
 
 - (void)loadDone1:(id)result error:(NSError *)error
@@ -379,11 +403,82 @@
     [self loadDone];
 }
 
+- (void)loadDone4:(id)result error:(NSError *)error
+{
+    if ( [result[@"rowcount"] integerValue] > 0 && result[@"data"] ) {
+        NSMutableArray *temp = [NSMutableArray array];
+        NSArray *array = result[@"data"];
+        for (id obj in array) {
+            id ID = obj[@"annexkeyid"] ?: @"0";
+            NSString *imageUrl = [[obj[@"annexurl"] componentsSeparatedByString:@"?"] lastObject];
+            NSDictionary *params = [imageUrl queryDictionaryUsingEncoding:NSUTF8StringEncoding];
+            imageUrl = [params[@"file"] stringByAppendingPathComponent:@"contents"];
+            
+            id item = @{ @"id": ID, @"imageURL": imageUrl };
+            [temp addObject:item];
+        }
+        
+        self.formObjects[@"photos"] = temp;
+    }
+    
+    [self loadDone];
+}
+
+- (void)prepareFormObjects
+{
+    //changecontent = Sssssss;
+    //changedate = "2017-12-28T11:45:59+08:00";
+    //changemoney = 1000;
+    //changereasonid = 30;
+    //changetheme = Test;
+    //changetype = "\U53d8\U66f4";
+    //contractid = 2220761;
+    //contractmoney = 497744;
+    //contractname = "\U5173\U4e8e\U4ee5\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f\U9879\U76ee\U5546\U54c1\U623f\U4f5c\U4ef7\U652f\U4ed8\U73cd\U5b9d\U9526\U57ce\U4e00\U671f\U9879\U76ee\U5de5\U7a0b\U6b3e\U7684\U534f\U8bae\U4e66";
+    //contractphyno = "\U5408\Uff08LL\Uff09-E312-2017-004";
+    //"flow_mid" = NULL;
+    //progress = "\U672a\U5f00\U59cb";
+    //"project_id" = 1291427;
+    //"project_name" = "\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f";
+    //"state_desc" = "\U5f85\U7533\U62a5";
+    //"state_num" = 0;
+    //supchangeid = 6;
+    //visamoney = NULL;
+    
+    if ( self.params[@"comsugkeyid"] ) {
+        self.formObjects[@"type"] = @{ @"name": self.params[@"typename"] ?: @"",
+                                            @"value": [self.params[@"typeid"] ?: @"" description],
+                                            };
+        [self typeDidChange:self.formObjects[@"type"]];
+        
+        self.formObjects[@"event_type"] = @{ @"name": @"", @"value": [self.params[@"typesmallid"] ?: @"" description] };
+        
+        self.formObjects[@"project"] = @{
+                                               @"name": self.params[@"project_name"] ?: @"",
+                                               @"value": [self.params[@"project_id"] ?: @"" description],
+                                               };
+        self.formObjects[@"contract"] = @{
+                                         @"name": HNStringFromObject(self.params[@"contractname"], @""),
+                                         @"value": [self.params[@"contractid"] ?: @"" description],
+                                         };
+        
+        self.formObjects[@"title"] = self.params[@"theme"];
+        self.formObjects[@"link_man"] = self.params[@"linkman"];
+        self.formObjects[@"link_man_title"] = self.params[@"linkmantitle"];
+        self.formObjects[@"link_man_mobile"] = self.params[@"linkmantel"];
+        
+        self.formObjects[@"opinion"] = self.params[@"contentdesc"];
+        
+    } else {
+        
+    }
+}
+
 - (void)loadDone
 {
     self.counter ++;
     
-    if ( self.counter == 3 ) {
+    if ( self.counter == self.totalCounter ) {
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         
         NSMutableArray *temp1 = [NSMutableArray array];
@@ -418,7 +513,7 @@
         [self formControlsDidChange];
     }
     
-//    [self prepareFormObjects];
+    [self prepareFormObjects];
 }
 
 - (void)typeDidChange:(id)selectedItem
