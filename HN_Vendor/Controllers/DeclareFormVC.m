@@ -410,17 +410,23 @@
                 continue;
             }
             
-            [self.projects addObject:projName];
+//            [self.projects addObject:projName];
             
             NSMutableArray *obj = self.contracts[projName];
             if ( !obj ) {
                 obj = [[NSMutableArray alloc] init];
                 self.contracts[projName] = obj;
-            }
-            
-            if ( ![obj containsObject:item] ) {
+                
+                [self.projects addObject:projName];
+                
+                [obj addObject:item];
+            } else {
                 [obj addObject:item];
             }
+            
+//            if ( ![obj containsObject:item] ) {
+//                [obj addObject:item];
+//            }
         }
     }
     
