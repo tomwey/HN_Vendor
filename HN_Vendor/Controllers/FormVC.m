@@ -1383,6 +1383,8 @@
             textView.font = [UIFont systemFontOfSize:16];
             self.textView = textView;
             
+            textView.userData = item;
+            
             textView.tintColor = MAIN_THEME_COLOR;
             
             textView.delegate = self;
@@ -2130,7 +2132,9 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    self.formObjects[@"opinion"] = textView.text;
+    id userData = textView.userData;
+    
+    self.formObjects[userData[@"field_name"]] = textView.text;
 }
 
 - (void)removeSingleContact:(UIButton *)sender
