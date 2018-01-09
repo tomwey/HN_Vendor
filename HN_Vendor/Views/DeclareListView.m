@@ -196,7 +196,7 @@
     id item = self.dataSource.dataSource[indexPath.row];
     NSArray *data = item[@"data"];
     
-    return (40 + data.count * 90) + 15;
+    return (50 + data.count * 90) + 15;
 }
 
 - (AWTableViewDataSource *)dataSource

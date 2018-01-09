@@ -50,9 +50,9 @@
     
     NSArray *array = data[@"data"];
     
-    self.viewContainer.frame = CGRectMake(15, 15, AWFullScreenWidth() - 30, 40 + array.count * 90);
+    self.viewContainer.frame = CGRectMake(15, 15, AWFullScreenWidth() - 30, 50 + array.count * 90);
     
-    self.titleLabel.frame = CGRectMake(10, 0, self.viewContainer.width - 20, 40);
+    self.titleLabel.frame = CGRectMake(10, 3, self.viewContainer.width - 20, 50);
     
     [self addItems:array];
 }
@@ -72,7 +72,7 @@
         data[@"order"] = [@(i + 1) description];
         
         DeclareItemView *itemView = [[DeclareItemView alloc] init];
-        itemView.frame = CGRectMake(0, 40 + 90 * i,
+        itemView.frame = CGRectMake(0, 55 + 90 * i,
                                     self.viewContainer.width,
                                     100);
         [self.viewContainer addSubview:itemView];
@@ -87,7 +87,7 @@
         AWHairlineView *line = [AWHairlineView horizontalLineWithWidth:self.viewContainer.width - 10
                                                                  color:AWColorFromHex(@"#e6e6e6")
                                                                 inView:self.viewContainer];
-        line.position = CGPointMake(5, 40 + 90 * i);
+        line.position = CGPointMake(5, 55 + 90 * i);
         
         i++;
     }
@@ -126,7 +126,8 @@
                                     AWColorFromRGB(51, 51, 51));
         [self.viewContainer addSubview:_titleLabel];
         
-        _titleLabel.adjustsFontSizeToFitWidth = YES;
+//        _titleLabel.adjustsFontSizeToFitWidth = YES;
+        _titleLabel.numberOfLines = 2;
     }
     return _titleLabel;
 }

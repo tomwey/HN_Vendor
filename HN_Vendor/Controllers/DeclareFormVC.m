@@ -224,7 +224,7 @@
     UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
                                                       50),
                                            @"保存",
-                                           IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR,
+                                           MAIN_THEME_COLOR,
                                            self,
                                            @selector(save));
     [self.contentView addSubview:moreBtn];
