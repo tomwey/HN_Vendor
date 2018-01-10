@@ -75,6 +75,22 @@
 {
     if ( [[request.URL absoluteString] hasPrefix:@"hn-msg://"] ) {
         NSLog(@"%d", navigationType);
+        
+//        contractid = 2192676;
+//        contractname = "\U201c\U5408\U80fd.\U73cd\U5b9d\U9526\U57ce\U9879\U76ee\U4e00\U671f\U201d\U300a\U5efa\U8bbe\U5de5\U7a0b\U65bd\U5de5\U5408\U540c\U300b\U8865\U5145\U534f\U8bae";
+//        islook = 1;
+//        memo = NULL;
+//        msgcolor = "#67ABE5";
+//        msgcontent = NULL;
+//        msgobjectid = 82;
+//        msgtheme = "\U60a8\U6709\U4e00\U7b14\U6307\U4ee4\U5df2\U5ba1\U6279\U5b8c\U6210";
+//        msgtypeid = 10;
+//        msgtypename = "\U53d8\U66f4\U5ba1\U6279";
+//        "project_id" = 1291426;
+//        "project_name" = "\U73cd\U5b9d\U9526\U57ce\U4e00\U671f";
+//        supmsgid = 4272;
+//        validbegindate = "2018-01-10T00:00:00+08:00";
+        
         return NO;
     }
     return YES;

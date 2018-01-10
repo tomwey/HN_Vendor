@@ -631,6 +631,7 @@
 		9955473B1FE3A25400DC0134 /* icon_constract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547381FE3A25400DC0134 /* icon_constract@2x.png */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99898DB32005C049004673DC /* ContractPayCell2.m */; };
 		998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43001FEB5A220040E013 /* MessageDetailVC.m */; };
 		998E43031FEB64640040E013 /* msg.tpl in Resources */ = {isa = PBXBuildFile; fileRef = 998E43021FEB64640040E013 /* msg.tpl */; };
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
@@ -1713,6 +1714,8 @@
 		995547381FE3A25400DC0134 /* icon_constract@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_constract@2x.png"; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		99898DB32005C049004673DC /* ContractPayCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell2.m; sourceTree = "<group>"; };
+		99898DB42005C049004673DC /* ContractPayCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractPayCell2.h; sourceTree = "<group>"; };
 		998E42FF1FEB5A220040E013 /* MessageDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageDetailVC.h; sourceTree = "<group>"; };
 		998E43001FEB5A220040E013 /* MessageDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageDetailVC.m; sourceTree = "<group>"; };
 		998E43021FEB64640040E013 /* msg.tpl */ = {isa = PBXFileReference; lastKnownFileType = text; path = msg.tpl; sourceTree = "<group>"; };
@@ -3534,6 +3537,8 @@
 				99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */,
 				9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */,
 				9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */,
+				99898DB42005C049004673DC /* ContractPayCell2.h */,
+				99898DB32005C049004673DC /* ContractPayCell2.m */,
 				9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */,
 				9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */,
 				99D44FA31FFCAC4200EF0558 /* PayTimeView.h */,
@@ -4176,6 +4181,7 @@
 				9955450A1FDFDBCC00DC0134 /* PNPieChart.m in Sources */,
 				995545851FDFDBCC00DC0134 /* LandPayListVC.m in Sources */,
 				9955457B1FDFDBCC00DC0134 /* GuideVC.m in Sources */,
+				99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */,
 				995545321FDFDBCC00DC0134 /* UIButton+AWButtonLoading.m in Sources */,
 				995545B41FDFDBCC00DC0134 /* PlanConfirmVC.m in Sources */,
 				995545601FDFDBCC00DC0134 /* BannerView.m in Sources */,

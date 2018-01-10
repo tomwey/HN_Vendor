@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBar.title = @"付款明细";//[self.params[@"moneytypename"] stringByAppendingString:@"明细"];
+    self.navBar.title = [self.params[@"moneytypename"] stringByAppendingString:@"明细"];
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
@@ -82,15 +82,15 @@
                   [me loadDone1:result error:error];
               }];
     
-    [[self apiServiceWithName:@"APIService"]
-     POST:nil
-     params:@{
-              @"dotype": @"GetData",
-              @"funname": @"供应商取值列表数据查询APP",
-              @"param1": @"款项类型",
-              } completion:^(id result, NSError *error) {
-                  [me loadDone2:result error:error];
-              }];
+//    [[self apiServiceWithName:@"APIService"]
+//     POST:nil
+//     params:@{
+//              @"dotype": @"GetData",
+//              @"funname": @"供应商取值列表数据查询APP",
+//              @"param1": @"款项类型",
+//              } completion:^(id result, NSError *error) {
+//                  [me loadDone2:result error:error];
+//              }];
 }
 
 - (void)loadDone1:(id)result error:(NSError *)error
@@ -98,6 +98,7 @@
     if ( [result[@"rowcount"] integerValue] > 0 ) {
         NSArray *data = result[@"data"];
         NSMutableArray *temp = [NSMutableArray array];
+        [temp addObject:@{ @"name": @"全部", @"value": @"0" }];
         for (id item in data) {
             [temp addObject:@{ @"name": item[@"dic_name"] ?: @"", @"value": item[@"dic_value"] ?: @"" }];
         }
@@ -124,32 +125,32 @@
 
 - (void)loadDone
 {
-    if ( ++self.counter == 3 ) {
+    if ( ++self.counter == 2 ) {
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
     }
 }
 
 - (void)initHeaderCaption
 {
-    self.moneyButton.frame = self.payButton.frame = CGRectMake(0, 0, self.contentView.width / 3,40);
-    self.payButton.left = self.moneyButton.right;
+    self.payButton.frame = self.payButton.frame = CGRectMake(0, 0, self.contentView.width / 2,40);
+//    self.payButton.left = self.moneyButton.right;
     
     AWHairlineView *line = [AWHairlineView horizontalLineWithWidth:self.contentView.width
                                                              color:AWColorFromHex(@"#e6e6e6")
                                                             inView:self.topbar];
-    line.position = CGPointMake(0, self.moneyButton.bottom - 1);
+    line.position = CGPointMake(0, self.payButton.bottom - 1);
     
-    line = [AWHairlineView verticalLineWithHeight:self.moneyButton.height - 10
-                                            color:AWColorFromHex(@"#e6e6e6")
-                                           inView:self.topbar];
-    line.position = CGPointMake(self.moneyButton.right, 5);
-    
-    line = [AWHairlineView verticalLineWithHeight:self.moneyButton.height - 10
+    line = [AWHairlineView verticalLineWithHeight:self.payButton.height - 10
                                             color:AWColorFromHex(@"#e6e6e6")
                                            inView:self.topbar];
     line.position = CGPointMake(self.payButton.right, 5);
     
-    UIButton *timeBtn = AWCreateTextButton(self.moneyButton.frame,
+//    line = [AWHairlineView verticalLineWithHeight:self.moneyButton.height - 10
+//                                            color:AWColorFromHex(@"#e6e6e6")
+//                                           inView:self.topbar];
+//    line.position = CGPointMake(self.payButton.right, 5);
+    
+    UIButton *timeBtn = AWCreateTextButton(self.payButton.frame,
                                            @"支付时间",
                                            AWColorFromRGB(88,88,88),
                                            self,
@@ -307,7 +308,7 @@
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [self.params[@"contractid"] ?: @"0" description],
-              @"param5": [self.moneyButton.userData[@"value"] ?: @"0" description],
+              @"param5": [self.params[@"moneytypeid"] ?: @"0" description],
               @"param6": [self.payButton.userData[@"value"] ?: @"0" description],
               @"param7": self.beginDateString ?: @"",
               @"param8": self.endDateString ?: @"",
@@ -354,7 +355,7 @@
         
         [self.contentView addSubview:_tableView];
         
-        _tableView.rowHeight = 98;
+        _tableView.rowHeight = 70;
         
         _tableView.separatorColor = AWColorFromHex(@"#e6e6e6");
     }
@@ -374,7 +375,7 @@
 - (AWTableViewDataSource *)dataSource
 {
     if ( !_dataSource ) {
-        _dataSource = AWTableViewDataSourceCreate(nil, @"ContractPayCell", @"cell.id");
+        _dataSource = AWTableViewDataSourceCreate(nil, @"ContractPayCell2", @"cell.id");
     }
     return _dataSource;
 }

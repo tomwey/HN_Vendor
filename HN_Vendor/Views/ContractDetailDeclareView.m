@@ -33,11 +33,12 @@
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-              @"param4": [self.userData[@"contractid"] ?: @"0" description],
-              @"param5": @"",
+              @"param4": @"0",
+              @"param5": [self.userData[@"contractid"] ?: @"0" description],
               @"param6": @"",
-              @"param7": @"",
+              @"param7": @"-1",
               @"param8": @"",
+              @"param9": @"",
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];

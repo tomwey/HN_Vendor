@@ -38,10 +38,11 @@
                       @"param2": [userInfo[@"loginname"] ?: @"" description],
                       @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
                       @"param4": @"0",
-                      @"param5": params[@"keyword"] ?: @"",
-                      @"param6": [params[@"state"] ?: @"-1" description],
-                      @"param7": params[@"begin_time"] ?: @"",
-                      @"param8": params[@"end_time"] ?: @"",
+                      @"param5": @"0",
+                      @"param6": params[@"keyword"] ?: @"",
+                      @"param7": [params[@"state"] ?: @"-1" description],
+                      @"param8": params[@"begin_time"] ?: @"",
+                      @"param9": params[@"end_time"] ?: @"",
                       };
     
     __weak typeof(self) me = self;
