@@ -30,6 +30,10 @@
 @property (nonatomic, copy) NSString *beginDateString;
 @property (nonatomic, copy) NSString *endDateString;
 
+@property (nonatomic, copy) NSString *changeVal;
+
+@property (nonatomic, weak) UIButton *timeBtn;
+
 @end
 
 @implementation PayListVC
@@ -156,6 +160,7 @@
                                            self,
                                            @selector(btnClicked:));
     [self.topbar addSubview:timeBtn];
+    self.timeBtn = timeBtn;
     
     timeBtn.titleLabel.font = AWSystemFontWithSize(14, NO);
     
@@ -186,10 +191,24 @@
         me.beginDateString = [df stringFromDate:beginDate];
         me.endDateString   = [df stringFromDate:endDate];
         
+        [me markTimeButton];
+        
         [me startLoadingData];
     };
     
     [self.contentView bringSubviewToFront:self.topbar];
+}
+
+- (void)markTimeButton
+{
+    self.changeVal = [NSString stringWithFormat:@"%@%@",
+                      self.beginDateString ?: @"",
+                      self.endDateString ?: @""];
+    if ( self.changeVal.length == 0 ) {
+        [self.timeBtn setTitleColor:AWColorFromRGB(88, 88, 88) forState:UIControlStateNormal];
+    } else {
+        [self.timeBtn setTitleColor:MAIN_THEME_COLOR forState:UIControlStateNormal];
+    }
 }
 
 - (void)openPickerForData:(NSArray *)data sender:(DMButton *)sender
@@ -364,12 +383,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"PayListVC" params:self.dataSource.dataSource[indexPath.row]];
-    
-    UIViewController *owner = self.userData[@"owner"];
-    [owner presentViewController:vc animated:YES completion:nil];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//
+//    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"PayListVC" params:self.dataSource.dataSource[indexPath.row]];
+//
+//    UIViewController *owner = self.userData[@"owner"];
+//    [owner presentViewController:vc animated:YES completion:nil];
 }
 
 - (AWTableViewDataSource *)dataSource
