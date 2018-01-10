@@ -91,9 +91,56 @@
 //        supmsgid = 4272;
 //        validbegindate = "2018-01-10T00:00:00+08:00";
         
+//        供应商查询变更指令详情APP
+        if ( [self.params[@"msgtypeid"] integerValue] == 10 ||
+             [self.params[@"msgtypeid"] integerValue] == 20 ) {
+            [self loadData];
+        }
+        
         return NO;
     }
     return YES;
+}
+
+- (void)loadData
+{
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
+    __weak typeof(self) me = self;
+    
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商查询变更指令详情APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": [userInfo[@"loginname"] ?: @"" description],
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": [self.params[@"msgobjectid"] ?: @"0" description],
+              } completion:^(id result, NSError *error) {
+                  [me handleResult:result error:error];
+              }];
+}
+
+- (void)handleResult:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    if ( error ) {
+        [self.contentView showHUDWithText:@"加载基础数据出错" succeed:NO];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            [self.contentView showHUDWithText:@"未找到变更数据" succeed:NO];
+        } else {
+            id item = [result[@"data"] firstObject];
+            
+            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC"
+                                                                        params:item];
+            [self presentViewController:vc animated:YES completion:nil];
+        }
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

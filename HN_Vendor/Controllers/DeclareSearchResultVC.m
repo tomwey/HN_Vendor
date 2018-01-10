@@ -41,6 +41,11 @@
         endTime = HNDateFromObject(self.params[@"publish_date.2"], @" ");
     }
     
+    NSString *projectID = @"0";
+    if ( self.params[@"project"] ) {
+        projectID = [self.params[@"project"][@"value"] description];
+    }
+    
     __weak typeof(self) me = self;
     self.listView.userData = @{
                                @"keyword" : self.params[@"keyword"] ?: @"",
@@ -48,6 +53,7 @@
                                @"begin_time": beginTime,
                                @"end_time": endTime,
                                @"owner": me,
+                               @"project_id": projectID,
                                };
     
     [self.listView startLoading:^(BOOL succeed, NSError *error) {
