@@ -94,12 +94,12 @@ static CGFloat const kFluidItemSpacing     = 10.0;
     
     if ( self.leftItem ) {
         self.inLeftItem.center = CGPointMake(self.leftMarginOfLeftItem + CGRectGetWidth(self.inLeftItem.bounds) / 2,
-                                             CGRectGetHeight(self.inLeftItem.bounds) / 2 + [self statusBarHeight]);
+                                             22 + [self statusBarHeight]);
     }
     
     if ( self.rightItem ) {
         self.inRightItem.center = CGPointMake(CGRectGetWidth(self.bounds) - self.rightMarginOfRightItem - CGRectGetWidth(self.inRightItem.bounds) / 2,
-                                              CGRectGetHeight(self.inRightItem.bounds) / 2 + [self statusBarHeight]);
+                                              22 + [self statusBarHeight]);
     }
     
     [self layoutFluidItems];
@@ -325,7 +325,7 @@ static CGFloat const kFluidItemSpacing     = 10.0;
     
     for (UIView *item in self.leftFluidItems) {
         item.center = CGPointMake(leftOffsetX + CGRectGetWidth(item.frame) / 2,
-                                  CGRectGetHeight(item.bounds) / 2 + [self statusBarHeight]);
+                                  22 + [self statusBarHeight]);
         leftOffsetX = CGRectGetMaxX(item.frame) + self.marginOfFluidItem;
     }
     
@@ -341,7 +341,7 @@ static CGFloat const kFluidItemSpacing     = 10.0;
     for (NSInteger i = count - 1; i >= 0; i--) {
         UIView* item = self.rightFluidItems[i];
         item.center = CGPointMake(rightOffsetX - CGRectGetWidth(item.frame) / 2,
-                                  CGRectGetHeight(item.bounds) / 2 + [self statusBarHeight]);
+                                  22 + [self statusBarHeight]);
         rightOffsetX = CGRectGetMinX(item.frame) - self.marginOfFluidItem;
     }
     
@@ -352,13 +352,13 @@ static CGFloat const kFluidItemSpacing     = 10.0;
     if ( self.inTitleLabel ) {
         self.inTitleLabel.frame  = CGRectMake(0, 0, width, 44);
         self.inTitleLabel.center = CGPointMake(CGRectGetWidth(self.bounds) / 2,
-                                               CGRectGetHeight(self.inTitleLabel.bounds) / 2 + [self statusBarHeight]);
+                                               22 + [self statusBarHeight]);
     }
     
     // 布局标题视图
     if ( self.inTitleView ) {
         self.inTitleView.center = CGPointMake(CGRectGetWidth(self.bounds) / 2,
-                                              CGRectGetHeight(self.inTitleLabel.bounds) / 2 + [self statusBarHeight]);
+                                              22 + [self statusBarHeight]);
     }
 }
 
@@ -400,7 +400,10 @@ static CGFloat const kContentViewTag  = 1011014;
         
         // 创建一个contentView
         CGFloat height = CGRectGetHeight(self.view.bounds) - CGRectGetHeight(navBar.frame);
-        height -= 34;
+        
+        if (CGRectGetHeight([[UIScreen mainScreen] bounds]) == 812) {
+            height -= 34;
+        }
         
         UIView* contentView = [[UIView alloc] initWithFrame:
                                CGRectMake(0,
