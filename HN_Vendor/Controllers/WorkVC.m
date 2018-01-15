@@ -71,7 +71,7 @@
                             @"page": @"DeclareListVC",
                             },
                         @{
-                            @"icon": @"icon_constract.png",
+                            @"icon": @"icon_contract.png",
                             @"name": @"合同执行",
                             @"page": @"ContractListVC",
                             },

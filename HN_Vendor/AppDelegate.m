@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "Defines.h"
 #import "GuideVC.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonCryptor.h>
 
 @interface AppDelegate () <UITabBarControllerDelegate>
 
@@ -46,7 +48,46 @@
     
     [self loadUnreadMessage];
     
+    NSLog(@"%@", [self AESEncryptStringByString:@"loginname=huyue&pwd=123321"]);
+    
     return YES;
+}
+
+- (NSString *)AESEncryptStringByString:(NSString *)string
+{
+    NSString *defaultKey = @"666AA4DF3533497D973D852004B975BC";
+    size_t bytesEncrypted = 0;
+    //#define BUFFSIZE 8192
+    
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    size_t bufferSize = data.length + kCCBlockSizeAES128;
+    char* buffer = malloc(bufferSize);
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(defaultKey.UTF8String, (CC_LONG)strlen(defaultKey.UTF8String), digest);
+    
+    CCCryptorStatus ret = CCCrypt(kCCEncrypt,
+                                  kCCAlgorithmAES128,
+                                  kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                  digest,
+                                  kCCKeySizeAES128,
+                                  NULL,
+                                  data.bytes,
+                                  data.length,
+                                  buffer, bufferSize,
+                                  &bytesEncrypted);
+    if (ret != kCCSuccess) {
+        free(buffer);
+        return nil;
+    }
+    NSMutableString *result = [[NSMutableString alloc] initWithCapacity:bytesEncrypted];
+    for(int i=0;i<bytesEncrypted;i++){
+        NSString *newHexStr = [NSString stringWithFormat:@"%02x",buffer[i]&0xff];///16进制数
+        [result appendString:newHexStr];
+    }
+    
+    free(buffer); buffer = NULL;
+    NSLog(@"REsult : [%@]", result);
+    return result;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
