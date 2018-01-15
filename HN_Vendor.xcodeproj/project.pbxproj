@@ -18,6 +18,7 @@
 		97CF18A61DC075C300ED8A73 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18A51DC075C300ED8A73 /* SystemConfiguration.framework */; };
 		97CF18D51DC0851400ED8A73 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18D41DC0851400ED8A73 /* libicucore.tbd */; };
 		97CF18D71DC088E100ED8A73 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97CF18D61DC088E100ED8A73 /* JavaScriptCore.framework */; };
+		990FBD6C200C6EEA0075DC6E /* Default-375w-812h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD6B200C6EEA0075DC6E /* Default-375w-812h@3x.png */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
 		9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */; };
 		9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB421FF1EAC50091A2AD /* PayListVC.m */; };
@@ -676,6 +677,7 @@
 		97CF18D41DC0851400ED8A73 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		97CF18D61DC088E100ED8A73 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		97F12FEA1DAB15AA00806E8A /* HN_Vendor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HN_Vendor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		990FBD6B200C6EEA0075DC6E /* Default-375w-812h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-812h@3x.png"; sourceTree = "<group>"; };
 		9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractPayCell.h; sourceTree = "<group>"; };
 		9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell.m; sourceTree = "<group>"; };
 		9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDeclareCell.h; sourceTree = "<group>"; };
@@ -3203,6 +3205,7 @@
 			children = (
 				995543981FDFDBCC00DC0134 /* Default-375w-667h@2x.png */,
 				995543991FDFDBCC00DC0134 /* Default-414w-736h@3x.png */,
+				990FBD6B200C6EEA0075DC6E /* Default-375w-812h@3x.png */,
 				9955439A1FDFDBCC00DC0134 /* Default-568h@2x.png */,
 				9955439B1FDFDBCC00DC0134 /* Default.png */,
 				9955439C1FDFDBCC00DC0134 /* Default@2x.png */,
@@ -3782,6 +3785,7 @@
 				998E43031FEB64640040E013 /* msg.tpl in Resources */,
 				995546CA1FDFDBCD00DC0134 /* work_icon_land@3x.png in Resources */,
 				995544DF1FDFDBCC00DC0134 /* Material-Design-Iconic-Font.ttf in Resources */,
+				990FBD6C200C6EEA0075DC6E /* Default-375w-812h@3x.png in Resources */,
 				995546341FDFDBCD00DC0134 /* guide_2.png in Resources */,
 				9955465F1FDFDBCD00DC0134 /* icon_calendar_done@3x.png in Resources */,
 				995546731FDFDBCD00DC0134 /* icon_feedback@3x.png in Resources */,

@@ -38,7 +38,7 @@
     
     [self.window makeKeyAndVisible];
     
-//    [[VersionCheckService sharedInstance] startCheckWithSilent:YES];
+    [[VersionCheckService sharedInstance] startCheckWithSilent:YES];
     
     if ( !canShow ) {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
