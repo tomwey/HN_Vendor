@@ -48,7 +48,7 @@
     
     [self loadUnreadMessage];
     
-    NSLog(@"%@", [self AESEncryptStringByString:@"loginname=huyue&pwd=123321"]);
+//    NSLog(@"%@, %@", [self AESEncryptStringByString:@"loginname=huyue&pwd=123321"], [@"666AA4DF3533497D973D852004B975BC" md5Hash]);
     
     return YES;
 }

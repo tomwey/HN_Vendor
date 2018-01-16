@@ -405,8 +405,8 @@
 
 - (void)gotoGuide
 {
-    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app showGuide:YES];
+//    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app showGuide:YES];
 }
 
 - (void)gotoTodo
