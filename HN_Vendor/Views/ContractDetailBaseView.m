@@ -169,6 +169,22 @@
     return label1;
 }
 
+- (void)gotoPayList
+{
+    void (^block)(NSInteger type) = self.userData[@"forwardMoreBlock"];
+    if (block) {
+        block(1);
+    }
+}
+
+- (void)gotoDeclareList
+{
+    void (^block)(NSInteger type) = self.userData[@"forwardMoreBlock"];
+    if (block) {
+        block(2);
+    }
+}
+
 - (void)addInfo2:(id)item
 {
     //
@@ -180,6 +196,15 @@
                                         AWSystemFontWithSize(12, YES),
                                         AWColorFromRGB(51, 51, 51));
     [self.scrollView addSubview:titleLabel];
+//    ›
+    UILabel *moreLabel = AWCreateLabel(CGRectMake(0, 0, 70, 30),
+                                       @"更多明细",
+                                       NSTextAlignmentRight,
+                                       AWSystemFontWithSize(12, NO),
+                                       AWColorFromRGB(153, 153, 153));
+    [self.scrollView addSubview:moreLabel];
+    moreLabel.center = CGPointMake(self.width - 15 - moreLabel.width / 2,
+                                   titleLabel.midY);
     
     UILabel *label1 = [self addLabelValue:item[@"unpaidamount"]
                                   forName:@"累计未付"
@@ -222,10 +247,16 @@
     progressLabel.text = [NSString stringWithFormat:@"%d%%", (int)(progress.progress * 100)];
     
     self.currentTop = progressLabel.bottom;
+    
+    UIButton *btn = AWCreateImageButton(nil, self, @selector(gotoPayList));
+    [self.scrollView addSubview:btn];
+    btn.frame = CGRectMake(10, titleLabel.top, self.width - 20, progressLabel.bottom - titleLabel.top);
+//    btn.backgroundColor = AWColorFromRGBA(0, 0, 0, 0.3);
 }
 
 - (void)addInfo3:(id)item
 {
+    // ›
     UILabel *titleLabel = AWCreateLabel(CGRectMake(15, self.currentTop + 10, self.width - 30,
                                                    30),
                                         @"变更签证",
@@ -233,6 +264,15 @@
                                         AWSystemFontWithSize(12, YES),
                                         AWColorFromRGB(51, 51, 51));
     [self.scrollView addSubview:titleLabel];
+    
+    UILabel *moreLabel = AWCreateLabel(CGRectMake(0, 0, 70, 30),
+                                       @"更多明细",
+                                       NSTextAlignmentRight,
+                                       AWSystemFontWithSize(12, NO),
+                                       AWColorFromRGB(153, 153, 153));
+    [self.scrollView addSubview:moreLabel];
+    moreLabel.center = CGPointMake(self.width - 15 - moreLabel.width / 2,
+                                   titleLabel.midY);
     
     UILabel *label1 = [self addLabelValue:item[@"visamoney"]
                                   forName:@"累计签证金额"
@@ -248,6 +288,10 @@
     label3.position = CGPointMake(self.width - 15 - label3.width, titleLabel.bottom + 10);
     
     self.currentTop = label3.bottom + 10;
+    
+    UIButton *btn = AWCreateImageButton(nil, self, @selector(gotoDeclareList));
+    [self.scrollView addSubview:btn];
+    btn.frame = CGRectMake(10, titleLabel.top, self.width - 20, label3.bottom - titleLabel.top);
 }
 
 - (void)addInfo4:(id)item

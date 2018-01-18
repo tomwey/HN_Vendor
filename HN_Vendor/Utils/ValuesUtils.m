@@ -30,6 +30,9 @@ NSString *HNFormatMoney(id obj, NSString *unit)
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     nf.numberStyle = NSNumberFormatterCurrencyStyle;
     
+    NSLocale *zhLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    nf.locale = zhLocale;
+    
     float num = [obj floatValue];
     
     NSString *str;

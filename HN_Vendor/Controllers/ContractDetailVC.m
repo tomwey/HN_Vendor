@@ -271,7 +271,14 @@
 {
     UIView *view = [self swipeViewForIndex:self.swipeView.currentPage];
     __weak typeof(self) weakSelf = self;
-    view.userData = @{ @"contractid": self.params[@"contractid"], @"owner": weakSelf };
+    
+    id block = ^(NSInteger type) {
+//        [weakSelf.tabStrip setSelectedIndex:type animated:YES];
+        [weakSelf.swipeView scrollToPage:type duration:0.0f]; // 0.35f
+        [weakSelf swipeViewDidEndDecelerating:weakSelf.swipeView];
+    };
+    view.userData = @{ @"contractid": self.params[@"contractid"], @"owner": weakSelf, @"forwardMoreBlock": block };
+    
     if ( [view respondsToSelector:@selector(startLoadingData)] ) {
         [view performSelector:@selector(startLoadingData) withObject:nil];
     }

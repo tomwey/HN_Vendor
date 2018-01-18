@@ -43,7 +43,7 @@
     [[VersionCheckService sharedInstance] startCheckWithSilent:YES];
     
     if ( !canShow ) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
+//        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
     }
     
     [self loadUnreadMessage];
