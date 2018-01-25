@@ -46,7 +46,12 @@
 //        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
     }
     
-    [self loadUnreadMessage];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadUnreadMessage2)
+                                                 name:@"kNeedLoadUnreadCountNotification"
+                                               object:nil];
+    
+    [self loadUnreadMessage:YES];
     
 //    NSLog(@"%@, %@", [self AESEncryptStringByString:@"loginname=huyue&pwd=123321"], [@"666AA4DF3533497D973D852004B975BC" md5Hash]);
     
@@ -92,10 +97,15 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self loadUnreadMessage];
+    [self loadUnreadMessage:YES];
 }
 
-- (void)loadUnreadMessage
+- (void)loadUnreadMessage2
+{
+    [self loadUnreadMessage:NO];
+}
+
+- (void)loadUnreadMessage:(BOOL)loadMessage
 {
     id userInfo = [[UserService sharedInstance] currentUser];
     
@@ -113,11 +123,11 @@
               @"param2": userInfo[@"loginname"] ?: @"",
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               } completion:^(id result, NSError *error) {
-                  [me handleResult:result error:error];
+                  [me handleResult:result error:error loadMessage:loadMessage];
               }];
 }
 
-- (void)handleResult:(id)result error:(NSError *)error
+- (void)handleResult:(id)result error:(NSError *)error loadMessage:(BOOL)yesOrNo
 {
     if ( !error && [result[@"rowcount"] integerValue] > 0 ) {
         id item = [result[@"data"] firstObject];
@@ -125,9 +135,11 @@
         NSInteger count = [item[@"unreadmsgnum"] integerValue];
         
         if (count > 0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
-                                                                object:nil
-                                                              userInfo:nil];
+            if (yesOrNo) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
+                                                                    object:nil
+                                                                  userInfo:nil];
+            }
             
             if (self.appTabBarController.viewControllers.count > 1) {
                 UIViewController *vc = self.appTabBarController.viewControllers[1];

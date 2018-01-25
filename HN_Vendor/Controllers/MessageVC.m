@@ -50,7 +50,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.tabBarItem.badgeValue = nil;
+//    self.tabBarItem.badgeValue = nil;
 }
 
 - (void)loadData

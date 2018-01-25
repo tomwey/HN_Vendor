@@ -33,7 +33,15 @@
                                                encoding:NSUTF8StringEncoding
                                                   error:nil];
     
-    NSString *content = [self.params[@"msgcontent"] stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+    NSString *content =
+    [self.params[@"msgcontent"] stringByReplacingOccurrencesOfString:@"\\s+"
+                                             withString:@"<br>"
+                                                options:NSRegularExpressionSearch // 注意里要选择这个枚举项,这个是用来匹配正则表达式的
+                                                  range:NSMakeRange (0, [self.params[@"msgcontent"] description].length)];
+    
+    content = [content stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+    
+    //[self.params[@"msgcontent"] stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
     html = [html stringByReplacingOccurrencesOfString:@"${title}" withString:self.params[@"msgtheme"]];
     html = [html stringByReplacingOccurrencesOfString:@"${content}" withString:content];
     
@@ -65,8 +73,11 @@
                            @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
                            @"param4": [self.params[@"supmsgid"] ?: @"0" description],
                            } completion:^(id result, NSError *error) {
-                               [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
-                                                                                   object:nil];
+                               if (!error) {
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"kNeedLoadUnreadCountNotification" object:nil];
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"kHasNewMessageNotification"
+                                                                                       object:nil];
+                               }
                            }];
     }
 }
