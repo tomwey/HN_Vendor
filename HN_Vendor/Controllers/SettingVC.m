@@ -60,10 +60,10 @@
     
     self.originalHeaderSize = self.tableHeader.frame.size;
     
-    __weak typeof(self) me = self;
-    self.tableHeader.didSelectCallback = ^(SettingTableHeader *sender) {
-        [me gotoUserProfile];
-    };
+//    __weak typeof(self) me = self;
+//    self.tableHeader.didSelectCallback = ^(SettingTableHeader *sender) {
+//        [me gotoUserProfile];
+//    };
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
