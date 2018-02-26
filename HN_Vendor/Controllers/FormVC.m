@@ -1379,7 +1379,7 @@
             UITextView *textView = [[UITextView alloc] initWithFrame:frame];
             textView.tag = 1002;
             [cell.contentView addSubview:textView];
-//            textView.backgroundColor = [UIColor redColor];
+            textView.backgroundColor = [UIColor clearColor];
             textView.font = [UIFont systemFontOfSize:16];
             self.textView = textView;
             
@@ -1397,8 +1397,11 @@
                 textView.text = nil;
                 textView.placeholder = [NSString stringWithFormat:@"输入%@", item[@"describe"]];//@"输入签字意见";
             }
+            NSLog(@"reload...");
             
             textView.placeholderAttributes = @{ NSFontAttributeName: textView.font ?: [UIFont systemFontOfSize:16] };
+            
+            textView.height = MAX([textView sizeThatFits:CGSizeMake(textView.width, MAXFLOAT)].height, 120);
             
             // 常用意见
             UIButton *opinionBtn = nil;
@@ -2135,6 +2138,12 @@
     id userData = textView.userData;
     
     self.formObjects[userData[@"field_name"]] = textView.text;
+    
+    textView.height = MAX([textView sizeThatFits:CGSizeMake(textView.width, MAXFLOAT)].height, 120);
+    
+    [self.tableView beginUpdates];
+    
+    [self.tableView endUpdates];
 }
 
 - (void)removeSingleContact:(UIButton *)sender
@@ -2183,6 +2192,15 @@
             return 50;
         }
     } else {
+        if ([item[@"data_type"] integerValue] == FormControlTypeTextArea) {
+            
+            UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width - 15 - 115, 120)];
+            textView.font = AWSystemFontWithSize(16, NO);
+            textView.text = self.formObjects[item[@"field_name"]];
+            
+            CGFloat height = [textView sizeThatFits:CGSizeMake(textView.width, MAXFLOAT)].height + 16;
+            return MAX(170, height);
+        }
         return height;
     }
 }
