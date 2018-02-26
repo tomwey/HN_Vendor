@@ -39,7 +39,7 @@
     
     [self addLabelValue:data[@"payableamount"]
                forLabel:self.payableLabel
-                forName:@"应付"
+                forName:@"产值"
                   color:AWColorFromRGB(74, 144, 226)];
     
     [self addLabelValue:data[@"paidamount"]

@@ -316,7 +316,10 @@
 
 - (void)gotoHelp
 {
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"HelpVC" params:nil];
+//    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"HelpVC" params:nil];
+//    [AWAppWindow().navController pushViewController:vc animated:YES];
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AttachmentPreviewVC" params:@{ @"item": @{ @"filename": @"操作指南", @"isdoc": @"1", @"addr": @"http://erp20-app.heneng.cn:16681/office/erp20-annex.heneng.cn/H_WF_INST_M/2018-02-26/343350/wopi/files/343350.docx" } }];
     [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 
