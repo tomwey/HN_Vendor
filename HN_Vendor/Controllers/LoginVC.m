@@ -247,6 +247,9 @@
                   [[AWMediator sharedInstance] openVCWithName:@"ResetPasswordVC" params:nil]
                                                       animated:YES];
              } else {
+                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"validLogin"];
+                 [[NSUserDefaults standardUserDefaults] synchronize];
+                 
                  AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                  
                  [app resetRootController];

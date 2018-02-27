@@ -171,7 +171,7 @@
     id currentUser = [[UserService sharedInstance] currentUser];
     if (currentUser) {
         BOOL hasChangedPwd = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasChangedPWD"];
-        if (hasChangedPwd) {
+        if (hasChangedPwd || [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"]) {
             rootVC = self.appRootController;
         } else {
             rootVC = [[NSClassFromString(@"ResetPasswordVC") alloc] init];

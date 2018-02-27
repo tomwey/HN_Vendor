@@ -206,18 +206,18 @@
     moreLabel.center = CGPointMake(self.width - 15 - moreLabel.width / 2,
                                    titleLabel.midY);
     
-    UILabel *label1 = [self addLabelValue:item[@"unpaidamount"]
-                                  forName:@"累计未付"
+    UILabel *label1 = [self addLabelValue:item[@"payableamount"]//item[@"unpaidamount"]
+                                  forName:@"累计完成产值"//@"累计未付"
                                      date:nil
                                     color:MAIN_THEME_COLOR];
     label1.position = CGPointMake(15, titleLabel.bottom + 10);
     
-    UILabel *label2 = [self addLabelValue:item[@"payableamount"]
-                                  forName:@"累计完成产值"
-                                     date:nil
-                                    color:AWColorFromRGB(74, 144, 226)];
-    label2.textAlignment = NSTextAlignmentCenter;
-    label2.position = CGPointMake(label1.right, titleLabel.bottom + 10);
+//    UILabel *label2 = [self addLabelValue:item[@"payableamount"]
+//                                  forName:@"累计完成产值"
+//                                     date:nil
+//                                    color:AWColorFromRGB(74, 144, 226)];
+//    label2.textAlignment = NSTextAlignmentCenter;
+//    label2.position = CGPointMake(label1.right, titleLabel.bottom + 10);
     
     UILabel *label3 = [self addLabelValue:item[@"paidamount"]
                                   forName:@"累计已付"

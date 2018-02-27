@@ -32,15 +32,15 @@
 {
     self.timeLabel.text = data[@"moneytypename"];
     
-    [self addLabelValue:data[@"unpaidamount"]
+    [self addLabelValue:data[@"showoutamount"]//data[@"unpaidamount"]
                forLabel:self.unpaidLabel
-                forName:@"未付"
+                forName:@"产值"//@"未付"
                   color:MAIN_THEME_COLOR];
     
-    [self addLabelValue:data[@"payableamount"]
-               forLabel:self.payableLabel
-                forName:@"产值"
-                  color:AWColorFromRGB(74, 144, 226)];
+//    [self addLabelValue:data[@"showoutamount"]
+//               forLabel:self.payableLabel
+//                forName:@"产值"
+//                  color:AWColorFromRGB(74, 144, 226)];
     
     [self addLabelValue:data[@"paidamount"]
                forLabel:self.paidLabel
