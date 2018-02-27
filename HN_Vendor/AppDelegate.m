@@ -34,7 +34,7 @@
     [[UITabBar appearance] setTintColor:MAIN_THEME_COLOR];
 //    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: MAIN_THEME_COLOR } forState:UIControlStateSelected];
     
-    BOOL canShow = [GuideVC canShowGuide];
+    BOOL canShow = NO;//[GuideVC canShowGuide];
     
     [self showGuide:canShow];
     
@@ -170,7 +170,12 @@
     
     id currentUser = [[UserService sharedInstance] currentUser];
     if (currentUser) {
-        rootVC = self.appRootController;
+        BOOL hasChangedPwd = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasChangedPWD"];
+        if (hasChangedPwd) {
+            rootVC = self.appRootController;
+        } else {
+            rootVC = [[NSClassFromString(@"ResetPasswordVC") alloc] init];
+        }
     } else {
         rootVC = [[NSClassFromString(@"LoginVC") alloc] init];
     }

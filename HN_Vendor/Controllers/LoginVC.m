@@ -242,14 +242,20 @@
 //                                position:CSToastPositionCenter];
              
              // 页面跳转
-             AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-             
-             [app resetRootController];
-             
-//             UINavigationController *nav = [[UINavigationController alloc] init];
-//             [nav pushViewController:app.appRootController animated:NO];
-             UINavigationController *nav = AWAppWindow().navController;
-             [nav pushViewController:app.appRootController animated:YES];
+             if ([self.passField.text isEqualToString:@"Hn123456"]) {
+                 [self.navigationController pushViewController:
+                  [[AWMediator sharedInstance] openVCWithName:@"ResetPasswordVC" params:nil]
+                                                      animated:YES];
+             } else {
+                 AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                 
+                 [app resetRootController];
+                 
+                 //             UINavigationController *nav = [[UINavigationController alloc] init];
+                 //             [nav pushViewController:app.appRootController animated:NO];
+                 UINavigationController *nav = AWAppWindow().navController;
+                 [nav pushViewController:app.appRootController animated:YES];
+             }
              
 //             AWAppWindow().rootViewController = app.appRootController;
              

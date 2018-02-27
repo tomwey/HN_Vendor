@@ -633,6 +633,7 @@
 		995547341FE1014E00DC0134 /* DeclareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 995547331FE1014E00DC0134 /* DeclareListVC.m */; };
 		995547391FE3A25400DC0134 /* icon_report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547361FE3A25300DC0134 /* icon_report@2x.png */; };
 		9955473A1FE3A25400DC0134 /* icon_declare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547371FE3A25300DC0134 /* icon_declare@2x.png */; };
+		99573EF42044E89900007D94 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99573EF22044E89800007D94 /* ResetPasswordVC.m */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99898DB32005C049004673DC /* ContractPayCell2.m */; };
@@ -1720,6 +1721,8 @@
 		995547331FE1014E00DC0134 /* DeclareListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareListVC.m; sourceTree = "<group>"; };
 		995547361FE3A25300DC0134 /* icon_report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_report@2x.png"; sourceTree = "<group>"; };
 		995547371FE3A25300DC0134 /* icon_declare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_declare@2x.png"; sourceTree = "<group>"; };
+		99573EF22044E89800007D94 /* ResetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordVC.m; sourceTree = "<group>"; };
+		99573EF32044E89800007D94 /* ResetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordVC.h; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99898DB32005C049004673DC /* ContractPayCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell2.m; sourceTree = "<group>"; };
@@ -2813,6 +2816,8 @@
 				995542931FDFDBCB00DC0134 /* ParamUtil.m */,
 				995542941FDFDBCB00DC0134 /* PasswordVC.h */,
 				995542951FDFDBCB00DC0134 /* PasswordVC.m */,
+				99573EF32044E89800007D94 /* ResetPasswordVC.h */,
+				99573EF22044E89800007D94 /* ResetPasswordVC.m */,
 				995542961FDFDBCB00DC0134 /* PlanAdjustVC.h */,
 				995542971FDFDBCB00DC0134 /* PlanAdjustVC.m */,
 				995542981FDFDBCB00DC0134 /* PlanConfirmVC.h */,
@@ -3884,6 +3889,7 @@
 				9955459F1FDFDBCC00DC0134 /* NSObject+APIService.m in Sources */,
 				995544E21FDFDBCC00DC0134 /* FSCalendar+Deprecated.m in Sources */,
 				995545ED1FDFDBCD00DC0134 /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
+				99573EF42044E89900007D94 /* ResetPasswordVC.m in Sources */,
 				995546F61FDFDBCD00DC0134 /* HNBadge.m in Sources */,
 				995545C31FDFDBCD00DC0134 /* TransmitVC.m in Sources */,
 				995545061FDFDBCC00DC0134 /* PNGenericChart.m in Sources */,
