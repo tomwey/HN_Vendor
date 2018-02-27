@@ -213,7 +213,7 @@
     label1.position = CGPointMake(15, titleLabel.bottom + 10);
     
     UILabel *label2 = [self addLabelValue:item[@"payableamount"]
-                                  forName:@"累计应付"
+                                  forName:@"累计完成产值"
                                      date:nil
                                     color:AWColorFromRGB(74, 144, 226)];
     label2.textAlignment = NSTextAlignmentCenter;
