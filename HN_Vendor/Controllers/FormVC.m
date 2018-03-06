@@ -549,7 +549,7 @@
     }
     
     label.width = 100;
-    label.numberOfLines = 1;
+    label.numberOfLines = 2;
     
     BOOL required = YES;
     if ( item[@"required"] ) {

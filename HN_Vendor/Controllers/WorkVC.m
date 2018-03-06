@@ -71,6 +71,11 @@
                             @"page": @"DeclareListVC",
                             },
                         @{
+                            @"icon": @"icon_declare.png",
+                            @"name": @"签证申报",
+                            @"page": @"SignListVC",
+                            },
+                        @{
                             @"icon": @"icon_contract.png",
                             @"name": @"合同执行",
                             @"page": @"ContractListVC",

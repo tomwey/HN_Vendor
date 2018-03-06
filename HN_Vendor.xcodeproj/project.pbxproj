@@ -636,6 +636,8 @@
 		99573EF42044E89900007D94 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99573EF22044E89800007D94 /* ResetPasswordVC.m */; };
 		99573EF72045463200007D94 /* hnapp-qrcode.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99573EF62045463100007D94 /* hnapp-qrcode.jpg */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
+		9976B1FB204E377A0035AFD9 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1F9204E37790035AFD9 /* SignListVC.m */; };
+		9976B1FE204E385F0035AFD9 /* SignFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1FD204E385F0035AFD9 /* SignFormVC.m */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99898DB32005C049004673DC /* ContractPayCell2.m */; };
 		998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43001FEB5A220040E013 /* MessageDetailVC.m */; };
@@ -1726,6 +1728,10 @@
 		99573EF32044E89800007D94 /* ResetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordVC.h; sourceTree = "<group>"; };
 		99573EF62045463100007D94 /* hnapp-qrcode.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "hnapp-qrcode.jpg"; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		9976B1F9204E37790035AFD9 /* SignListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
+		9976B1FA204E377A0035AFD9 /* SignListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
+		9976B1FC204E385F0035AFD9 /* SignFormVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignFormVC.h; sourceTree = "<group>"; };
+		9976B1FD204E385F0035AFD9 /* SignFormVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignFormVC.m; sourceTree = "<group>"; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99898DB32005C049004673DC /* ContractPayCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell2.m; sourceTree = "<group>"; };
 		99898DB42005C049004673DC /* ContractPayCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractPayCell2.h; sourceTree = "<group>"; };
@@ -2641,6 +2647,10 @@
 		995541E01FDFDBCB00DC0134 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9976B1FA204E377A0035AFD9 /* SignListVC.h */,
+				9976B1F9204E37790035AFD9 /* SignListVC.m */,
+				9976B1FC204E385F0035AFD9 /* SignFormVC.h */,
+				9976B1FD204E385F0035AFD9 /* SignFormVC.m */,
 				995541E11FDFDBCB00DC0134 /* AddSignVC.h */,
 				995541E21FDFDBCB00DC0134 /* AddSignVC.m */,
 				995541E31FDFDBCB00DC0134 /* ApplyLeaveVC.h */,
@@ -4003,6 +4013,7 @@
 				9955455F1FDFDBCC00DC0134 /* BackVC.m in Sources */,
 				9955452E1FDFDBCC00DC0134 /* APIManager.m in Sources */,
 				995545761FDFDBCC00DC0134 /* FlowcopyVC.m in Sources */,
+				9976B1FE204E385F0035AFD9 /* SignFormVC.m in Sources */,
 				995546181FDFDBCD00DC0134 /* ContactInsertHistory.m in Sources */,
 				995545581FDFDBCC00DC0134 /* AddSignVC.m in Sources */,
 				9955470B1FDFDBCD00DC0134 /* PlanProjectView.m in Sources */,
@@ -4230,6 +4241,7 @@
 				995545BA1FDFDBCD00DC0134 /* RulesSearchVC.m in Sources */,
 				995547121FDFDBCD00DC0134 /* SignCell.m in Sources */,
 				995545DB1FDFDBCD00DC0134 /* DGActivityIndicatorBallBeatAnimation.m in Sources */,
+				9976B1FB204E377A0035AFD9 /* SignListVC.m in Sources */,
 				995544D51FDFDBCC00DC0134 /* FAKFoundationIcons.m in Sources */,
 				995546DB1FDFDBCD00DC0134 /* HNNewFlowCountService.m in Sources */,
 				995545E91FDFDBCD00DC0134 /* DGActivityIndicatorBallZigZagAnimation.m in Sources */,

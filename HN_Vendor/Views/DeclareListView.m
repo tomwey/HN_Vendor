@@ -75,6 +75,10 @@
 //                NSString *contractID = [item[@"contractid"] description];
                 NSString *contractname = [item[@"contractname"] description];
                 
+                if (!contractname) {
+                    continue;
+                }
+                
                 NSMutableArray *array = (NSMutableArray *)[self.contractDeclares objectForKey:contractname];
                 if ( !array ) {
                     array = [[NSMutableArray alloc] init];
@@ -83,20 +87,29 @@
                     [temp addObject:contractname];
                     [array addObject:item];
                 } else {
-                    [array addObject:item];
+                    if (item) {
+                        [array addObject:item];
+                    }
+                    
                 }
             }
             
             NSMutableArray *temp2 = [NSMutableArray array];
             for (id obj in temp) {
                 id dict = @{
-                            @"name": obj,
-                            @"data": self.contractDeclares[obj],
+                            @"name": obj ?: @"",
+                            @"data": self.contractDeclares[obj] ?: [NSNull null],
                             };
                 [temp2 addObject:dict];
             }
             
-            self.dataSource.dataSource = temp2;
+            if ( temp2.count == 0 ) {
+                self.dataSource.dataSource = nil;
+                [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+            } else {
+                self.dataSource.dataSource = temp2;
+            }
+            
         }
         
         [self.tableView reloadData];
