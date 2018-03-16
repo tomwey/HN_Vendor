@@ -173,6 +173,7 @@
 //8 已取消
 //10  已申报
 //40  已审批
+//50  签证中
 //60  已签证
 //80  已作废
 - (UIColor *)colorByState:(id)state
@@ -200,9 +201,15 @@
         {
             return AWColorFromRGB(70, 121, 178);
         }
+            
+        case 50:
+        {
+            return  MAIN_THEME_COLOR;//AWColorFromRGB(252, 242, 206);
+        }
+        
         case 60:
         {
-            return AWColorFromRGB(118, 190, 219);
+            return AWColorFromRGB(11, 228, 253);
         }
         case 80:
         {
@@ -239,9 +246,40 @@
     
     self.timeLabel.text = HNDateFromObject(obj, @"T");
     
-    [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+    NSInteger visaid = [data[@"supvisaid"] integerValue];
     
-    [self setLabel:self.money2Label forData:data[@"visamoney"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+    BOOL showMoney = NO;
+    if ( visaid > 0 ) {
+        
+        if ( [data[@"state_num"] integerValue] >= 40 ) {
+            showMoney = YES;
+        }
+        
+        // 签证
+        [self setLabel:self.money1Label forData:data[@"visaappmoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+        
+        [self setLabel:self.money2Label forData:data[@"visaconfrimmoney"] prefix:@"核定" textColor: AWColorFromRGB(74,144,226)];
+        
+        if ( !showMoney ) {
+            [self setLabel2:self.money2Label prefix:@"核定" textColor:AWColorFromRGB(74,144,226)];
+        }
+        
+    } else {
+        if ( [data[@"state_num"] integerValue] == 60 ) {
+            showMoney = YES;
+        }
+        
+        // 变更
+        [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+        
+        [self setLabel:self.money2Label forData:data[@"visamoney"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+        
+        if ( !showMoney ) {
+            [self setLabel2:self.money2Label prefix:@"签证" textColor:AWColorFromRGB(74,144,226)];
+        }
+    }
+    
+    
 }
 
 - (void)updateStateInfo:(id)state
@@ -277,6 +315,23 @@
                               NSFontAttributeName: AWCustomFont(@"PingFang SC", 16),
                               NSForegroundColorAttributeName: color,
                               } range:[string rangeOfString:moneyStr]];
+    
+    label.attributedText = attrStr;
+}
+
+- (void)setLabel2:(UILabel *)label
+           prefix:(NSString *)prefix
+       textColor:(UIColor *)color
+{
+    NSString *moneyStr = @"--";
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@万", prefix, moneyStr];
+    
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrStr addAttributes:@{
+                             NSFontAttributeName: AWCustomFont(@"PingFang SC", 16),
+                             NSForegroundColorAttributeName: color,
+                             } range:[string rangeOfString:moneyStr]];
     
     label.attributedText = attrStr;
 }
