@@ -168,6 +168,26 @@
             self.disableFormInputs = YES;
             
             // 已申报
+//            [self.inFormControls insertObject:      @{
+//                                                      @"data_type": @"1",
+//                                                      @"datatype_c": @"文本框",
+//                                                      @"describe": @"签证金额",
+//                                                      @"field_name": @"money3",
+//                                                      @"item_name": @"",
+//                                                      @"item_value": @"",
+//                                                      @"readonly": @"1",
+//                                                      @"keyboard_type": @(UIKeyboardTypeNumberPad),
+//                                                      } atIndex:self.inFormControls.count - 1];
+            [self addCancelButton];
+        } else {
+            self.disableFormInputs = YES;
+            
+            if ( [self.params[@"canvisa"] boolValue] ) {
+                [self addVisaButton];
+            }
+        }
+        
+        if ( [self.params[@"state_num"] integerValue] == 60 ) {
             [self.inFormControls insertObject:      @{
                                                       @"data_type": @"1",
                                                       @"datatype_c": @"文本框",
@@ -178,13 +198,6 @@
 //                                                      @"readonly": @"1",
                                                       @"keyboard_type": @(UIKeyboardTypeNumberPad),
                                                       } atIndex:self.inFormControls.count - 1];
-            [self addCancelButton];
-        } else {
-            self.disableFormInputs = YES;
-            
-            if ( [self.params[@"canvisa"] boolValue] ) {
-                [self addVisaButton];
-            }
         }
     }
     

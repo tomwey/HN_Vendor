@@ -180,21 +180,23 @@
         } else if ( [self.params[@"state_num"] integerValue] == 10 ) {
             // 已申报
             self.disableFormInputs = YES;
-            
+            [self addCancelButton];
+        } else {
+            self.disableFormInputs = YES;
+        }
+        
+        if ( [self.params[@"state_num"] integerValue] >= 40 ) {
             // 已申报
             [self.inFormControls insertObject:      @{
                                                       @"data_type": @"1",
                                                       @"datatype_c": @"文本框",
-                                                      @"describe": @"签证金额",
+                                                      @"describe": @"核定金额",
                                                       @"field_name": @"money3",
                                                       @"item_name": @"",
                                                       @"item_value": @"",
 //                                                      @"readonly": @"1",
                                                       @"keyboard_type": @(UIKeyboardTypeNumberPad),
-                                                      } atIndex:self.inFormControls.count - 1];
-            [self addCancelButton];
-        } else {
-            self.disableFormInputs = YES;
+                                                      } atIndex:6];
         }
     }
     
@@ -307,7 +309,7 @@
         
         self.formObjects[@"sign_content"] = self.params[@"visacontent"] ?: @"";
         self.formObjects[@"money2"] = self.params[@"visaappmoney"] ?: @"";
-//        self.formObjects[@"money3"] = @([self.params[@"visamoney"] floatValue]);
+        self.formObjects[@"money3"] = @([self.params[@"visaconfrimmoney"] floatValue]);
         
         self.formObjects[@"sign_desc"] = self.params[@"visaprogress"] ?: @"";
         
