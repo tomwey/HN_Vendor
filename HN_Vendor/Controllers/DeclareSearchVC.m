@@ -26,7 +26,7 @@
                                  @"datatype_c": @"文本框",
                                  @"describe": @"关键字",
                                  @"field_name": @"keyword",
-                                 @"placeholder": @"输入变更主题/内容",
+                                 @"placeholder": @"输入关键字",
                                  @"item_name": @"",
                                  @"item_value": @"",
                                  @"required": @"0",
@@ -132,7 +132,7 @@
     }
     
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareSearchResultVC" params:self.formObjects];
-    vc.userData[@"funname"] = self.params[@"from"] ? @"供应商查询变更签证列表APP" : @"";
+    vc.userData = @{ @"funname": self.params[@"from"] ? @"供应商查询变更签证列表APP" : @"" };
     
     [self.navigationController pushViewController:vc animated:YES];
 }

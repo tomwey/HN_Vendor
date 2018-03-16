@@ -123,7 +123,7 @@
           @"keyboard_type": @(UIKeyboardTypeNumberPad),
           },
       @{
-          @"data_type": @"20",
+          @"data_type": @"19",
           @"datatype_c": @"上传组件",
           @"describe": @"照片",
           @"field_name": @"photos",
@@ -181,6 +181,10 @@
             [self addCancelButton];
         } else {
             self.disableFormInputs = YES;
+            
+            if ( [self.params[@"canvisa"] boolValue] ) {
+                [self addVisaButton];
+            }
         }
     }
     
@@ -190,6 +194,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeMe:)
+                                                 name:@"kNeedDismissNotification" object:nil];
     
     [self loadData];
 }
@@ -207,6 +215,30 @@
     cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
     
     self.tableView.height -= cancelBtn.height;
+}
+
+- (void)addVisaButton
+{
+    UIButton *visaBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+                                                        50),
+                                             @"签证",
+                                             [UIColor whiteColor],
+                                             self,
+                                             @selector(visaClick));
+    [self.contentView addSubview:visaBtn];
+    visaBtn.backgroundColor = MAIN_THEME_COLOR;
+    visaBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    self.tableView.height -= visaBtn.height;
+}
+
+- (void)visaClick
+{
+    NSMutableDictionary *dict = [self.params mutableCopy];
+    dict[@"_flag"] = @"1"; // 只是用来做页面交互的
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName: @"SignFormVC" params:dict];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)addToolButtons
@@ -348,6 +380,7 @@
                   @"param2": [userInfo[@"loginname"] ?: @"" description],
                   @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
                   @"param4": [self.params[@"supchangeid"] ?: @"0" description],
+                  @"param5": @"8",
                   } completion:^(id result, NSError *error) {
                       [me loadDone4:result error:error];
                   }];
@@ -697,10 +730,23 @@
     }
 }
 
+//- (void)closeMe:(id)sender
+//{
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+//}
+
 - (void)commit
 {
 //    NSLog(@"%@", self.formObjects);
     [self sendReqForType:2];
+}
+
+- (void)closeMe:(id)sender
+{
+    [self.navigationController ?: self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+    }];
 }
 
 - (void)cancelClick

@@ -172,7 +172,11 @@
         _dataSource.itemDidSelectBlock = ^(UIView<AWTableDataConfig> *sender, id selectedData) {
 //            NSLog(@"%@", selectedData);
             UIViewController *owner = me.userData[@"owner"];
-            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC"
+            
+            NSString *pageName = [me.userData[@"funname"] isEqualToString:@"供应商查询变更签证列表APP"]
+            ? @"SignFormVC" : @"DeclareFormVC";
+            
+            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:pageName
                                                                         params:selectedData];
             [owner presentViewController:vc animated:YES completion:nil];
         };

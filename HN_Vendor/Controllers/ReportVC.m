@@ -112,7 +112,7 @@
                                 @"item_value": @"",
                                 },
                             @{
-                                @"data_type": @"20",
+                                @"data_type": @"19",
                                 @"datatype_c": @"上传组件",
                                 @"describe": @"照片",
                                 @"field_name": @"photos",

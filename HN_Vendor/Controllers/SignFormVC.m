@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSArray *changeOptions;
 
 @property (nonatomic, strong) id selectedContact;
+@property (nonatomic, strong) id selectedChangeItem;
 
 @end
 
@@ -86,7 +87,7 @@
           @"placeholder": @"请先选择合同",
           },
       @{
-          @"data_type": @"21",
+          @"data_type": @"20",
           @"datatype_c": @"打开新页面",
           @"describe": @"指令/变更主题",
           @"field_name": @"sign_subject",
@@ -138,7 +139,7 @@
           @"item_value": @"",
           },
       @{
-          @"data_type": @"20",
+          @"data_type": @"19",
           @"datatype_c": @"上传组件",
           @"describe": @"照片",
           @"field_name": @"photos",
@@ -162,7 +163,7 @@
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
-    if (!self.params[@"state_num"]) {
+    if (!self.params[@"state_num"] || [self.params[@"canvisa"] boolValue]) {
         // 新建
         self.disableFormInputs = NO;
         self.totalCounter = 3;
@@ -261,26 +262,28 @@
 
 - (void)prepareFormObjects
 {
-    //changecontent = Sssssss;
-    //changedate = "2017-12-28T11:45:59+08:00";
-    //changemoney = 1000;
-    //changereasonid = 30;
-    //changetheme = Test;
-    //changetype = "\U53d8\U66f4";
-    //contractid = 2220761;
-    //contractmoney = 497744;
-    //contractname = "\U5173\U4e8e\U4ee5\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f\U9879\U76ee\U5546\U54c1\U623f\U4f5c\U4ef7\U652f\U4ed8\U73cd\U5b9d\U9526\U57ce\U4e00\U671f\U9879\U76ee\U5de5\U7a0b\U6b3e\U7684\U534f\U8bae\U4e66";
-    //contractphyno = "\U5408\Uff08LL\Uff09-E312-2017-004";
-    //"flow_mid" = NULL;
-    //progress = "\U672a\U5f00\U59cb";
-    //"project_id" = 1291427;
-    //"project_name" = "\U73cd\U5b9d\U73b2\U73d1\U4e00\U671f";
-    //"state_desc" = "\U5f85\U7533\U62a5";
-    //"state_num" = 0;
-    //supchangeid = 6;
-    //visamoney = NULL;
+//    addmoney = NULL;
+//    contractid = 2203231;
+//    contractmoney = "1681393.39";
+//    contractname = "\U67ab\U4e39\U94c2\U9e93\U4e00\U671f1\U30017\U30018\U30019\U53f7\U697c\U516c\U5171\U533a\U57df\U88c5\U9970\U5de5\U7a0b\U5408\U540c";
+//    contractphyno = "\U5408\Uff08WA\Uff09-E214-2017-015";
+//    "flow_mid" = NULL;
+//    order = 1;
+//    "project_id" = 1290827;
+//    "project_name" = "\U67ab\U4e39\U94c2\U9e93\U4e00\U671f";
+//    "state_desc" = "\U5f85\U7533\U62a5";
+//    "state_num" = 0;
+//    supchangeid = 0;
+//    supvisaid = 4011;
+//    visaappmoney = 987654321;
+//    visaconfrimmoney = NULL;
+//    visacontent = "";
+//    visadate = "2018-03-16T10:23:29+08:00";
+//    visaprogress = "\U521a\U5f00\U59cb\U8fdb\U5c55";
+//    visareason = "\U6ca1\U5f97\U539f\U56e0";
+//    visatheme = "\U6709\U7167\U7247\U7684";
     
-    if ( self.params[@"supchangeid"] ) {
+    if ( self.params[@"supvisaid"] || [self.params[@"canvisa"] boolValue] ) {
         self.formObjects[@"proj_name"] = @{ @"name": self.params[@"project_name"] ?: @"",
                                             @"value": [self.params[@"project_name"] ?: @"" description],
                                             };
@@ -290,13 +293,27 @@
                                                @"name": self.params[@"contractname"] ?: @"",
                                                @"value": [self.params[@"contractid"] ?: @"" description],
                                                };
+        
+        if (self.formObjects[@"contract_name"]) {
+            self.selectedContact = self.formObjects[@"contract_name"];
+        }
+        
         self.formObjects[@"money"] = self.params[@"contractmoney"];
         self.formObjects[@"contract_no"] = self.params[@"contractphyno"];
         
-        self.formObjects[@"sign_subject"] = self.params[@"visatheme"];
+        self.formObjects[@"sign_subject"] = @{ @"name": self.params[@"changetheme"] ?: @"", @"value": self.params[@"supchangeid"] ?: @"0" };
+        
+        self.selectedChangeItem = self.formObjects[@"sign_subject"];
+        
         self.formObjects[@"sign_content"] = self.params[@"visacontent"] ?: @"";
-        self.formObjects[@"money2"] = self.params[@"visamoney"];
+        self.formObjects[@"money2"] = self.params[@"visaappmoney"] ?: @"";
 //        self.formObjects[@"money3"] = @([self.params[@"visamoney"] floatValue]);
+        
+        self.formObjects[@"sign_desc"] = self.params[@"visaprogress"] ?: @"";
+        
+        self.formObjects[@"sign_reason"] = self.params[@"visareason"] ?: @"";
+        
+        self.formObjects[@"sign_name"] = self.params[@"visatheme"] ?: @"";
         
     } else {
         
@@ -352,7 +369,7 @@
                   @"param1": [userInfo[@"supid"] ?: @"0" description],
                   @"param2": [userInfo[@"loginname"] ?: @"" description],
                   @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-                  @"param4": [self.params[@"supchangeid"] ?: @"0" description],
+                  @"param4": [self.params[@"supvisaid"] ?: @"0" description],
                   @"param5": @"11",
                   } completion:^(id result, NSError *error) {
                       [me loadDone4:result error:error];
@@ -519,6 +536,10 @@
 
 - (void)openSelect:(id)item
 {
+    if ( [self.params[@"canvisa"] boolValue] ) {
+        return;
+    }
+    
     if ( !self.selectedContact ) {
         [self.contentView showHUDWithText:@"请先选择合同" offset:CGPointMake(0,20)];
         return;
@@ -534,8 +555,8 @@
                                   @"contract_id": [self.selectedContact[@"value"] description],
                                   @"selectCallback": selectCallback,
                                   } mutableCopy];
-    if ( item ) {
-        [dict setObject:item forKey:@"item"];
+    if ( item || self.selectedChangeItem ) {
+        [dict setObject:item ?: self.selectedChangeItem forKey:@"item"];
     }
     
     UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"SignOptionsVC" params:dict];
@@ -608,35 +629,35 @@
         [self.inFormControls replaceObjectAtIndex:0 withObject:newDict];
         
         ///
-        dict = [self.inFormControls objectAtIndex:5];
-        NSMutableArray *temp1 = [NSMutableArray array];
-        NSMutableArray *temp2 = [NSMutableArray array];
-        for (id item in self.changeEvents) {
-            [temp1 addObject:item[@"name"]];
-            [temp2 addObject:item[@"value"]];
-        }
-        
-        newDict = [dict mutableCopy];
-        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
-        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
-        
-        [self.inFormControls replaceObjectAtIndex:5 withObject:newDict];
-        
-        
-        ////
-        dict = [self.inFormControls objectAtIndex:6];
-        temp1 = [NSMutableArray array];
-        temp2 = [NSMutableArray array];
-        for (id item in self.changeReason) {
-            [temp1 addObject:item[@"name"]];
-            [temp2 addObject:item[@"value"]];
-        }
-        
-        newDict = [dict mutableCopy];
-        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
-        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
-        
-        [self.inFormControls replaceObjectAtIndex:6 withObject:newDict];
+//        dict = [self.inFormControls objectAtIndex:5];
+//        NSMutableArray *temp1 = [NSMutableArray array];
+//        NSMutableArray *temp2 = [NSMutableArray array];
+//        for (id item in self.changeEvents) {
+//            [temp1 addObject:item[@"name"]];
+//            [temp2 addObject:item[@"value"]];
+//        }
+//
+//        newDict = [dict mutableCopy];
+//        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
+//        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
+//
+//        [self.inFormControls replaceObjectAtIndex:5 withObject:newDict];
+//
+//
+//        ////
+//        dict = [self.inFormControls objectAtIndex:6];
+//        temp1 = [NSMutableArray array];
+//        temp2 = [NSMutableArray array];
+//        for (id item in self.changeReason) {
+//            [temp1 addObject:item[@"name"]];
+//            [temp2 addObject:item[@"value"]];
+//        }
+//
+//        newDict = [dict mutableCopy];
+//        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
+//        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
+//
+//        [self.inFormControls replaceObjectAtIndex:6 withObject:newDict];
         
         [self formControlsDidChange];
     }
@@ -780,10 +801,21 @@
                 (item[@"code"] && [item[@"code"] integerValue] == 0) ||
                 ([[[item allValues] firstObject] integerValue] == 1) ) {
                 NSString *msg = item[@"hint"] ?: @"操作成功";
-                [self.navigationController.view showHUDWithText:msg succeed:YES];
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
-                }];
+                [AWAppWindow() showHUDWithText:msg succeed:YES];
+                
+                if ( self.params[@"_flag"] ) {
+//                    [self.presentingViewController dismissViewControllerAnimated:YES
+//                                                                  completion:^{
+//                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+//                                                                  }];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kNeedDismissNotification"
+                                                                        object:nil];
+                } else {
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+                    }];
+                }
+                
             } else {
                 [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
             }

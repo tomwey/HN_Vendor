@@ -218,7 +218,7 @@
 {
     self.orderLabel.text = data[@"order"];
     
-    self.nameLabel.text  = data[@"changetheme"] ?: data[@"visatheme"];
+    self.nameLabel.text  = data[@"visatheme"] ?: data[@"changetheme"];
     
     if ( data[@"state_num"] ) {
 //        self.stateLabel.hidden = NO;

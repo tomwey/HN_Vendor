@@ -206,7 +206,7 @@
     moreLabel.center = CGPointMake(self.width - 15 - moreLabel.width / 2,
                                    titleLabel.midY);
     
-    UILabel *label1 = [self addLabelValue:item[@"payableamount"]//item[@"unpaidamount"]
+    UILabel *label1 = [self addLabelValue:item[@"showoutamount"]//item[@"unpaidamount"]
                                   forName:@"累计完成产值"//@"累计未付"
                                      date:nil
                                     color:MAIN_THEME_COLOR];
@@ -231,8 +231,8 @@
     progress.frame = CGRectMake(15, label3.bottom + 5, self.width - 30 - 60, 18);
     progress.progressTintColor = MAIN_THEME_COLOR;
     progress.trackTintColor = AWColorFromHex(@"#e6e6e6");
-    progress.progress = HNFloatFromObject(item[@"payableamount"], 0) == 0 ? 0 :
-    HNFloatFromObject(item[@"paidamount"], 0) / HNFloatFromObject(item[@"payableamount"], 0);
+    progress.progress = HNFloatFromObject(item[@"showoutamount"], 0) == 0 ? 0 :
+    HNFloatFromObject(item[@"paidamount"], 0) / HNFloatFromObject(item[@"showoutamount"], 0);
     
     UILabel *progressLabel = AWCreateLabel(CGRectMake(0, 0, 60, 30),
                                            nil,
