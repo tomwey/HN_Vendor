@@ -44,11 +44,6 @@
     }
     
     [self configData:data];
-    
-    NSLog(@"data: %@", data);
-    
-    
-    
 }
 
 - (UIColor *)colorByState:(id)state
@@ -285,7 +280,10 @@
 {
     id item = sender.view.userData;
     
-    NSLog(@"%@", item);
+//    NSLog(@"%@", item);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kOpenSignItemDetailNotification"
+                                                        object:item];
 }
 
 @end

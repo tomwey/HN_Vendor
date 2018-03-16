@@ -145,7 +145,9 @@
     
     self.navBar.title = self.params[@"title"] ?: @"";
     
-    [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
+    if ( !self.userData || ![[self.userData description] isEqualToString:@"1"] ) {
+        [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
+    }
     
     if (!self.params[@"state_num"]) {
         // 新建

@@ -538,8 +538,7 @@
         [dict setObject:item forKey:@"item"];
     }
     
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"SignOptionsVC"
-                                                                params:dict];
+    UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"SignOptionsVC" params:dict];
     
     [self presentViewController:vc animated:YES completion:nil];
 }

@@ -28,6 +28,20 @@
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
     [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(openDetail:)
+                                                 name:@"kOpenSignItemDetailNotification"
+                                               object:nil];
+}
+
+- (void)openDetail:(NSNotification *)noti
+{
+    id item = noti.object;
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC" params:item];
+    vc.userData = @"1";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)loadData
