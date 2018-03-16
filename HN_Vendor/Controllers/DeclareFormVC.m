@@ -216,19 +216,19 @@
 }
 
 + (BOOL)isValidMoney:(NSString *)str{
-    NSString * regex        = @"(/^-?[1-9]\\d*$/)";
+    NSString * regex        = @"((-?\\d+)(\\.\\d+)?)|(-?\\d+)";
     NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     BOOL isMatch            = [pred evaluateWithObject:str];
-    
-    if ( isMatch ) {
-        return YES;
-    }
-    
-    // 匹配浮点数
-    regex   = @"(/^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$/)";
-    pred    = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    isMatch = [pred evaluateWithObject:str];
-    
+//
+//    if ( isMatch ) {
+//        return YES;
+//    }
+//
+//    // 匹配浮点数
+//    regex   = @"(/^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$/)";
+//    pred    = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+//    isMatch = [pred evaluateWithObject:str];
+//
     return isMatch;
 }
 
