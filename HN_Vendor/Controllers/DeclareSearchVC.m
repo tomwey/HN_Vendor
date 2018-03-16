@@ -132,6 +132,7 @@
     }
     
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareSearchResultVC" params:self.formObjects];
+    vc.userData[@"funname"] = self.params[@"from"] ? @"供应商查询变更签证列表APP" : @"";
     
     [self.navigationController pushViewController:vc animated:YES];
 }

@@ -32,6 +32,10 @@
 
 @property (nonatomic, assign) NSInteger totalCounter;
 
+@property (nonatomic, strong) NSArray *changeOptions;
+
+@property (nonatomic, strong) id selectedContact;
+
 @end
 
 @implementation SignFormVC
@@ -82,12 +86,13 @@
           @"placeholder": @"请先选择合同",
           },
       @{
-          @"data_type": @"9",
-          @"datatype_c": @"下拉选",
+          @"data_type": @"21",
+          @"datatype_c": @"打开新页面",
           @"describe": @"指令/变更主题",
           @"field_name": @"sign_subject",
           @"item_name": @"",
           @"item_value": @"",
+          @"open_action": @"openSelect:",
           },
       @{
           @"data_type": @"1",
@@ -123,6 +128,14 @@
           @"item_name": @"",
           @"item_value": @"",
           @"placeholder": @"原因说明"
+          },
+      @{
+          @"data_type": @"10",
+          @"datatype_c": @"多行文本",
+          @"describe": @"变更内容",
+          @"field_name": @"sign_content",
+          @"item_name": @"",
+          @"item_value": @"",
           },
       @{
           @"data_type": @"20",
@@ -280,18 +293,10 @@
         self.formObjects[@"money"] = self.params[@"contractmoney"];
         self.formObjects[@"contract_no"] = self.params[@"contractphyno"];
         
-        self.formObjects[@"subject"] = self.params[@"changetheme"];
-        self.formObjects[@"event_type"] = @{
-                                            @"name": self.params[@"progress"] ?: @"",
-                                            @"value": self.params[@"progress"] ?: @"",
-                                            };
-        self.formObjects[@"event_reason"] = @{
-                                              @"name": @"",
-                                              @"value": [self.params[@"changereasonid"] ?: @"" description]
-                                              };
-        self.formObjects[@"change_content"] = self.params[@"changecontent"] ?: @"";
-        self.formObjects[@"money2"] = self.params[@"changemoney"];
-        self.formObjects[@"money3"] = @([self.params[@"visamoney"] floatValue]);
+        self.formObjects[@"sign_subject"] = self.params[@"visatheme"];
+        self.formObjects[@"sign_content"] = self.params[@"visacontent"] ?: @"";
+        self.formObjects[@"money2"] = self.params[@"visamoney"];
+//        self.formObjects[@"money3"] = @([self.params[@"visamoney"] floatValue]);
         
     } else {
         
@@ -348,6 +353,7 @@
                   @"param2": [userInfo[@"loginname"] ?: @"" description],
                   @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
                   @"param4": [self.params[@"supchangeid"] ?: @"0" description],
+                  @"param5": @"11",
                   } completion:^(id result, NSError *error) {
                       [me loadDone4:result error:error];
                   }];
@@ -496,14 +502,97 @@
 - (void)contractDidSelect:(id)selectedItem
 {
     id item = self.contracts2[[selectedItem[@"value"] description]];
+    self.selectedContact = selectedItem;
     
     if (item) {
+        [self.formObjects removeObjectForKey:@"sign_subject"];
+        
         self.formObjects[@"contract_no"] = item[@"contractphyno"];
         self.formObjects[@"money"] = item[@"contractmoney"];
         
 //        [self formControlsDidChange];
         [self.tableView reloadData];
+        
+//        [self loadData2:[selectedItem[@"value"] description]];
     }
+}
+
+- (void)openSelect:(id)item
+{
+    if ( !self.selectedContact ) {
+        [self.contentView showHUDWithText:@"请先选择合同" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    __weak typeof(self) me = self;
+    void (^selectCallback)(id data) = ^(id data) {
+        me.formObjects[@"sign_subject"] = @{ @"name": data[@"changetheme"] ?: @"", @"value": [data[@"supchangeid"] ?: @"0" description] };
+        [me.tableView reloadData];
+    };
+    
+    NSMutableDictionary *dict = [@{
+                                  @"contract_id": [self.selectedContact[@"value"] description],
+                                  @"selectCallback": selectCallback,
+                                  } mutableCopy];
+    if ( item ) {
+        [dict setObject:item forKey:@"item"];
+    }
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"SignOptionsVC"
+                                                                params:dict];
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)loadData2:(NSString *)contractNo
+{
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商可发起签证的变更列表APP",
+              @"param1": contractNo ?: @"",
+              @"param2": @"40",
+              @"param3": @"0"
+              } completion:^(id result, NSError *error) {
+//                  [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//
+//                  if ( [result[@"rowcount"] integerValue] != 0 ) {
+//                      self.changeOptions = result[@"data"];
+//                  } else {
+//                      self.changeOptions = nil;
+//                  }
+                  [me handleResult2:result error:error];
+              }];
+}
+
+- (void)handleResult2:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    id dict = [self.inFormControls objectAtIndex:4];
+    NSMutableDictionary *newDict = [dict mutableCopy];
+    
+    if ([result[@"rowcount"] integerValue] > 0) {
+        NSMutableArray *temp1 = [NSMutableArray array];
+        NSMutableArray *temp2 = [NSMutableArray array];
+        for (id item in result[@"data"]) {
+            [temp1 addObject:item[@"changetheme"]];
+            [temp2 addObject:item[@"supchangeid"]];
+        }
+        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
+        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
+    } else {
+        newDict[@"item_name"] = @"";
+        newDict[@"item_value"] = @"";
+    }
+    
+    [self.inFormControls replaceObjectAtIndex:4 withObject:newDict];
+    
+    [self formControlsDidChange];
 }
 
 - (void)loadDone
@@ -582,46 +671,50 @@
         return;
     }
     
+    NSString *changeID = @"";
+    if ( self.formObjects[@"sign_subject"] ) {
+        changeID = [self.formObjects[@"sign_subject"][@"value"] description];
+    }
+    
+    if (changeID.length == 0) {
+        [self.contentView showHUDWithText:@"必须选择指令/变更主题" offset:CGPointMake(0,20)];
+        return;
+    }
+    
     // 主题
-    NSString *theme = self.formObjects[@"subject"] ?: @"";
+    NSString *theme = self.formObjects[@"sign_name"] ?: @"";
     theme = [theme trim];
     if ( theme.length == 0 ) {
-        [self.contentView showHUDWithText:@"变更主题不能为空" offset:CGPointMake(0,20)];
+        [self.contentView showHUDWithText:@"签证主题不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
-    // 事项进展
-    NSString *eventType = @"";
-    if ( self.formObjects[@"event_type"] ) {
-        eventType = [self.formObjects[@"event_type"][@"value"] description];
-    }
-    if ( eventType.length == 0 ) {
-        [self.contentView showHUDWithText:@"必须选择事项进展" offset:CGPointMake(0,20)];
+    NSString *summary = self.formObjects[@"sign_desc"] ?: @"";
+    summary = [summary trim];
+    if ( summary.length == 0 ) {
+        [self.contentView showHUDWithText:@"进展说明不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
-    // 变更原因
-    NSString *reasonID = @"";
-    if ( self.formObjects[@"event_reason"] ) {
-        reasonID = [self.formObjects[@"event_reason"][@"value"] description];
-    }
     
-    if ( reasonID.length == 0 ) {
-        [self.contentView showHUDWithText:@"必须选择变更原因" offset:CGPointMake(0,20)];
+    NSString *reason = self.formObjects[@"sign_reason"] ?: @"";
+    reason = [reason trim];
+    if ( reason.length == 0 ) {
+        [self.contentView showHUDWithText:@"产生原因不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
+
     // 变更金额
     NSString *money = [self.formObjects[@"money2"] ?: @"" description];
     if ( money.length == 0 ) {
-        [self.contentView showHUDWithText:@"变更金额不能为空" offset:CGPointMake(0,20)];
+        [self.contentView showHUDWithText:@"申报金额不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
-    // 变更内容
-    NSString *opinion = [[self.formObjects[@"change_content"] ?: @"" description] trim];
-    if ( opinion.length == 0 ) {
-        [self.contentView showHUDWithText:@"变更内容不能为空" offset:CGPointMake(0,20)];
+    NSString *content = [self.formObjects[@"sign_content"] ?: @"" description];
+    if ( content.length == 0 ) {
+        [self.contentView showHUDWithText:@"签证内容不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
@@ -644,27 +737,29 @@
     
     id userInfo = [[UserService sharedInstance] currentUser];
     
-    NSString *changeID = [self.params[@"supchangeid"] ?: @"0" description];
+    NSString *visaID = [self.params[@"visaid"] ?: @"0" description];
     
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"供应商变更指令操作APP",
+              @"funname": @"供应商发起变更签证APP",
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [@(type) description],
-              @"param5": changeID,
-              @"param6": @"变更",
+              @"param5": visaID,
+              @"param6": changeID,
               @"param7": contractID,
               @"param8": theme,
-              @"param9": eventType,
-              @"param10": reasonID,
-              @"param11": money,
-              @"param12": opinion,
-              @"param13": IDs,
+              @"param9": @"1",
+              @"param10": summary,
+              @"param11": reason,
+              @"param12": money,
+              @"param13": content,
+              @"param14": IDs,
+              @"param15": @"1"
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];

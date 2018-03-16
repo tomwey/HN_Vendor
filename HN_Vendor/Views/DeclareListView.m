@@ -30,10 +30,13 @@
     id userInfo = [[UserService sharedInstance] currentUser];
     
     NSDictionary *params = self.userData;
-    
+    NSString *funname = self.userData[@"funname"];
+    if (funname.length == 0) {
+        funname = @"供应商查询变更指令列表APP";
+    }
     id reqParams = @{
                       @"dotype": @"GetData",
-                      @"funname": @"供应商查询变更指令列表APP",
+                      @"funname": funname,
                       @"param1": [userInfo[@"supid"] ?: @"0" description],
                       @"param2": [userInfo[@"loginname"] ?: @"" description],
                       @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],

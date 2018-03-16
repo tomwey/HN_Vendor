@@ -54,6 +54,7 @@
                                @"end_time": endTime,
                                @"owner": me,
                                @"project_id": projectID,
+                               @"funname": self.userData[@"funname"] ?: @""
                                };
     
     [self.listView startLoading:^(BOOL succeed, NSError *error) {

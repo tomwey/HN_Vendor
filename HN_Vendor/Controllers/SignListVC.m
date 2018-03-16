@@ -166,7 +166,7 @@
     NSString *state = self.swipeView.currentPage == 0 ? @"0" : @"10";
     
     __weak typeof(self) me = self;
-    listView.userData = @{ @"state": state, @"owner": me };
+    listView.userData = @{ @"state": state, @"owner": me, @"funname": @"供应商查询变更签证列表APP" };
     
     [listView startLoading:^(BOOL succeed, NSError *error) {
         
@@ -176,7 +176,7 @@
 - (void)search:(id)sender
 {
     UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"DeclareSearchVC"
-                                                                   params:nil];
+                                                                   params:@{ @"from": @"1" }];
     [self presentViewController:vc animated:YES completion:nil];
 }
 

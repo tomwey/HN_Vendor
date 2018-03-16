@@ -27,6 +27,8 @@
 		9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */; };
 		9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB421FF1EAC50091A2AD /* PayListVC.m */; };
 		9947AB461FF229B30091A2AD /* DeclareFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB451FF229B30091A2AD /* DeclareFormVC.m */; };
+		994E1BA9205B533D005333C0 /* SignOptionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BA8205B533D005333C0 /* SignOptionsVC.m */; };
+		994E1BAC205B5CB0005333C0 /* SignOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BAB205B5CB0005333C0 /* SignOptionCell.m */; };
 		995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */; };
 		995544BF1FDFDBCC00DC0134 /* NSArray+CTPersistanceRecordTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406B1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.m */; };
 		995544C01FDFDBCC00DC0134 /* NSString+ReqularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9955406F1FDFDBCB00DC0134 /* NSString+ReqularExpression.m */; };
@@ -697,6 +699,10 @@
 		9947AB421FF1EAC50091A2AD /* PayListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayListVC.m; sourceTree = "<group>"; };
 		9947AB441FF229B30091A2AD /* DeclareFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareFormVC.h; sourceTree = "<group>"; };
 		9947AB451FF229B30091A2AD /* DeclareFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareFormVC.m; sourceTree = "<group>"; };
+		994E1BA7205B533D005333C0 /* SignOptionsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionsVC.h; sourceTree = "<group>"; };
+		994E1BA8205B533D005333C0 /* SignOptionsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignOptionsVC.m; sourceTree = "<group>"; };
+		994E1BAA205B5CB0005333C0 /* SignOptionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionCell.h; sourceTree = "<group>"; };
+		994E1BAB205B5CB0005333C0 /* SignOptionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignOptionCell.m; sourceTree = "<group>"; };
 		995540651FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPersistanceAsyncExecutor.h; sourceTree = "<group>"; };
 		995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTPersistanceAsyncExecutor.m; sourceTree = "<group>"; };
 		9955406A1FDFDBCB00DC0134 /* NSArray+CTPersistanceRecordTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CTPersistanceRecordTransform.h"; sourceTree = "<group>"; };
@@ -2894,6 +2900,8 @@
 				9947AB451FF229B30091A2AD /* DeclareFormVC.m */,
 				99D44FA71FFCCA5E00EF0558 /* ReportListVC.h */,
 				99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */,
+				994E1BA7205B533D005333C0 /* SignOptionsVC.h */,
+				994E1BA8205B533D005333C0 /* SignOptionsVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3575,6 +3583,8 @@
 				99D44FA41FFCAC4200EF0558 /* PayTimeView.m */,
 				99D44FAA1FFCCC5C00EF0558 /* ReportCell.h */,
 				99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */,
+				994E1BAA205B5CB0005333C0 /* SignOptionCell.h */,
+				994E1BAB205B5CB0005333C0 /* SignOptionCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4213,6 +4223,7 @@
 				995545C01FDFDBCD00DC0134 /* SubmitVC.m in Sources */,
 				995544F81FDFDBCC00DC0134 /* JTSAnimatedGIFUtility.m in Sources */,
 				995544C31FDFDBCC00DC0134 /* CTPersistanceDataBase.m in Sources */,
+				994E1BA9205B533D005333C0 /* SignOptionsVC.m in Sources */,
 				995545BB1FDFDBCD00DC0134 /* RulesVC.m in Sources */,
 				995545D51FDFDBCD00DC0134 /* UIAlertView+AFNetworking.m in Sources */,
 				9955450A1FDFDBCC00DC0134 /* PNPieChart.m in Sources */,
@@ -4236,6 +4247,7 @@
 				995544E91FDFDBCC00DC0134 /* FSCalendarConstants.m in Sources */,
 				995544F11FDFDBCC00DC0134 /* FSCalendarWeekdayView.m in Sources */,
 				995545DC1FDFDBCD00DC0134 /* DGActivityIndicatorBallClipRotateAnimation.m in Sources */,
+				994E1BAC205B5CB0005333C0 /* SignOptionCell.m in Sources */,
 				995545AA1FDFDBCC00DC0134 /* OutputJDConfirmVC.m in Sources */,
 				9955454C1FDFDBCC00DC0134 /* UITableView+RemoveBlankCells.m in Sources */,
 				995545BA1FDFDBCD00DC0134 /* RulesSearchVC.m in Sources */,

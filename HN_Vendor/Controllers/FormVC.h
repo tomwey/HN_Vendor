@@ -28,10 +28,11 @@ typedef NS_ENUM(NSInteger, FormControlType) {
     FormControlTypeRequestReply = 17, // 请示批复
     FormControlTypeAttendanceException = 18, // 考勤异常
     FormControlTypeUploadImageControl  = 20, // 上传图片
+    FormControlTypeOpenSelectPage = 21, // 打开一个新页面
 };
 
 static CGFloat ControlHeights[] = {
-    50,50,50,50,50,0,50,50,50,170,0,50,50,50,50,50,121,118,0
+    50,50,50,50,50,0,50,50,50,170,0,50,50,50,50,50,121,118,0,50
 };
 
 @interface FormVC : BaseNavBarVC

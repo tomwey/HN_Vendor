@@ -765,6 +765,50 @@
             
         }
             break;
+        case FormControlTypeOpenSelectPage:
+        {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            
+            UILabel *detailLabel = AWCreateLabel(CGRectMake(label.right,
+                                                            label.top,
+                                                            self.contentView.width - 20 - 10 - label.right,
+                                                            label.height),
+                                                 nil,
+                                                 NSTextAlignmentRight,
+                                                 nil,
+                                                 IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR);
+            [cell.contentView addSubview:detailLabel];
+            detailLabel.tag = 1002;
+            detailLabel.numberOfLines = 0;
+            
+            detailLabel.adjustsFontSizeToFitWidth = YES;
+            
+            NSString *key = [item[@"field_name"] description];
+            if ( self.formObjects[key] ) {
+                id currentItem = self.formObjects[key];
+                
+//                if ( [currentItem[@"name"] description].length == 0 ) {
+//                    NSArray *names = [item[@"item_name"] componentsSeparatedByString:@","];
+//                    NSArray *values = [item[@"item_value"] componentsSeparatedByString:@","];
+//                    NSInteger index = [values indexOfObject:[currentItem[@"value"] description]];
+//                    if ( index != NSNotFound && index < names.count ) {
+//                        detailLabel.text = names[index];
+//
+//                        self.formObjects[key] = @{
+//                                                  @"name": detailLabel.text,
+//                                                  @"value": currentItem[@"value"]
+//                                                  };
+//                    }
+//                } else {
+                    detailLabel.text = currentItem[@"name"];
+//                }
+                
+            } else {
+                detailLabel.text = item[@"placeholder"] ?: [NSString stringWithFormat:@"选择%@", item[@"describe"]];
+            }
+        }
+            break;
         case FormControlTypeSelect:
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -2335,6 +2379,17 @@
                                afterDelay:.1];
                 }
             };
+        }
+            break;
+        
+        case FormControlTypeOpenSelectPage:
+        {
+            NSString *sel = item[@"open_action"];
+            if ( [self respondsToSelector:NSSelectorFromString(sel)] ) {
+                [self performSelector:NSSelectorFromString(sel)
+                           withObject:self.formObjects[item[@"field_name"]]
+                           afterDelay:.1];
+            }
         }
             break;
         

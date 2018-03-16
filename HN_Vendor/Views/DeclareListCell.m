@@ -218,7 +218,7 @@
 {
     self.orderLabel.text = data[@"order"];
     
-    self.nameLabel.text  = data[@"changetheme"];
+    self.nameLabel.text  = data[@"changetheme"] ?: data[@"visatheme"];
     
     if ( data[@"state_num"] ) {
 //        self.stateLabel.hidden = NO;
@@ -235,7 +235,9 @@
 //        self.stateLabel.hidden = YES;
     }
     
-    self.timeLabel.text = HNDateFromObject(data[@"changedate"], @"T");
+    id obj = data[@"changedate"] ?: data[@"visadate"];
+    
+    self.timeLabel.text = HNDateFromObject(obj, @"T");
     
     [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
     
