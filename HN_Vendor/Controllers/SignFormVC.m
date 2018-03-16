@@ -110,7 +110,7 @@
           @"field_name": @"money2",
           @"item_name": @"",
           @"item_value": @"",
-          @"keyboard_type": @(UIKeyboardTypeNumberPad),
+          @"keyboard_type": @(UIKeyboardTypeNumbersAndPunctuation),
           },
       @{
           @"data_type": @"1",
@@ -681,6 +681,23 @@
 //@sContentDesc varchar(8000),--变更内容
 //@sAnnexIDs varchar(500)='',--附件/图片ID
 
++ (BOOL)isValidMoney:(NSString *)str{
+    NSString * regex        = @"(/^-?[1-9]\\d*$/)";
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch            = [pred evaluateWithObject:str];
+    
+    if ( isMatch ) {
+        return YES;
+    }
+    
+    // 匹配浮点数
+    regex   = @"(/^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$/)";
+    pred    = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    isMatch = [pred evaluateWithObject:str];
+    
+    return isMatch;
+}
+
 - (void)sendReqForType:(NSInteger)type
 {
     // 合同
@@ -731,6 +748,11 @@
     NSString *money = [self.formObjects[@"money2"] ?: @"" description];
     if ( money.length == 0 ) {
         [self.contentView showHUDWithText:@"申报金额不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    if ( ![[self class] isValidMoney:money] ) {
+        [self.contentView showHUDWithText:@"不是一个正确的金额" offset:CGPointMake(0,20)];
         return;
     }
     
