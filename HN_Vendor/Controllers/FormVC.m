@@ -165,8 +165,23 @@
 {
     _disableFormInputs = disableFormInputs;
     
-    for (UITableViewCell *cell in [self.tableView visibleCells]) {
-        cell.userInteractionEnabled = !disableFormInputs;
+//    for (UITableViewCell *cell in [self.tableView visibleCells]) {
+//        cell.userInteractionEnabled = !disableFormInputs;
+//    }
+    
+    NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
+    for (NSIndexPath *ip in indexPaths) {
+        id item = self.dataSource[ip.section];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
+        
+        if ( [item[@"data_type"] integerValue] == FormControlTypeUploadImageControl ) {
+            UploadImageControl *control = (UploadImageControl *)[cell.contentView viewWithTag:1002];
+            control.enabled = !disableFormInputs;
+            cell.userInteractionEnabled = YES;
+        } else {
+            cell.userInteractionEnabled = !disableFormInputs;
+        }
+        
     }
 }
 
@@ -527,7 +542,17 @@
     
     [self addControlAtIndexPath:indexPath forCell:cell];
     
-    cell.userInteractionEnabled = !self.disableFormInputs;
+    id item = self.dataSource[indexPath.section];
+    if ( [item[@"data_type"] integerValue] == FormControlTypeUploadImageControl ) {
+        cell.userInteractionEnabled = YES;
+        
+        UploadImageControl *control = (UploadImageControl *)[cell.contentView viewWithTag:1002];
+        control.enabled = !self.disableFormInputs;
+        
+    } else {
+        cell.userInteractionEnabled = !self.disableFormInputs;
+    }
+    
     
     return cell;
 }

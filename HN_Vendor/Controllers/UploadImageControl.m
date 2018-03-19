@@ -30,6 +30,8 @@
 
 @property (nonatomic, strong) NSMutableArray *totalUploadImages;
 
+@property (nonatomic, strong) NSMutableArray *deletedAttachments;
+
 @end
 
 @interface ImagePreviewVC : BaseNavBarVC
@@ -43,12 +45,18 @@
 //- (instancetype)initWithFrame:(CGRect)frame
 //{
 //    if ( self = [super initWithFrame:frame] ) {
+//        self.deletedAttachments = [@[] mutableCopy];
+//        
 //        [self.imageButtons addObject:self.addButton];
-//
+//        
 //        [[NSNotificationCenter defaultCenter] addObserver:self
 //                                                 selector:@selector(deleteImage:)
 //                                                     name:@"kUploadedImageDidDeleteNotification"
 //                                                   object:nil];
+//        
+//        self.uploadImages = @[];
+//        
+//        [self addImages];
 //    }
 //    return self;
 //}
@@ -56,6 +64,11 @@
 - (instancetype)initWithAttachments:(NSArray *)attachments
 {
     if (self = [super init]) {
+        
+        _enabled = YES;
+        
+        self.deletedAttachments = [@[] mutableCopy];
+        
         [self.imageButtons addObject:self.addButton];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -117,6 +130,10 @@
 
 - (void)addImage
 {
+    if ( !self.enabled ) {
+        return;
+    }
+    
     TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self];
     
     imagePickerVC.allowTakePicture  = YES;
@@ -318,7 +335,14 @@
 {
     UIButton *sender = noti.object;
     
+    [self.deletedAttachments addObject:[sender.userData[@"id"] description]];
+    
     [self close:sender];
+}
+
+- (NSArray *)deletedAttachmentIDs
+{
+    return [self.deletedAttachments copy];
 }
 
 - (void)close:(UIButton *)sender
@@ -343,7 +367,8 @@
 {
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ImagePreviewVC"
                                                                 params:@{
-                                                                         @"imageButton": sender
+                                                                         @"imageButton": sender,
+                                                                         @"enabled": @(self.enabled),
                                                                          }];
     [self.owner presentViewController:vc animated:YES completion:nil];
 }
@@ -453,18 +478,22 @@
     UIButton *closeBtn = HNCloseButton(34, self, @selector(close));
     [self addLeftItemWithView:closeBtn leftMargin:2];
     
-    __weak typeof(self) me = self;
-    [self addRightItemWithTitle:@"删除"
-                titleAttributes:@{  }
-                           size:CGSizeMake(44, 40)
-                    rightMargin:5
-                       callback:^{
-                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确定要删除吗？" message:@""
-                                                                          delegate:me
-                                                                 cancelButtonTitle:nil
-                                                                 otherButtonTitles:@"取消", @"确定", nil];
-                           [alert show];
-                       }];
+    BOOL enabled = [self.params[@"enabled"] boolValue];
+    
+    if (enabled) {
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"删除"
+                    titleAttributes:@{  }
+                               size:CGSizeMake(44, 40)
+                        rightMargin:5
+                           callback:^{
+                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确定要删除吗？" message:@""
+                                                                              delegate:me
+                                                                     cancelButtonTitle:nil
+                                                                     otherButtonTitles:@"取消", @"确定", nil];
+                               [alert show];
+                           }];
+    }
     
     UIImageView *imageView = AWCreateImageView(nil);
     [self.contentView addSubview:imageView];
