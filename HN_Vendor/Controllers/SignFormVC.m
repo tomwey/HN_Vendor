@@ -781,7 +781,7 @@
     
     id userInfo = [[UserService sharedInstance] currentUser];
     
-    NSString *visaID = [self.params[@"visaid"] ?: @"0" description];
+    NSString *visaID = [self.params[@"supvisaid"] ?: @"0" description];
     
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
