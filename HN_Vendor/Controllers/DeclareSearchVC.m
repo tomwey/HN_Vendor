@@ -16,6 +16,11 @@
 @property (nonatomic, strong) NSMutableArray *projectIDs;
 @property (nonatomic, strong) NSMutableArray *projectNames;
 
+@property (nonatomic, assign) NSInteger counter;
+
+@property (nonatomic, strong) id optionData;
+@property (nonatomic, strong) id contractData;
+
 @end
 
 @implementation DeclareSearchVC
@@ -92,35 +97,84 @@
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil params:@{
+                       @"dotype": @"GetData",
+                       @"funname": @"供应商取值列表数据查询APP",
+                       @"param1": self.params[@"from"] ? @"签证状态" : @"变更状态",
+                       } completion:^(id result, NSError *error) {
+                           [me handleResult2:result error:error];
+                       }];
+}
+
+- (void)handleResult2:(id)result error:(NSError *)error
+{
+    self.optionData = result;
+    
+    [self loadDone];
 }
 
 - (void)handleResult:(id)result error:(NSError *)error
 {
-    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
     
-    if (!error && [result[@"rowcount"] integerValue] > 0) {
-        NSArray *data = result[@"data"];
+    self.contractData = result;
+    
+    [self loadDone];
+}
+
+- (void)loadDone
+{
+    self.counter++;
+    if ( self.counter == 2 ) {
+        self.counter = 0;
         
-//        "project_id" = 1291426;
-//        "project_name" = "\U73cd\U5b9d\U9526\U57ce\U4e00\U671f";
+        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         
-        for (id item in data) {
-            if ( ![self.projectNames containsObject:item[@"project_name"]] ) {
-                [self.projectNames addObject:item[@"project_name"]];
-                [self.projectIDs addObject:[item[@"project_id"] description]];
+        if ([self.contractData[@"rowcount"] integerValue] > 0) {
+            NSArray *data = self.contractData[@"data"];
+            
+            //        "project_id" = 1291426;
+            //        "project_name" = "\U73cd\U5b9d\U9526\U57ce\U4e00\U671f";
+            
+            for (id item in data) {
+                if ( ![self.projectNames containsObject:item[@"project_name"]] ) {
+                    [self.projectNames addObject:item[@"project_name"]];
+                    [self.projectIDs addObject:[item[@"project_id"] description]];
+                }
+            }
+            
+            if (self.projectNames.count > 1) {
+                id dict = [self.inFormControls lastObject];
+                NSMutableDictionary *newDict = [dict mutableCopy];
+                newDict[@"item_name"] = [self.projectNames componentsJoinedByString:@","];
+                newDict[@"item_value"] = [self.projectIDs componentsJoinedByString:@","];
+                [self.inFormControls replaceObjectAtIndex:3 withObject:newDict];
             }
         }
         
-        if (self.projectNames.count > 1) {
-            id dict = [self.inFormControls lastObject];
-            NSMutableDictionary *newDict = [dict mutableCopy];
-            newDict[@"item_name"] = [self.projectNames componentsJoinedByString:@","];
-            newDict[@"item_value"] = [self.projectIDs componentsJoinedByString:@","];
-            [self.inFormControls replaceObjectAtIndex:3 withObject:newDict];
+        if ( [self.optionData[@"rowcount"] integerValue] > 0 ) {
+            NSArray *data = self.optionData[@"data"];
             
-            [self formControlsDidChange];
+            NSMutableArray *temp1 = [@[@"全部"] mutableCopy];
+            NSMutableArray *temp2 = [@[@"-1"] mutableCopy];
+            for (id dic in data) {
+                [temp1 addObject:dic[@"dic_name"] ?: @""];
+                [temp2 addObject:[dic[@"dic_value"] ?: @"" description]];
+            }
+            
+            id dict = [self.inFormControls objectAtIndex:1];
+            NSMutableDictionary *newDict = [dict mutableCopy];
+            newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
+            newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
+            [self.inFormControls replaceObjectAtIndex:1 withObject:newDict];
         }
+        
+        [self formControlsDidChange];
+        
     }
+    
 }
 
 - (void)done
