@@ -182,7 +182,7 @@
 
 - (void)add:(id)sender
 {
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"SignFormVC" params:@{ @"title": @"发起申报", @"type": @"1" }];
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"SignFormVC" params:@{ @"title": @"发起签证", @"type": @"1" }];
     [self presentViewController:vc animated:YES completion:nil];
 }
 

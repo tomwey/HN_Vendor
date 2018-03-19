@@ -6,10 +6,10 @@
 //  Copyright © 2017 tomwey. All rights reserved.
 //
 
-#import "ContractDeclareCell.h"
+#import "ContractSignCell.h"
 #import "Defines.h"
 
-@interface ContractDeclareCell ()
+@interface ContractSignCell ()
 
 @property (nonatomic, strong) UILabel *nameLabel;
 
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation ContractDeclareCell
+@implementation ContractSignCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,7 +35,7 @@
 
 - (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *, id))selectBlock
 {
-    self.nameLabel.text  = data[@"changetheme"];
+    self.nameLabel.text  = data[@"visatheme"];
     
     if ( data[@"state_num"] ) {
         //        self.stateLabel.hidden = NO;
@@ -52,19 +52,19 @@
         self.stateLabel.hidden = YES;
     }
     
-    self.timeLabel.text = HNDateFromObject(data[@"changedate"], @"T");
+    self.timeLabel.text = HNDateFromObject(data[@"visadate"], @"T");
     
-    [self setLabel:self.money1Label forData:data[@"changemoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
+    [self setLabel:self.money1Label forData:data[@"visaappmoney"] prefix:@"申报" textColor: MAIN_THEME_COLOR];
     
-    [self setLabel:self.money2Label forData:data[@"visamoney"] prefix:@"签证" textColor: AWColorFromRGB(74,144,226)];
+    [self setLabel:self.money2Label forData:data[@"visaconfirmmoney"] prefix:@"核定" textColor: AWColorFromRGB(74,144,226)];
     
     BOOL showMoney = NO;
-    if ( [data[@"state_num"] integerValue] == 60 ) {
+    if ( [data[@"state_num"] integerValue] >= 40 ) {
         showMoney = YES;
     }
     
     if ( !showMoney ) {
-        [self setLabel2:self.money2Label prefix:@"签证" textColor:AWColorFromRGB(74,144,226)];
+        [self setLabel2:self.money2Label prefix:@"核定" textColor:AWColorFromRGB(74,144,226)];
     }
     
 //    self.nameLabel.text  = data[@"name"];

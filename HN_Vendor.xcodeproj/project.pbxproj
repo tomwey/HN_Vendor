@@ -637,6 +637,8 @@
 		9955473A1FE3A25400DC0134 /* icon_declare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 995547371FE3A25300DC0134 /* icon_declare@2x.png */; };
 		99573EF42044E89900007D94 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99573EF22044E89800007D94 /* ResetPasswordVC.m */; };
 		99573EF72045463200007D94 /* hnapp-qrcode.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99573EF62045463100007D94 /* hnapp-qrcode.jpg */; };
+		995DF707205F903A008D63D8 /* ContractDetailSignView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995DF706205F9039008D63D8 /* ContractDetailSignView.m */; };
+		995DF70A205F929F008D63D8 /* ContractSignCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 995DF708205F929E008D63D8 /* ContractSignCell.m */; };
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		9976B1FB204E377A0035AFD9 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1F9204E37790035AFD9 /* SignListVC.m */; };
 		9976B1FE204E385F0035AFD9 /* SignFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1FD204E385F0035AFD9 /* SignFormVC.m */; };
@@ -1733,6 +1735,10 @@
 		99573EF22044E89800007D94 /* ResetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordVC.m; sourceTree = "<group>"; };
 		99573EF32044E89800007D94 /* ResetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordVC.h; sourceTree = "<group>"; };
 		99573EF62045463100007D94 /* hnapp-qrcode.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "hnapp-qrcode.jpg"; sourceTree = "<group>"; };
+		995DF705205F9039008D63D8 /* ContractDetailSignView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractDetailSignView.h; sourceTree = "<group>"; };
+		995DF706205F9039008D63D8 /* ContractDetailSignView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractDetailSignView.m; sourceTree = "<group>"; };
+		995DF708205F929E008D63D8 /* ContractSignCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractSignCell.m; sourceTree = "<group>"; };
+		995DF709205F929E008D63D8 /* ContractSignCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractSignCell.h; sourceTree = "<group>"; };
 		996E64411E7146F7001EC40D /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		9976B1F9204E37790035AFD9 /* SignListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
 		9976B1FA204E377A0035AFD9 /* SignListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
@@ -3573,10 +3579,14 @@
 				99E155101FF0D90D006CD1A3 /* ContractDetailPayView.m */,
 				99E155121FF0D91B006CD1A3 /* ContractDetailDeclareView.h */,
 				99E155131FF0D91B006CD1A3 /* ContractDetailDeclareView.m */,
+				995DF705205F9039008D63D8 /* ContractDetailSignView.h */,
+				995DF706205F9039008D63D8 /* ContractDetailSignView.m */,
 				9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */,
 				9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */,
 				99898DB42005C049004673DC /* ContractPayCell2.h */,
 				99898DB32005C049004673DC /* ContractPayCell2.m */,
+				995DF709205F929E008D63D8 /* ContractSignCell.h */,
+				995DF708205F929E008D63D8 /* ContractSignCell.m */,
 				9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */,
 				9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */,
 				99D44FA31FFCAC4200EF0558 /* PayTimeView.h */,
@@ -4211,6 +4221,7 @@
 				995547091FDFDBCD00DC0134 /* PlanDocView.m in Sources */,
 				9955460D1FDFDBCD00DC0134 /* TZPhotoPreviewController.m in Sources */,
 				995544D41FDFDBCC00DC0134 /* FAKFontAwesome.m in Sources */,
+				995DF707205F903A008D63D8 /* ContractDetailSignView.m in Sources */,
 				995546EB1FDFDBCD00DC0134 /* CustomSearchBar.m in Sources */,
 				995545811FDFDBCC00DC0134 /* LandAnnexListVC.m in Sources */,
 				99E87FA21FECA8C600D6FC5F /* ContractDetailVC.m in Sources */,
@@ -4291,6 +4302,7 @@
 				995544ED1FDFDBCC00DC0134 /* FSCalendarHeaderView.m in Sources */,
 				995545051FDFDBCC00DC0134 /* PNColor.m in Sources */,
 				995547081FDFDBCD00DC0134 /* PlanCell2.m in Sources */,
+				995DF70A205F929F008D63D8 /* ContractSignCell.m in Sources */,
 				995545161FDFDBCC00DC0134 /* TYAlertFadeAnimation.m in Sources */,
 				995544F01FDFDBCC00DC0134 /* FSCalendarTransitionCoordinator.m in Sources */,
 				9955451B1FDFDBCC00DC0134 /* UIView+TYAlertView.m in Sources */,

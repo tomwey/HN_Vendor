@@ -145,9 +145,14 @@
                            @"page": @"ContractDetailPayView",
                            },
                        @{
-                           @"name": @"变更签证",
+                           @"name": @"变更指令",
                            @"type": @"2",
                            @"page": @"ContractDetailDeclareView",
+                           },
+                       @{
+                           @"name": @"签证",
+                           @"type": @"3",
+                           @"page": @"ContractDetailSignView",
                            },
                        ];
     
@@ -158,7 +163,7 @@
     self.tabStrip.width = self.contentView.width - 30;
     self.tabStrip.position = CGPointMake(15, line1.bottom + 5);
 
-    self.tabStrip.tabWidth = (self.contentView.width - 30) / 3;
+    self.tabStrip.tabWidth = (self.contentView.width - 30) / self.tabTitles.count;
 
 //    self.tabStrip.allowShowingIndicator = NO;
 
