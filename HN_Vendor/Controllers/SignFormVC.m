@@ -783,6 +783,8 @@
     
     NSString *visaID = [self.params[@"supvisaid"] ?: @"0" description];
     
+    [self hideKeyboard];
+    
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
