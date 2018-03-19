@@ -196,7 +196,7 @@
                                                       @"item_value": @"",
 //                                                      @"readonly": @"1",
                                                       @"keyboard_type": @(UIKeyboardTypeNumberPad),
-                                                      } atIndex:6];
+                                                      } atIndex:7];
         }
     }
     

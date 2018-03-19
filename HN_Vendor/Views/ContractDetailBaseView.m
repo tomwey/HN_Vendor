@@ -259,7 +259,7 @@
     // ›
     UILabel *titleLabel = AWCreateLabel(CGRectMake(15, self.currentTop + 10, self.width - 30,
                                                    30),
-                                        @"变更签证",
+                                        @"签证（已审批且未签订补充合同）",
                                         NSTextAlignmentLeft,
                                         AWSystemFontWithSize(12, YES),
                                         AWColorFromRGB(51, 51, 51));

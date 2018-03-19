@@ -252,7 +252,7 @@
 {
     UIButton *visaBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
                                                         50),
-                                             @"签证",
+                                             @"发起签证",
                                              [UIColor whiteColor],
                                              self,
                                              @selector(visaClick));
