@@ -607,7 +607,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             
             CGRect frame = CGRectMake(label.right, label.top,
-                                      self.contentView.width - 15 - label.right, label.height);
+                                      self.contentView.width - 5 - 15 - label.right, label.height);
             
             UITextField *textField = [[UITextField alloc] initWithFrame:frame];
             textField.placeholder = item[@"placeholder"] ?: [NSString stringWithFormat:@"请输入%@", item[@"describe"]];
@@ -648,7 +648,7 @@
             [cell.contentView addSubview:group];
             group.tag = 1002;
             group.frame = CGRectMake(0, 0,
-                                     self.contentView.width - 15 - label.right, 40);
+                                     self.contentView.width - 5 - 15 - label.right, 40);
             group.position = CGPointMake(label.right + 10, 5);
             
             NSArray *names = [item[@"item_name"] componentsSeparatedByString:@","];

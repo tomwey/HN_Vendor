@@ -106,7 +106,7 @@
       @{
           @"data_type": @"1",
           @"datatype_c": @"文本框",
-          @"describe": @"申报金额",
+          @"describe": @"申报金额(元)",
           @"field_name": @"money2",
           @"item_name": @"",
           @"item_value": @"",
@@ -190,7 +190,7 @@
             [self.inFormControls insertObject:      @{
                                                       @"data_type": @"1",
                                                       @"datatype_c": @"文本框",
-                                                      @"describe": @"核定金额",
+                                                      @"describe": @"核定金额(元)",
                                                       @"field_name": @"money3",
                                                       @"item_name": @"",
                                                       @"item_value": @"",
