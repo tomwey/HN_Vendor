@@ -89,7 +89,7 @@
     
     [self addInfo1:item];
     
-    [self addInfo2:item];
+//    [self addInfo2:item];
     
     [self addInfo3:item];
     

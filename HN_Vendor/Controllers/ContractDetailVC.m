@@ -139,11 +139,11 @@
                            @"type": @"0",
                            @"page": @"ContractDetailBaseView",
                            },
-                       @{
-                           @"name": @"付款",
-                           @"type": @"1",
-                           @"page": @"ContractDetailPayView",
-                           },
+//                       @{
+//                           @"name": @"付款",
+//                           @"type": @"1",
+//                           @"page": @"ContractDetailPayView",
+//                           },
                        @{
                            @"name": @"变更指令",
                            @"type": @"2",
