@@ -115,6 +115,17 @@
 
 - (void)loadData
 {
+    NSString *funname = nil;
+    if ( [self.params[@"msgtypeid"] integerValue] == 10 ) {
+        funname = @"供应商查询变更指令详情APP";
+    } else if ( [self.params[@"msgtypeid"] integerValue] == 20 ) {
+        funname = @"供应商变更签证明细APP";
+    }
+    
+    if ( !funname ) {
+        return;
+    }
+    
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
     __weak typeof(self) me = self;
@@ -125,7 +136,7 @@
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"供应商查询变更指令详情APP",
+              @"funname": funname,
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
@@ -147,9 +158,19 @@
         } else {
             id item = [result[@"data"] firstObject];
             
-            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"DeclareFormVC"
-                                                                        params:item];
-            [self presentViewController:vc animated:YES completion:nil];
+            NSString *pageName = nil;
+            if ( [self.params[@"msgtypeid"] integerValue] == 10 ) {
+                pageName = @"DeclareFormVC";
+            } else if ( [self.params[@"msgtypeid"] integerValue] == 20 ) {
+                pageName = @"SignFormVC";
+            }
+            
+            if (pageName) {
+                UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:pageName
+                                                                            params:item];
+                [self presentViewController:vc animated:YES completion:nil];
+            }
+            
         }
     }
 }

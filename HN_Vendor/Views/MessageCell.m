@@ -35,7 +35,7 @@
 
 - (void)configData:(id)data selectBlock:(void (^)(UIView <AWTableDataConfig> *sender, id selectedData))selectBlock
 {
-    self.titleLabel.text = data[@"contractname"];
+    self.titleLabel.text = data[@"msgtheme"];
     self.bodyLabel.text = [NSString stringWithFormat:@"%@ %@", data[@"project_name"], HNDateFromObject(data[@"validbegindate"], @"T")];
     
     self.state = data;
