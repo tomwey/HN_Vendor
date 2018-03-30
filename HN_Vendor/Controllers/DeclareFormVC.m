@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *changeEvents;
 
 @property (nonatomic, strong) NSMutableArray *changeReason;
+@property (nonatomic, strong) NSMutableArray *changeType;
 
 @property (nonatomic, assign) NSInteger counter;
 
@@ -92,6 +93,14 @@
       @{
           @"data_type": @"9",
           @"datatype_c": @"下拉选",
+          @"describe": @"变更类型",
+          @"field_name": @"change_type",
+          @"item_name": @"弥补缺陷,其它",
+          @"item_value": @"30,3",
+          },
+      @{
+          @"data_type": @"9",
+          @"datatype_c": @"下拉选",
           @"describe": @"变更事项进展",
           @"field_name": @"event_type",
           @"item_name": @"未开始,已保存",
@@ -141,6 +150,7 @@
     self.contracts = [@{} mutableCopy];
     self.contracts2 = [@{} mutableCopy];
     self.changeReason = [@[] mutableCopy];
+    self.changeType = [@[] mutableCopy];
     self.changeEvents = [@[] mutableCopy];
     
     self.navBar.title = self.params[@"title"] ?: @"";
@@ -152,12 +162,12 @@
     if (!self.params[@"state_num"]) {
         // 新建
         self.disableFormInputs = NO;
-        self.totalCounter = 3;
+        self.totalCounter = 4;
         
         [self addToolButtons];
     } else {
         // 添加状态显示
-        self.totalCounter = 4; // 加载附件
+        self.totalCounter = 5; // 加载附件
         
         if ([self.params[@"state_num"] integerValue] == 0) {
             // 待申报
@@ -344,6 +354,12 @@
         self.formObjects[@"contract_no"] = self.params[@"contractphyno"];
         
         self.formObjects[@"subject"] = self.params[@"changetheme"];
+        
+        self.formObjects[@"change_type"] = @{
+                                            @"name": self.params[@"changetype"] ?: @"",
+                                            @"value": self.params[@"changetype"] ?: @"",
+                                            };
+        
         self.formObjects[@"event_type"] = @{
                                             @"name": self.params[@"progress"] ?: @"",
                                             @"value": self.params[@"progress"] ?: @"",
@@ -401,7 +417,17 @@
                   [me loadDone3:result error: error];
               }];
     
-    if ( self.totalCounter == 4 ) { // 需要加载附件列表
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商取值列表数据查询APP",
+              @"param1": @"变更类型"
+              } completion:^(id result, NSError *error) {
+                  [me loadDone5:result error: error];
+              }];
+    
+    if ( self.totalCounter == 5 ) { // 需要加载附件列表
         [[self apiServiceWithName:@"APIService"]
          POST:nil
          params:@{
@@ -528,6 +554,21 @@
     [self loadDone];
 }
 
+- (void)loadDone5:(id)result error:(NSError *)error
+{
+    if ( [result[@"rowcount"] integerValue] > 0 ) {
+        //        self.changeReason = [result[@"data"] mutableCopy];
+        for (id item in result[@"data"]) {
+            [self.changeType addObject:@{
+                                           @"name": item[@"dic_name"] ?: @"",
+                                           @"value": item[@"dic_value"] ?: item[@"dic_name"] ?: @"",
+                                           }];
+        }
+    }
+    
+    [self loadDone];
+}
+
 - (void)projectDidSelect:(id)selectedItem
 {
     [self.formObjects removeObjectForKey:@"contract_name"];
@@ -575,6 +616,8 @@
     self.counter ++;
     
     if ( self.counter == self.totalCounter ) {
+        self.counter = 0;
+        
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         
         id dict = [self.inFormControls objectAtIndex:0];
@@ -583,11 +626,11 @@
         newDict[@"item_value"] = [self.projects componentsJoinedByString:@","];
         [self.inFormControls replaceObjectAtIndex:0 withObject:newDict];
         
-        ///
+        /// 变更类型
         dict = [self.inFormControls objectAtIndex:5];
         NSMutableArray *temp1 = [NSMutableArray array];
         NSMutableArray *temp2 = [NSMutableArray array];
-        for (id item in self.changeEvents) {
+        for (id item in self.changeType) {
             [temp1 addObject:item[@"name"]];
             [temp2 addObject:item[@"value"]];
         }
@@ -598,9 +641,24 @@
         
         [self.inFormControls replaceObjectAtIndex:5 withObject:newDict];
         
+        /// 变更事项进展
+        dict = [self.inFormControls objectAtIndex:6];
+       temp1 = [NSMutableArray array];
+        temp2 = [NSMutableArray array];
+        for (id item in self.changeEvents) {
+            [temp1 addObject:item[@"name"]];
+            [temp2 addObject:item[@"value"]];
+        }
+        
+        newDict = [dict mutableCopy];
+        newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
+        newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
+        
+        [self.inFormControls replaceObjectAtIndex:6 withObject:newDict];
+        
         
         ////
-        dict = [self.inFormControls objectAtIndex:6];
+        dict = [self.inFormControls objectAtIndex:7];
         temp1 = [NSMutableArray array];
         temp2 = [NSMutableArray array];
         for (id item in self.changeReason) {
@@ -612,7 +670,7 @@
         newDict[@"item_name"] = [temp1 componentsJoinedByString:@","];
         newDict[@"item_value"] = [temp2 componentsJoinedByString:@","];
         
-        [self.inFormControls replaceObjectAtIndex:6 withObject:newDict];
+        [self.inFormControls replaceObjectAtIndex:7 withObject:newDict];
         
         [self formControlsDidChange];
     }
@@ -651,6 +709,16 @@
     theme = [theme trim];
     if ( theme.length == 0 ) {
         [self.contentView showHUDWithText:@"变更主题不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    // 变更类型
+    NSString *changeType = @"";
+    if ( self.formObjects[@"change_type"] ) {
+        changeType = [self.formObjects[@"change_type"][@"value"] description];
+    }
+    if ( changeType.length == 0 ) {
+        [self.contentView showHUDWithText:@"必须选择变更类型" offset:CGPointMake(0,20)];
         return;
     }
     
@@ -728,7 +796,7 @@
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [@(type) description],
               @"param5": changeID,
-              @"param6": @"变更",
+              @"param6": changeType,
               @"param7": contractID,
               @"param8": theme,
               @"param9": eventType,
