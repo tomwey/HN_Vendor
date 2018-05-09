@@ -173,7 +173,7 @@
         // 添加状态显示
         self.totalCounter = 4; // 加载附件
         
-        if ([self.params[@"state_num"] integerValue] == 0) {
+        if ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5) {
             // 待申报
             self.disableFormInputs = NO;
             [self addToolButtons];
@@ -495,6 +495,8 @@
     [self.formObjects removeObjectForKey:@"money"];
     [self.formObjects removeObjectForKey:@"contract_no"];
     
+    [self.formObjects removeObjectForKey:@"sign_subject"];
+    
     [self populateData:selectedItem];
     
     [self formControlsDidChange];
@@ -538,9 +540,10 @@
 
 - (void)openSelect:(id)item
 {
-    if ( [self.params[@"canvisa"] boolValue] ) {
-        return;
-    }
+//    if ( [self.params[@"canvisa"] boolValue] && self.formObjects[@"sign_subject"] ) {
+//        // 从变更申报里面发起签证，如果没有重新选项目或者合同，那么直接不能修改指令变更主题
+//        return;
+//    }
     
     if ( !self.selectedContact ) {
         [self.contentView showHUDWithText:@"请先选择合同" offset:CGPointMake(0,20)];

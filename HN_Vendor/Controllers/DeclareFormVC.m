@@ -169,7 +169,7 @@
         // 添加状态显示
         self.totalCounter = 5; // 加载附件
         
-        if ([self.params[@"state_num"] integerValue] == 0) {
+        if ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5) {
             // 待申报
             self.disableFormInputs = NO;
             [self addToolButtons];
@@ -192,7 +192,7 @@
         } else {
             self.disableFormInputs = YES;
             
-            if ( [self.params[@"canvisa"] boolValue] ) {
+            if ( [self.params[@"canvisa"] boolValue] && ![self.userData isEqualToString:@"1"] ) {
                 [self addVisaButton];
             }
         }

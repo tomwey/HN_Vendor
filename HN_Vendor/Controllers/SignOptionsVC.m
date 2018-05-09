@@ -82,7 +82,8 @@
                 NSMutableArray *temp = [NSMutableArray array];
                 for (id item in result[@"data"]) {
                     NSMutableDictionary *dict = [item mutableCopy];
-                    dict[@"selected"] = @([[item[@"supchangeid"] description] isEqualToString:selectedItem[@"value"]]);
+//                    NSLog(@"item: %@, selected: %@", item[@"supchangeid"], selectedItem[@"value"]);
+                    dict[@"selected"] = @([[item[@"supchangeid"] description] isEqualToString:[selectedItem[@"value"] description]]);
                     [temp addObject:dict];
                 }
                 self.dataSource.dataSource = temp;
