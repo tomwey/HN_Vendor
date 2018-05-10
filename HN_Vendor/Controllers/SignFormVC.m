@@ -497,6 +497,8 @@
     
     [self.formObjects removeObjectForKey:@"sign_subject"];
     
+    self.selectedContact = nil;
+    
     [self populateData:selectedItem];
     
     [self formControlsDidChange];
