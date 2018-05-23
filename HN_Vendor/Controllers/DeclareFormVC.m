@@ -248,7 +248,7 @@
 
 - (void)showZFBox
 {
-    [[[ZFBoxView alloc] init] showReason:@"这是作废原因"
+    [[[ZFBoxView alloc] init] showReason:self.params[@"returnmemo"]
                                   inView:self.view
                              commitBlock:^(ZFBoxView *sender) {
                                  
@@ -314,7 +314,10 @@
 
 - (void)zfClick
 {
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:nil];
+    id newParams = [self.params mutableCopy];
+    newParams[@"zf_type"] = @"1";
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
     [self presentViewController:vc animated:YES completion:nil];
 }
 

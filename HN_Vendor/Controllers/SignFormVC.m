@@ -8,11 +8,13 @@
 
 #import "SignFormVC.h"
 #import "Defines.h"
+#import "ZFBoxView.h"
 
 @interface SignFormVC ()
 
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *commitButton;
+@property (nonatomic, strong) UIButton *zfButton;
 
 @property (nonatomic, strong) NSMutableArray *projects;
 
@@ -208,6 +210,30 @@
                                                object:nil];
     
     [self loadData];
+    
+    if ([self.params[@"state_num"] integerValue] == 5) {
+        // 被驳回，显示驳回原因
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"驳回原因"
+                    titleAttributes:@{
+                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
+                                      }
+                               size:CGSizeMake(80,40)
+                        rightMargin:5 callback:^{
+                            [me showZFBox];
+                        }];
+        
+        [self showZFBox];
+    }
+}
+
+- (void)showZFBox
+{
+    [[[ZFBoxView alloc] init] showReason:self.params[@"returnmemo"]
+                                  inView:self.view
+                             commitBlock:^(ZFBoxView *sender) {
+                                 
+                             }];
 }
 
 - (void)addCancelButton
@@ -227,7 +253,26 @@
 
 - (void)addToolButtons
 {
-    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+    CGFloat width = self.contentView.width / 2.0;
+    CGFloat left = 0;
+    
+    if ( [self.params[@"state_num"] integerValue] == 5 ) {
+        width = self.contentView.width / 3.0;
+        
+        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+                                             @"作废",
+                                             [UIColor whiteColor],
+                                             self, @selector(zfClick));
+        [self.contentView addSubview:zfBtn];
+        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+        
+        self.zfButton = zfBtn;
+        
+        left = self.zfButton.right;
+    }
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                         50),
                                              @"提交",
                                              [UIColor whiteColor],
@@ -235,11 +280,11 @@
                                              @selector(commit));
     [self.contentView addSubview:commitBtn];
     commitBtn.backgroundColor = MAIN_THEME_COLOR;
-    commitBtn.position = CGPointMake(0, self.contentView.height - 50);
+    commitBtn.position = CGPointMake(left, self.contentView.height - 50);
     
     self.commitButton = commitBtn;
     
-    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                       50),
                                            @"保存",
                                            MAIN_THEME_COLOR,
@@ -256,10 +301,48 @@
                                                         inView:moreBtn];
     hairLine.position = CGPointMake(0,0);
     
-    commitBtn.left = 0;
-    moreBtn.left = commitBtn.right;
+//    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+//                                                        50),
+//                                             @"提交",
+//                                             [UIColor whiteColor],
+//                                             self,
+//                                             @selector(commit));
+//    [self.contentView addSubview:commitBtn];
+//    commitBtn.backgroundColor = MAIN_THEME_COLOR;
+//    commitBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+//    self.commitButton = commitBtn;
+//
+//    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+//                                                      50),
+//                                           @"保存",
+//                                           MAIN_THEME_COLOR,
+//                                           self,
+//                                           @selector(save));
+//    [self.contentView addSubview:moreBtn];
+//    moreBtn.backgroundColor = [UIColor whiteColor];
+//    moreBtn.position = CGPointMake(commitBtn.right, self.contentView.height - 50);
+//
+//    self.saveButton = moreBtn;
+//
+//    UIView *hairLine = [AWHairlineView horizontalLineWithWidth:moreBtn.width
+//                                                         color:IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR
+//                                                        inView:moreBtn];
+//    hairLine.position = CGPointMake(0,0);
+//
+//    commitBtn.left = 0;
+//    moreBtn.left = commitBtn.right;
     
     self.tableView.height -= moreBtn.height;
+}
+
+- (void)zfClick
+{
+    id newParams = [self.params mutableCopy];
+    newParams[@"zf_type"] = @"2";
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)prepareFormObjects
@@ -881,6 +964,7 @@
     
     [UIView animateWithDuration:duration animations:^{
         self.commitButton.top =
+        self.zfButton.top =
         self.saveButton.top =
         self.contentView.height - CGRectGetHeight(frame) - self.commitButton.height;
     } completion:^(BOOL finished) {
@@ -898,6 +982,7 @@
     
     [UIView animateWithDuration:duration animations:^{
         self.commitButton.top =
+        self.zfButton.top =
         self.saveButton.top =
         self.contentView.height - self.commitButton.height;
     } completion:^(BOOL finished) {
