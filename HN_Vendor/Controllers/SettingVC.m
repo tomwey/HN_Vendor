@@ -60,10 +60,10 @@
     
     self.originalHeaderSize = self.tableHeader.frame.size;
     
-//    __weak typeof(self) me = self;
-//    self.tableHeader.didSelectCallback = ^(SettingTableHeader *sender) {
-//        [me gotoUserProfile];
-//    };
+    __weak typeof(self) me = self;
+    self.tableHeader.didSelectCallback = ^(SettingTableHeader *sender) {
+        [me gotoUserProfile];
+    };
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -220,10 +220,10 @@
 - (void)gotoUserProfile
 {
     id user = [[UserService sharedInstance] currentUser];
-    NSString *manID = [user[@"man_id"] description];
-    manID = manID ?: @"0";
+//    NSString *manID = [user[@"man_id"] description];
+//    manID = manID ?: @"0";
     
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"MancardVC" params:@{ @"manid": manID }];
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"MancardVC" params:user];
     [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 

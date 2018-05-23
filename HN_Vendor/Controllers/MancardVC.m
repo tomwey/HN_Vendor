@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBar.title = @"人事卡片";
+    self.navBar.title = @"详细资料";
     
     self.dataSource = [@[] mutableCopy];
     
@@ -51,37 +51,46 @@
     
     [self addTableHeader];
     
-    [self addTableFooter];
+//    [self addTableFooter];
     
     [self openCardForManID:self.params[@"manid"]];
 }
 
 - (void)addTableHeader
 {
-    UIImageView *headerBG = AWCreateImageView(@"setting-header.png");
-    headerBG.frame = CGRectMake(0, 0, self.contentView.width, self.contentView.height * 0.3);
-    headerBG.contentMode = UIViewContentModeScaleAspectFill;
-    headerBG.clipsToBounds = YES;
-    headerBG.userInteractionEnabled = YES;
+    SettingTableHeader *settingHeader = [[SettingTableHeader alloc] init];
+    UIView *tableHeader = [[UIView alloc] initWithFrame:settingHeader.frame];
+    [tableHeader addSubview:settingHeader];
+//    self.tableHeader = settingHeader;
     
-    self.tableView.tableHeaderView = headerBG;
+    self.tableView.tableHeaderView = tableHeader;
     
-    self.avatarView = AWCreateImageView(@"default_avatar.png");
-    self.avatarView.frame = CGRectMake(0, 0, 60, 60);
-    [headerBG addSubview:self.avatarView];
-    self.avatarView.cornerRadius = self.avatarView.height / 2;
-    self.avatarView.center = CGPointMake(headerBG.width / 2, headerBG.height / 2 - 20);
+    settingHeader.currentUser = self.params;
     
-    self.nameLabel = AWCreateLabel(CGRectMake(0, 0, 80, 34),
-                                   nil, NSTextAlignmentCenter,
-                                   [UIFont systemFontOfSize:15], [UIColor whiteColor]);
-    [headerBG addSubview:self.nameLabel];
-    self.nameLabel.text = @"姓名";
-    
-    self.nameLabel.cornerRadius = 6;
-    self.nameLabel.backgroundColor = AWColorFromRGBA(0, 0, 0, 0.7);
-    
-    self.nameLabel.center = CGPointMake(self.avatarView.midX, self.avatarView.bottom + self.nameLabel.height / 2 + 10);
+//    UIImageView *headerBG = AWCreateImageView(@"setting-header.png");
+//    headerBG.frame = CGRectMake(0, 0, self.contentView.width, self.contentView.height * 0.3);
+//    headerBG.contentMode = UIViewContentModeScaleAspectFill;
+//    headerBG.clipsToBounds = YES;
+//    headerBG.userInteractionEnabled = YES;
+//
+//    self.tableView.tableHeaderView = headerBG;
+//
+//    self.avatarView = AWCreateImageView(@"default_avatar.png");
+//    self.avatarView.frame = CGRectMake(0, 0, 60, 60);
+//    [headerBG addSubview:self.avatarView];
+//    self.avatarView.cornerRadius = self.avatarView.height / 2;
+//    self.avatarView.center = CGPointMake(headerBG.width / 2, headerBG.height / 2 - 20);
+//
+//    self.nameLabel = AWCreateLabel(CGRectMake(0, 0, 80, 34),
+//                                   nil, NSTextAlignmentCenter,
+//                                   [UIFont systemFontOfSize:15], [UIColor whiteColor]);
+//    [headerBG addSubview:self.nameLabel];
+//    self.nameLabel.text = self.params[@"supname"];
+//
+//    self.nameLabel.cornerRadius = 6;
+//    self.nameLabel.backgroundColor = AWColorFromRGBA(0, 0, 0, 0.7);
+//
+//    self.nameLabel.center = CGPointMake(self.avatarView.midX, self.avatarView.bottom + self.nameLabel.height / 2 + 10);
 }
 
 - (void)addTableFooter
@@ -250,8 +259,12 @@
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil params:@{
-                       @"dotype": @"mancard",
-                       @"manid": [manID description],
+                       @"dotype": @"GetData",
+                       @"funname": @"供应商获取用户信息APP",
+                       @"param1": [self.params[@"supid"] ?: @"0" description],
+                       @"param2": [self.params[@"loginname"] ?: @"" description],
+                       @"param3": [self.params[@"symbolkeyid"] ?: @"0" description],
+//                       @"manid": [manID description],
                        } completion:^(id result, NSError *error) {
                            [me handleMancard:result error: error];
                        }];
@@ -269,119 +282,37 @@
         
         self.manData = dict;
         
-//        [self.avatarView setImageWithURL:dict[@"avatar"] placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-        
-//        self.avatarView.image = [UIImage imageNamed:@"default_avatar.png"];
-        [HNImageHelper imageForName:dict[@"man_name"]
-                              manID:[dict[@"man_id"] integerValue]
-                               size:CGSizeMake(60, 60)
-                    completionBlock:^(UIImage *anImage, NSError *error) {
-                        if ( anImage ) {
-                            self.avatarView.image = anImage;
-                        }
-                    }];
-        
-        self.nameLabel.text = dict[@"man_name"];
-        
         [self.dataSource addObject:@{
-                                     @"label": @"部门：",
-                                     @"value": dict[@"topdept_name"] ?: @"",
+                                     @"label": @"供应商ID：",
+                                     @"value": dict[@"supid"] ?: @"",
                                      @"isLink": @(NO),
                                      }];
         
         [self.dataSource addObject:@{
-                                     @"label": @"岗位：",
-                                     @"value": dict[@"station_name"] ?: @"",
-                                     @"isLink": @(NO),
-                                     }];
-        
-        BOOL hideTel = [dict[@"hidetel"] boolValue];
-        
-        self.hideTel = hideTel;
-        
-        if ( !hideTel ) {
-            [self.dataSource addObject:@{
-                                         @"label": @"手机：",
-                                         @"value": dict[@"mobile"] ?: @"",
-                                         @"isLink": @(NO),
-                                         }];
-        }
-        
-        [self.dataSource addObject:@{
-                                     @"label": @"分机：",
-                                     @"value": dict[@"seatno"] ?: @"",
+                                     @"label": @"名字：",
+                                     @"value": dict[@"supname"] ?: @"",
                                      @"isLink": @(NO),
                                      }];
         
         [self.dataSource addObject:@{
-                                     @"label": @"邮箱：",
-                                     @"value": dict[@"email"] ?: @"",
+                                     @"label": @"账号代码：",
+                                     @"value": dict[@"supaccountcode"] ?: @"",
                                      @"isLink": @(NO),
                                      }];
         
         [self.dataSource addObject:@{
-                                     @"label": @"人事状态：",
-                                     @"value": dict[@"state_desc"] ?: @"",
+                                     @"label": @"登录名：",
+                                     @"value": dict[@"supaccountname"] ?: @"",
                                      @"isLink": @(NO),
                                      }];
         
+        [self.dataSource addObject:@{
+                                     @"label": @"供应商手机：",
+                                     @"value": dict[@"supaccounttel"] ?: @"",
+                                     @"isLink": @(NO),
+                                     }];
         
-        
-//        [self.dataSource addObject:@{
-//                                     @"label": @"姓名",
-//                                     @"value": dict[@"man_name"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"性别",
-//                                     @"value": dict[@"sex"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"人事状态",
-//                                     @"value": dict[@"state_desc"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"入职时间",
-//                                     @"value": [[dict[@"joindate"] componentsSeparatedByString:@"T"] firstObject] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"所在部门",
-//                                     @"value": dict[@"topdept_name"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"岗位",
-//                                     @"value": dict[@"station_name"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"职级",
-//                                     @"value": dict[@"grade"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"直接领导",
-//                                     @"value": dict[@"manager_name"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"分机",
-//                                     @"value": dict[@"telephone"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"联系电话",
-//                                     @"value": dict[@"mobile"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
-//        [self.dataSource addObject:@{
-//                                     @"label": @"邮箱",
-//                                     @"value": dict[@"email"] ?: @"",
-//                                     @"isLink": @(NO),
-//                                     }];
+
         
         [self.tableView reloadData];
     }

@@ -70,6 +70,8 @@
     
     
     self.nickname.text = currentUser[@"supname"];
+    
+    [self setNeedsLayout];
     //currentUser ? [currentUser formatUsername] : @"唐伟";
 }
 
@@ -81,7 +83,11 @@
     
 //    self.arrowView.center  = CGPointMake(self.width - 15 - self.arrowView.width / 2, self.avatarView.midY);
     
-    self.nickname.frame    = CGRectMake(0, 0, 80, 34);
+    CGSize size = [self.nickname.text sizeWithAttributes:@{ NSFontAttributeName: self.nickname.font }];
+    
+    CGFloat width = MAX(80, size.width + 20);
+    width = MIN(width, self.width - 20);
+    self.nickname.frame    = CGRectMake(0, 0, width, 34);
     self.nickname.center   = CGPointMake(self.width / 2, self.avatarView.bottom + 10 + self.nickname.height / 2);
 }
 
