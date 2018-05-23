@@ -8,11 +8,17 @@
 
 #import "DeclareFormVC.h"
 #import "Defines.h"
+#import "UIView+TYAlertView.h"
+// if you want blur efffect contain this
+#import "TYAlertController+BlurEffects.h"
+#import "ZFBoxView.h"
 
 @interface DeclareFormVC ()
 
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *commitButton;
+
+@property (nonatomic, strong) UIButton *zfButton;
 
 @property (nonatomic, strong) NSMutableArray *projects;
 
@@ -223,6 +229,30 @@
                                                  name:@"kNeedDismissNotification" object:nil];
     
     [self loadData];
+    
+    if ([self.params[@"state_num"] integerValue] == 5) {
+        // 被驳回，显示驳回原因
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"驳回原因"
+                    titleAttributes:@{
+                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
+                                      }
+                               size:CGSizeMake(80,40)
+                        rightMargin:5 callback:^{
+                            [me showZFBox];
+                        }];
+        
+        [self showZFBox];
+    }
+}
+
+- (void)showZFBox
+{
+    [[[ZFBoxView alloc] init] showReason:@"这是作废原因"
+                                  inView:self.view
+                             commitBlock:^(ZFBoxView *sender) {
+                                 
+                             }];
 }
 
 + (BOOL)isValidMoney:(NSString *)str{
@@ -282,9 +312,34 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+- (void)zfClick
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:nil];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 - (void)addToolButtons
 {
-    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+    CGFloat width = self.contentView.width / 2.0;
+    CGFloat left = 0;
+    
+    if ( [self.params[@"state_num"] integerValue] == 5 ) {
+        width = self.contentView.width / 3.0;
+        
+        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+                                             @"作废",
+                                             [UIColor whiteColor],
+                                             self, @selector(zfClick));
+        [self.contentView addSubview:zfBtn];
+        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+        
+        self.zfButton = zfBtn;
+        
+        left = self.zfButton.right;
+    }
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                         50),
                                              @"提交",
                                              [UIColor whiteColor],
@@ -292,11 +347,11 @@
                                              @selector(commit));
     [self.contentView addSubview:commitBtn];
     commitBtn.backgroundColor = MAIN_THEME_COLOR;
-    commitBtn.position = CGPointMake(0, self.contentView.height - 50);
+    commitBtn.position = CGPointMake(left, self.contentView.height - 50);
     
     self.commitButton = commitBtn;
     
-    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                       50),
                                            @"保存",
                                            MAIN_THEME_COLOR,
@@ -313,8 +368,8 @@
                                                         inView:moreBtn];
     hairLine.position = CGPointMake(0,0);
     
-    commitBtn.left = 0;
-    moreBtn.left = commitBtn.right;
+//    commitBtn.left = 0;
+//    moreBtn.left = commitBtn.right;
     
     self.tableView.height -= moreBtn.height;
 }
@@ -876,6 +931,7 @@
     
     [UIView animateWithDuration:duration animations:^{
         self.commitButton.top =
+        self.zfButton.top =
         self.saveButton.top =
         self.contentView.height - CGRectGetHeight(frame) - self.commitButton.height;
     } completion:^(BOOL finished) {
@@ -893,6 +949,7 @@
     
     [UIView animateWithDuration:duration animations:^{
         self.commitButton.top =
+        self.zfButton.top =
         self.saveButton.top =
         self.contentView.height - self.commitButton.height;
     } completion:^(BOOL finished) {

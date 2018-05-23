@@ -23,6 +23,8 @@
 		990FBD72200C9FB60075DC6E /* icon_declare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD6F200C9FB60075DC6E /* icon_declare@3x.png */; };
 		990FBD73200C9FB60075DC6E /* icon_report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD70200C9FB60075DC6E /* icon_report@3x.png */; };
 		990FBD74200C9FB60075DC6E /* icon_contract@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD71200C9FB60075DC6E /* icon_contract@3x.png */; };
+		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
+		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
 		9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */; };
 		9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB421FF1EAC50091A2AD /* PayListVC.m */; };
@@ -693,6 +695,10 @@
 		990FBD6F200C9FB60075DC6E /* icon_declare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_declare@3x.png"; sourceTree = "<group>"; };
 		990FBD70200C9FB60075DC6E /* icon_report@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_report@3x.png"; sourceTree = "<group>"; };
 		990FBD71200C9FB60075DC6E /* icon_contract@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contract@3x.png"; sourceTree = "<group>"; };
+		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
+		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
+		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
+		9927E6A820B54B140022991B /* ZFBoxVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxVC.m; sourceTree = "<group>"; };
 		9947AB3B1FF1E0580091A2AD /* ContractPayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractPayCell.h; sourceTree = "<group>"; };
 		9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell.m; sourceTree = "<group>"; };
 		9947AB3E1FF1E5570091A2AD /* ContractDeclareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDeclareCell.h; sourceTree = "<group>"; };
@@ -2908,6 +2914,8 @@
 				99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */,
 				994E1BA7205B533D005333C0 /* SignOptionsVC.h */,
 				994E1BA8205B533D005333C0 /* SignOptionsVC.m */,
+				9927E6A720B54B140022991B /* ZFBoxVC.h */,
+				9927E6A820B54B140022991B /* ZFBoxVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3595,6 +3603,8 @@
 				99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */,
 				994E1BAA205B5CB0005333C0 /* SignOptionCell.h */,
 				994E1BAB205B5CB0005333C0 /* SignOptionCell.m */,
+				9927E6A420B53CF50022991B /* ZFBoxView.h */,
+				9927E6A520B53CF50022991B /* ZFBoxView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4166,6 +4176,7 @@
 				995546DC1FDFDBCD00DC0134 /* NetworkService.m in Sources */,
 				9955452D1FDFDBCC00DC0134 /* APIFileParam.m in Sources */,
 				995544C21FDFDBCC00DC0134 /* CTPersistanceCriteria.m in Sources */,
+				9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */,
 				9955461A1FDFDBCD00DC0134 /* ContactSectionInfo.m in Sources */,
 				995546141FDFDBCD00DC0134 /* AppManager.m in Sources */,
 				9955453D1FDFDBCC00DC0134 /* AWKeyboardManager.m in Sources */,
@@ -4275,6 +4286,7 @@
 				995545221FDFDBCC00DC0134 /* TYLinkTextStorage.m in Sources */,
 				995545561FDFDBCC00DC0134 /* UIWebView+KeyValueStorage.m in Sources */,
 				995546041FDFDBCD00DC0134 /* TZAssetCell.m in Sources */,
+				9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */,
 				995545961FDFDBCC00DC0134 /* MeetingOrderListVC.m in Sources */,
 				995545EC1FDFDBCD00DC0134 /* DGActivityIndicatorDoubleBounceAnimation.m in Sources */,
 				995545171FDFDBCC00DC0134 /* TYAlertScaleFadeAnimation.m in Sources */,
