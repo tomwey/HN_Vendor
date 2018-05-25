@@ -85,15 +85,16 @@
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": @"4",
               @"param5": changeID,
-              @"param6": @"",
-              @"param7": @"",
-              @"param8": @"",
-              @"param9": @"",
-              @"param10": @"",
-              @"param11": @"",
-              @"param12": @"",
+              @"param6": [self.params[@"changetype"] ?: @"" description],
+              @"param7": [self.params[@"contractid"] ?: @"" description],
+              @"param8": [self.params[@"changetheme"] ?: @"" description],
+              @"param9": [self.params[@"progress"] ?: @"" description],
+              @"param10": [self.params[@"changereasonid"] ?: @"0" description],
+              @"param11": [self.params[@"changemoney"] ?: @"0" description],
+              @"param12": [self.params[@"changecontent"] ?: @"" description],
               @"param13": @"",
-              @"param14": self.textView.text
+              @"param14": @"1",
+              @"param15": self.textView.text
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
@@ -118,7 +119,7 @@
                     NSString *msg = item[@"hint"] ?: @"操作成功";
                     [AWAppWindow() showHUDWithText:msg succeed:YES];
                     [self dismissViewControllerAnimated:YES completion:^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
                         [[NSNotificationCenter defaultCenter]
                          postNotificationName:@"kNeedDismissNotification" object:nil];
                     }];
@@ -147,7 +148,7 @@
 //                                                                            object:nil];
 //                    } else {
                         [self dismissViewControllerAnimated:YES completion:^{
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+//                            [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
                             [[NSNotificationCenter defaultCenter]
                              postNotificationName:@"kNeedDismissNotification" object:nil];
                         }];
@@ -190,20 +191,21 @@
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": @"4",
               @"param5": visaID,
-              @"param6": @"",
-              @"param7": @"",
-              @"param8": @"",
+              @"param6": [self.params[@"supchangeid"] ?: @"0" description],
+              @"param7": [self.params[@"contractid"] ?: @"0" description],
+              @"param8": [self.params[@"visatheme"] ?: @"" description],
               @"param9": @"1",
-              @"param10": @"",
-              @"param11": @"",
-              @"param12": @"",
-              @"param13": @"",
+              @"param10": [self.params[@"visaprogress"] ?: @"" description],
+              @"param11": [self.params[@"visareason"] ?: @"" description],
+              @"param12": [self.params[@"visaappmoney"] ?: @"" description],
+              @"param13": [self.params[@"visacontent"] ?: @"" description],
               @"param14": @"",
               @"param15": @"1",
               @"param16": self.textView.text
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
+    
 }
 
 - (void)close

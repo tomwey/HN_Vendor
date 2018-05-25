@@ -209,6 +209,10 @@
                                              selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeMe:)
+                                                 name:@"kNeedDismissNotification" object:nil];
+    
     [self loadData];
     
     if ([self.params[@"state_num"] integerValue] == 5) {
@@ -225,6 +229,14 @@
         
         [self showZFBox];
     }
+}
+
+- (void)closeMe:(NSNotification *)sender
+{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController ?: self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
+    }];
 }
 
 - (void)showZFBox
