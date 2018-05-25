@@ -36,12 +36,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBar.title = @"详细资料";
+    self.navBar.title = @"用户信息";
     
     self.dataSource = [@[] mutableCopy];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.contentView.bounds
-                                                  style:UITableViewStylePlain];
+                                                  style:UITableViewStyleGrouped];
     [self.contentView addSubview:self.tableView];
     
     self.tableView.dataSource = self;
@@ -216,7 +216,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.dataSource count];
+    NSArray *data = self.dataSource[section][@"data"];
+    return [data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -227,14 +228,20 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    cell.textLabel.text = self.dataSource[indexPath.row][@"label"];
-    cell.detailTextLabel.text = HNStringFromObject(self.dataSource[indexPath.row][@"value"], @"无");
+    id item = self.dataSource[indexPath.section];
+    NSArray *data = item[@"data"];
+    
+    cell.textLabel.text = data[indexPath.row][@"label"];
+    cell.detailTextLabel.text = HNStringFromObject(data[indexPath.row][@"value"], @"无");
     
     if ( [cell.textLabel.text hasPrefix:@"手机"] ) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }
@@ -248,9 +255,20 @@
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id item = self.dataSource[section];
+    return item[@"name"];
+}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 30;
+//}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.dataSource.count;
 }
 
 - (void)openCardForManID:(NSString *)manID
@@ -282,8 +300,50 @@
         
         self.manData = dict;
         
+        NSDictionary *dict1 = @{
+                                @"name": @"基本信息",
+                                @"data": @[
+                                        @{
+                                            @"label": @"供应商全称：",
+                                            @"value": dict[@"supname"] ?: @"",
+                                            @"isLink": @(NO),
+                                            },
+                                        @{
+                                            @"label": @"供应商简称：",
+                                            @"value": dict[@"supaccountname"] ?: @"",
+                                            @"isLink": @(NO),
+                                            }
+                                        ]
+                                };
+        
+        [self.dataSource addObject:dict1];
+        
+        NSDictionary *dict2 = @{
+                                @"name": @"登录信息 (以下都可用于登录)",
+                                @"data": @[
+                                        @{
+                                            @"label": @"供应商唯一标识：",
+                                            @"value": dict[@"supid"] ?: @"",
+                                            @"isLink": @(NO),
+                                            },
+                                        @{
+                                            @"label": @"供应商登录名：",
+                                            @"value": dict[@"supaccountcode"] ?: @"",
+                                            @"isLink": @(NO),
+                                            },
+                                        @{
+                                            @"label": @"供应商手机：",
+                                            @"value": dict[@"supaccounttel"] ?: @"",
+                                            @"isLink": @(NO),
+                                            }
+                                        ]
+                                };
+        
+        [self.dataSource addObject:dict2];
+        
+        /*
         [self.dataSource addObject:@{
-                                     @"label": @"供应商ID：",
+                                     @"label": @"供应商唯一标识：",
                                      @"value": dict[@"supid"] ?: @"",
                                      @"isLink": @(NO),
                                      }];
@@ -310,7 +370,7 @@
                                      @"label": @"供应商手机：",
                                      @"value": dict[@"supaccounttel"] ?: @"",
                                      @"isLink": @(NO),
-                                     }];
+                                     }];*/
         
 
         

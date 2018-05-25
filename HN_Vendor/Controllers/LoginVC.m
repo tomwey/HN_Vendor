@@ -65,7 +65,7 @@
                                          inputBGView.height / 2 - 34 / 2 + 1,
                                          inputBGView.width - iconView.right - 10, 34)];
     [inputBGView addSubview:userField];
-    userField.placeholder = @"账号";
+    userField.placeholder = @"登录名/手机/唯一标识";
 //    userField.keyboardType = UIKeyboardTypeNumberPad;
     userField.textColor = MAIN_THEME_COLOR;
     userField.returnKeyType = UIReturnKeyNext;
