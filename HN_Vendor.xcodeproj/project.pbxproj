@@ -29,6 +29,8 @@
 		9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3F1FF1E5570091A2AD /* ContractDeclareCell.m */; };
 		9947AB431FF1EAC50091A2AD /* PayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB421FF1EAC50091A2AD /* PayListVC.m */; };
 		9947AB461FF229B30091A2AD /* DeclareFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB451FF229B30091A2AD /* DeclareFormVC.m */; };
+		9949475820F3587300A0768A /* ForgetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9949475720F3587300A0768A /* ForgetPasswordVC.m */; };
+		9949F51920FCA60C00955CFC /* UpdatePasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */; };
 		994E1BA9205B533D005333C0 /* SignOptionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BA8205B533D005333C0 /* SignOptionsVC.m */; };
 		994E1BAC205B5CB0005333C0 /* SignOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BAB205B5CB0005333C0 /* SignOptionCell.m */; };
 		995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */; };
@@ -707,6 +709,10 @@
 		9947AB421FF1EAC50091A2AD /* PayListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayListVC.m; sourceTree = "<group>"; };
 		9947AB441FF229B30091A2AD /* DeclareFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareFormVC.h; sourceTree = "<group>"; };
 		9947AB451FF229B30091A2AD /* DeclareFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareFormVC.m; sourceTree = "<group>"; };
+		9949475620F3587300A0768A /* ForgetPasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordVC.h; sourceTree = "<group>"; };
+		9949475720F3587300A0768A /* ForgetPasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordVC.m; sourceTree = "<group>"; };
+		9949F51720FCA60C00955CFC /* UpdatePasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdatePasswordVC.h; sourceTree = "<group>"; };
+		9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdatePasswordVC.m; sourceTree = "<group>"; };
 		994E1BA7205B533D005333C0 /* SignOptionsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionsVC.h; sourceTree = "<group>"; };
 		994E1BA8205B533D005333C0 /* SignOptionsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignOptionsVC.m; sourceTree = "<group>"; };
 		994E1BAA205B5CB0005333C0 /* SignOptionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionCell.h; sourceTree = "<group>"; };
@@ -2916,6 +2922,10 @@
 				994E1BA8205B533D005333C0 /* SignOptionsVC.m */,
 				9927E6A720B54B140022991B /* ZFBoxVC.h */,
 				9927E6A820B54B140022991B /* ZFBoxVC.m */,
+				9949475620F3587300A0768A /* ForgetPasswordVC.h */,
+				9949475720F3587300A0768A /* ForgetPasswordVC.m */,
+				9949F51720FCA60C00955CFC /* UpdatePasswordVC.h */,
+				9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4022,6 +4032,7 @@
 				995544C11FDFDBCC00DC0134 /* NSString+SQL.m in Sources */,
 				9955452A1FDFDBCC00DC0134 /* APIDictionaryReformer.m in Sources */,
 				995546EF1FDFDBCD00DC0134 /* DocumentView.m in Sources */,
+				9949F51920FCA60C00955CFC /* UpdatePasswordVC.m in Sources */,
 				995546D81FDFDBCD00DC0134 /* APIService.m in Sources */,
 				995545B51FDFDBCD00DC0134 /* PlanDetailVC.m in Sources */,
 				995546D91FDFDBCD00DC0134 /* AttachmentDownloadService.m in Sources */,
@@ -4133,6 +4144,7 @@
 				995546DF1FDFDBCD00DC0134 /* UserService.m in Sources */,
 				995545CE1FDFDBCD00DC0134 /* AFURLRequestSerialization.m in Sources */,
 				9955461E1FDFDBCD00DC0134 /* OfficeDocProtocol.m in Sources */,
+				9949475820F3587300A0768A /* ForgetPasswordVC.m in Sources */,
 				995546E41FDFDBCD00DC0134 /* ValuesUtils.m in Sources */,
 				995545F11FDFDBCD00DC0134 /* DGActivityIndicatorLineScalePulseOutRapidAnimation.m in Sources */,
 				995545A71FDFDBCC00DC0134 /* OutputCatalogVC.m in Sources */,
