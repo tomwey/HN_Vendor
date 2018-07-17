@@ -84,7 +84,7 @@
             [self.contentView showHUDWithText:@"账号不存在" succeed:NO];
         } else {
             id item = [result[@"data"] firstObject];
-            NSString *mobile = item[@"supaccounttel"];
+            NSString *mobile = @"18048553687";//item[@"supaccounttel"];
 //            NSLog(@"mobile: %@", mobile);
             UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"UpdatePasswordVC" params:@{ @"mobile": mobile ?: @"" }];
             [self.navigationController pushViewController:vc animated:YES];
