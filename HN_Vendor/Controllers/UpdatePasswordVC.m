@@ -300,4 +300,12 @@
     mobileField.placeholder = @"请输入新密码";
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.countDownTimer invalidate];
+    self.countDownTimer = nil;
+}
+
 @end
