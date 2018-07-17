@@ -19,6 +19,7 @@
 
 @property (nonatomic, weak) UITextField *codeField;
 @property (nonatomic, weak) UITextField *passwordField;
+@property (nonatomic, weak) UITextField *passwordField2;
 
 @end
 
@@ -59,7 +60,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,6 +77,8 @@
             [self addCodeInput:cell];
         } else if ( indexPath.row == 2 ) {
             [self addPasswordInput:cell];
+        } else if ( indexPath.row == 3 ) {
+            [self addPasswordInput2:cell];
         }
     }
     
@@ -228,6 +231,26 @@
     [self.codeField resignFirstResponder];
     [self.passwordField resignFirstResponder];
     
+    if ( [[self.codeField.text trim] length] == 0 ) {
+        [self.contentView showHUDWithText:@"验证码不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    if ( [self.passwordField.text length] == 0 ) {
+        [self.contentView showHUDWithText:@"新密码不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    if ( [self.passwordField2.text length] == 0 ) {
+        [self.contentView showHUDWithText:@"确认密码不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    if ( [self.passwordField.text isEqualToString:self.passwordField2.text] == NO ) {
+        [self.contentView showHUDWithText:@"两次密码输入不一致" offset:CGPointMake(0,20)];
+        return;
+    }
+    
     __weak typeof(self) me = self;
     [self requestWithURI:@"sms/code_verify"
                   params:@{ @"Mobile": self.params[@"mobile"] ?: @"",
@@ -298,6 +321,16 @@
     mobileField.frame = CGRectMake(15, 0, 260, 50);
     mobileField.secureTextEntry = YES;
     mobileField.placeholder = @"请输入新密码";
+}
+
+- (void)addPasswordInput2:(UITableViewCell *)cell
+{
+    UITextField *mobileField = [[UITextField alloc] init];
+    [cell.contentView addSubview:mobileField];
+    self.passwordField2 = mobileField;
+    mobileField.frame = CGRectMake(15, 0, 260, 50);
+    mobileField.secureTextEntry = YES;
+    mobileField.placeholder = @"请输入确认密码";
 }
 
 - (void)viewWillDisappear:(BOOL)animated
