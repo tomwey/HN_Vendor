@@ -115,17 +115,22 @@
     [self.codeField resignFirstResponder];
     [self.passwordField resignFirstResponder];
     
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
     __weak typeof(self) me = self;
     [self requestWithURI:@"sms/send"
                   params:@{ @"Mobile": self.params[@"mobile"] ?: @"",
                             @"Type": @(1)
                             }
               completion:^(BOOL succeed, NSError *error2) {
+                  [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
+                  
                   if ( succeed ) {
                       [me startTimer];
                   } else {
                       [me setCodeButtonEnabled:YES];
                   }
+                  
               }];
 }
 
@@ -149,9 +154,9 @@
                 params:(NSDictionary *)params
             completion:(void (^)(BOOL succeed, NSError *error2))completion
 {
-    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+//    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
-    NSString *host = @"http://10.19.0.216:8080/api";
+    NSString *host = @"http://erp20-sms.heneng.cn:16710/api";
     
     NSString *Nonce = [NSString stringWithFormat:@"%ld", (NSInteger)[[NSDate date] timeIntervalSince1970]];
     NSString *Signature = [[NSString stringWithFormat:@"%@HN.Mobile.sms.2018-0", Nonce] md5Hash];
@@ -186,7 +191,7 @@
                error:(NSError *)error
           completion:(void (^)(BOOL succeed, NSError *error2))completion
 {
-    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
     
     if ( error ) {
         [self.contentView showHUDWithText:@"服务器出错了~" succeed:NO];
@@ -208,14 +213,14 @@
         } else {
             NSInteger code = [object[@"code"] integerValue];
             if ( code == 0 ) {
-                [self.contentView showHUDWithText:object[@"msg"] succeed:YES];
+                [self.contentView showHUDWithText:object[@"codemsg"] succeed:YES];
                 if ( completion ) {
                     completion(YES, nil);
                 }
             } else {
-                [self.contentView showHUDWithText:object[@"msg"] succeed:NO];
+                [self.contentView showHUDWithText:object[@"codemsg"] succeed:NO];
                 if ( completion ) {
-                    completion(NO, [NSError errorWithDomain:object[@"msg"]
+                    completion(NO, [NSError errorWithDomain:object[@"codemsg"]
                                                        code:code
                                                    userInfo:nil]);
                 }
@@ -251,6 +256,8 @@
         return;
     }
     
+    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
+    
     __weak typeof(self) me = self;
     [self requestWithURI:@"sms/code_verify"
                   params:@{ @"Mobile": self.params[@"mobile"] ?: @"",
@@ -260,13 +267,48 @@
               completion:^(BOOL succeed, NSError *error2) {
                   if ( succeed ) {
                       [me updatePassword];
+                  } else {
+                      [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
                   }
               }];
 }
 
 - (void)updatePassword
 {
+//    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
+    __weak typeof(self) me = self;
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商重置密码APP",
+              @"param1": self.params[@"mobile"],
+              @"param2": [[NSString stringWithFormat:@"%@%@", self.passwordField.text, NB_KEY] md5Hash]
+                  } completion:^(id result, NSError *error) {
+                      [me handleResult2:result error:error];
+                  }];
+}
+
+- (void)handleResult2:(id)result error:(NSError *)error
+{
+    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+    
+    if (error) {
+        [self.contentView showHUDWithText:@"服务器出错了~" succeed:NO];
+    } else {
+        if ( [result[@"rowcount"] integerValue] == 0 ) {
+            [self.contentView showHUDWithText:@"未知错误" succeed:NO];
+        } else {
+            id item = [result[@"data"] firstObject];
+            if ( [item[@"hinttype"] integerValue] == 1 ) {
+                [self.navigationController.view showHUDWithText:@"密码重置成功" succeed:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
+            }
+        }
+    }
 }
 
 - (NSTimer *)countDownTimer
