@@ -122,12 +122,14 @@
                   params:@{ @"Mobile": self.params[@"mobile"] ?: @"",
                             @"Type": @(1)
                             }
-              completion:^(BOOL succeed, NSError *error2) {
+              completion:^(NSInteger code, NSString *msg) {
                   [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
                   
-                  if ( succeed ) {
+                  if ( code == 0 ) {
+                      [me.contentView showHUDWithText:msg succeed:YES];
                       [me startTimer];
                   } else {
+                      [me.contentView showHUDWithText:msg succeed:NO];
                       [me setCodeButtonEnabled:YES];
                   }
                   
@@ -152,7 +154,7 @@
 
 - (void)requestWithURI:(NSString *)uri
                 params:(NSDictionary *)params
-            completion:(void (^)(BOOL succeed, NSError *error2))completion
+            completion:(void (^)(NSInteger code, NSString *msg))completion
 {
 //    [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
@@ -189,40 +191,34 @@
 
 - (void)handleResult:(NSData *)data
                error:(NSError *)error
-          completion:(void (^)(BOOL succeed, NSError *error2))completion
+          completion:(void (^)(NSInteger code, NSString *msg))completion
 {
 //    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
     
     if ( error ) {
-        [self.contentView showHUDWithText:@"服务器出错了~" succeed:NO];
+//        [self.contentView showHUDWithText:@"服务器出错了~" succeed:NO];
         if ( completion ) {
-            completion(NO, error);
+            completion(500, @"服务器出错了~");
         }
     } else {
         id object = [NSJSONSerialization JSONObjectWithData:data
                                                     options:0
                                                       error:nil];
         if ( !object ) {
-            [self.contentView showHUDWithText:@"解析结果出错" succeed:NO];
-            
             if ( completion ) {
-                completion(NO, [NSError errorWithDomain:@"解析结果出错"
-                                                   code:-9
-                                               userInfo:nil]);
+                completion(-9, @"解析结果出错");
             }
         } else {
             NSInteger code = [object[@"code"] integerValue];
             if ( code == 0 ) {
-                [self.contentView showHUDWithText:object[@"codemsg"] succeed:YES];
+//                [self.contentView showHUDWithText:object[@"codemsg"] succeed:YES];
                 if ( completion ) {
-                    completion(YES, nil);
+                    completion(0, object[@"codemsg"]);
                 }
             } else {
-                [self.contentView showHUDWithText:object[@"codemsg"] succeed:NO];
+//                [self.contentView showHUDWithText:object[@"codemsg"] succeed:NO];
                 if ( completion ) {
-                    completion(NO, [NSError errorWithDomain:object[@"codemsg"]
-                                                       code:code
-                                                   userInfo:nil]);
+                    completion(code, object[@"codemsg"]);
                 }
             }
             
@@ -246,6 +242,12 @@
         return;
     }
     
+    if ( self.passwordField.text.length < 6 || self.passwordField.text.length > 20 ) {
+        [self.contentView showHUDWithText:@"密码长度为6-20位"
+                                   offset:CGPointMake(0, 20)];
+        return;
+    }
+    
     if ( [self.passwordField2.text length] == 0 ) {
         [self.contentView showHUDWithText:@"确认密码不能为空" offset:CGPointMake(0,20)];
         return;
@@ -264,11 +266,12 @@
                             @"Type": @(1),
                             @"Code": [self.codeField.text trim] ?: @""
                             }
-              completion:^(BOOL succeed, NSError *error2) {
-                  if ( succeed ) {
+              completion:^(NSInteger code, NSString *msg) {
+                  if ( code == 0 ) {
                       [me updatePassword];
                   } else {
                       [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
+                      [me.contentView showHUDWithText:msg succeed:NO];
                   }
               }];
 }
@@ -352,6 +355,7 @@
     [cell.contentView addSubview:mobileField];
     mobileField.frame = CGRectMake(15, 0, 120, 50);
     self.codeField = mobileField;
+    mobileField.keyboardType = UIKeyboardTypeNumberPad;
     mobileField.placeholder = @"请输入验证码";
 }
 
