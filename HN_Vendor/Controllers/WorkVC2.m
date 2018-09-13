@@ -66,19 +66,21 @@
                             @"size": @"{26,26}"
                             },
                         @{
-                            @"icon": @"icon_chanzhi.png",
-                            @"name": @"产值申报",
-                            @"page": @"OutputListVC",
-                            @"color": @"#CA5B54",
-                            @"size": @"{28,28}"
-                            },
-                        @{
                             @"icon": @"icon_wgqr.png",
                             @"name": @"完工确认",
                             @"page": @"WorkDoneConfirmVC",
                             @"color": /*@"213,156,85"*/@"#7FB762",
                             @"size": @"{30,30}"
                             },
+                        
+                        @{
+                            @"icon": @"icon_chanzhi.png",
+                            @"name": @"产值申报",
+                            @"page": @"OutputListVC",
+                            @"color": @"#CA5B54",
+                            @"size": @"{28,28}"
+                            },
+                        
                         @{
                             @"icon": @"icon_jiesuan.png",
                             @"name": @"结算申报",
@@ -111,8 +113,8 @@
     self.mainCollectionView = [[UICollectionView alloc] initWithFrame:self.contentView.bounds
                                                  collectionViewLayout:layout];
     
-    self.mainCollectionView.height -= (50 + 10 + header.height);
-    self.mainCollectionView.top = header.bottom + 10;
+    self.mainCollectionView.height -= (50 + header.height);
+    self.mainCollectionView.top = header.bottom;
     
     [self.contentView addSubview:self.mainCollectionView];
     self.mainCollectionView.backgroundColor = [UIColor whiteColor];
@@ -152,7 +154,7 @@
 
 - (NSInteger)numberOfCols
 {
-    return 4;
+    return 3;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -163,7 +165,7 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(15, 5, 10, 5);
+    return UIEdgeInsetsMake(20, 5, 10, 5);
 }
 
 //设置每个item水平间距

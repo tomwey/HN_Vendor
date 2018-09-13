@@ -667,6 +667,9 @@
 		99CA50A9214A53F300DA083E /* icon_contract_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA50A3214A53F200DA083E /* icon_contract_2@2x.png */; };
 		99CA50AA214A53F300DA083E /* icon_report_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA50A4214A53F300DA083E /* icon_report_2@2x.png */; };
 		99CA50AB214A53F300DA083E /* icon_contract_2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA50A5214A53F300DA083E /* icon_contract_2@3x.png */; };
+		99CA50AE214A5C2500DA083E /* WorkDoneConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CA50AD214A5C2500DA083E /* WorkDoneConfirmVC.m */; };
+		99CA50B1214A5C7A00DA083E /* AccountFinalListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CA50B0214A5C7A00DA083E /* AccountFinalListVC.m */; };
+		99CA50B4214A5CA600DA083E /* OutputListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CA50B3214A5CA600DA083E /* OutputListVC.m */; };
 		99D44FA51FFCAC4200EF0558 /* PayTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FA41FFCAC4200EF0558 /* PayTimeView.m */; };
 		99D44FA91FFCCA5E00EF0558 /* ReportListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FA81FFCCA5E00EF0558 /* ReportListVC.m */; };
 		99D44FAC1FFCCC5C00EF0558 /* ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D44FAB1FFCCC5C00EF0558 /* ReportCell.m */; };
@@ -1797,6 +1800,12 @@
 		99CA50A3214A53F200DA083E /* icon_contract_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contract_2@2x.png"; sourceTree = "<group>"; };
 		99CA50A4214A53F300DA083E /* icon_report_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_report_2@2x.png"; sourceTree = "<group>"; };
 		99CA50A5214A53F300DA083E /* icon_contract_2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contract_2@3x.png"; sourceTree = "<group>"; };
+		99CA50AC214A5C2500DA083E /* WorkDoneConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkDoneConfirmVC.h; sourceTree = "<group>"; };
+		99CA50AD214A5C2500DA083E /* WorkDoneConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkDoneConfirmVC.m; sourceTree = "<group>"; };
+		99CA50AF214A5C7A00DA083E /* AccountFinalListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountFinalListVC.h; sourceTree = "<group>"; };
+		99CA50B0214A5C7A00DA083E /* AccountFinalListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountFinalListVC.m; sourceTree = "<group>"; };
+		99CA50B2214A5CA600DA083E /* OutputListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputListVC.h; sourceTree = "<group>"; };
+		99CA50B3214A5CA600DA083E /* OutputListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputListVC.m; sourceTree = "<group>"; };
 		99D44FA31FFCAC4200EF0558 /* PayTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayTimeView.h; sourceTree = "<group>"; };
 		99D44FA41FFCAC4200EF0558 /* PayTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayTimeView.m; sourceTree = "<group>"; };
 		99D44FA71FFCCA5E00EF0558 /* ReportListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportListVC.h; sourceTree = "<group>"; };
@@ -2959,6 +2968,12 @@
 				9949475720F3587300A0768A /* ForgetPasswordVC.m */,
 				9949F51720FCA60C00955CFC /* UpdatePasswordVC.h */,
 				9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */,
+				99CA50AC214A5C2500DA083E /* WorkDoneConfirmVC.h */,
+				99CA50AD214A5C2500DA083E /* WorkDoneConfirmVC.m */,
+				99CA50AF214A5C7A00DA083E /* AccountFinalListVC.h */,
+				99CA50B0214A5C7A00DA083E /* AccountFinalListVC.m */,
+				99CA50B2214A5CA600DA083E /* OutputListVC.h */,
+				99CA50B3214A5CA600DA083E /* OutputListVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4018,6 +4033,7 @@
 				995545A91FDFDBCC00DC0134 /* OutputContractListVC.m in Sources */,
 				995544EC1FDFDBCC00DC0134 /* FSCalendarExtensions.m in Sources */,
 				995546031FDFDBCD00DC0134 /* NSBundle+TZImagePicker.m in Sources */,
+				99CA50B4214A5CA600DA083E /* OutputListVC.m in Sources */,
 				995545E61FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleRippleAnimation.m in Sources */,
 				9955459C1FDFDBCC00DC0134 /* NewsDetailVC.m in Sources */,
 				9955451F1FDFDBCC00DC0134 /* TYDrawStorage.m in Sources */,
@@ -4305,6 +4321,7 @@
 				995545281FDFDBCC00DC0134 /* BaseAppDelegate.m in Sources */,
 				995547091FDFDBCD00DC0134 /* PlanDocView.m in Sources */,
 				9955460D1FDFDBCD00DC0134 /* TZPhotoPreviewController.m in Sources */,
+				99CA50B1214A5C7A00DA083E /* AccountFinalListVC.m in Sources */,
 				995544D41FDFDBCC00DC0134 /* FAKFontAwesome.m in Sources */,
 				995DF707205F903A008D63D8 /* ContractDetailSignView.m in Sources */,
 				995546EB1FDFDBCD00DC0134 /* CustomSearchBar.m in Sources */,
@@ -4343,6 +4360,7 @@
 				995544E91FDFDBCC00DC0134 /* FSCalendarConstants.m in Sources */,
 				995544F11FDFDBCC00DC0134 /* FSCalendarWeekdayView.m in Sources */,
 				995545DC1FDFDBCD00DC0134 /* DGActivityIndicatorBallClipRotateAnimation.m in Sources */,
+				99CA50AE214A5C2500DA083E /* WorkDoneConfirmVC.m in Sources */,
 				994E1BAC205B5CB0005333C0 /* SignOptionCell.m in Sources */,
 				995545AA1FDFDBCC00DC0134 /* OutputJDConfirmVC.m in Sources */,
 				9955454C1FDFDBCC00DC0134 /* UITableView+RemoveBlankCells.m in Sources */,
