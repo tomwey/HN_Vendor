@@ -76,6 +76,21 @@
                             @"page": @"SignListVC",
                             },
                         @{
+                            @"icon": @"icon_wgqr.png",
+                            @"name": @"完工确认",
+                            @"page": @"SignListVC",
+                            },
+                        @{
+                            @"icon": @"icon_declare.png",
+                            @"name": @"产值申报",
+                            @"page": @"SignListVC",
+                            },
+                        @{
+                            @"icon": @"icon_declare.png",
+                            @"name": @"结算申报",
+                            @"page": @"SignListVC",
+                            },
+                        @{
                             @"icon": @"icon_contract.png",
                             @"name": @"合同执行",
                             @"page": @"ContractListVC",

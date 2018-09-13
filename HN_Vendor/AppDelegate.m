@@ -188,7 +188,7 @@
         self.appTabBarController = [[UITabBarController alloc] init];
         self.appTabBarController.delegate = self;
         
-        UIViewController *workVC = [UIViewController createControllerWithName:@"WorkVC"];
+        UIViewController *workVC = [UIViewController createControllerWithName:@"WorkVC2"];
 //        UIViewController *oaVC = [UIViewController createControllerWithName:@"OAListVC"];
         UIViewController *messageVC = [UIViewController createControllerWithName:@"MessageVC"];
 //        UIViewController *contactsVC = [UIViewController createControllerWithName:@"ContactVC"];
