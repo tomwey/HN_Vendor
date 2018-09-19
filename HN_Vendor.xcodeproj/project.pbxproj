@@ -646,6 +646,9 @@
 		996E64421E7146F7001EC40D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 996E64411E7146F7001EC40D /* libresolv.tbd */; };
 		9976B1FB204E377A0035AFD9 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1F9204E37790035AFD9 /* SignListVC.m */; };
 		9976B1FE204E385F0035AFD9 /* SignFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9976B1FD204E385F0035AFD9 /* SignFormVC.m */; };
+		9985BBD5215226F500792BFD /* icon_czfh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9985BBD3215226F500792BFD /* icon_czfh@2x.png */; };
+		9985BBD6215226F500792BFD /* icon_czfh@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9985BBD4215226F500792BFD /* icon_czfh@3x.png */; };
+		9985BBD92152274700792BFD /* OutputDoneConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99898DB32005C049004673DC /* ContractPayCell2.m */; };
 		998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43001FEB5A220040E013 /* MessageDetailVC.m */; };
@@ -1774,6 +1777,10 @@
 		9976B1FA204E377A0035AFD9 /* SignListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
 		9976B1FC204E385F0035AFD9 /* SignFormVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignFormVC.h; sourceTree = "<group>"; };
 		9976B1FD204E385F0035AFD9 /* SignFormVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignFormVC.m; sourceTree = "<group>"; };
+		9985BBD3215226F500792BFD /* icon_czfh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_czfh@2x.png"; sourceTree = "<group>"; };
+		9985BBD4215226F500792BFD /* icon_czfh@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_czfh@3x.png"; sourceTree = "<group>"; };
+		9985BBD72152274700792BFD /* OutputDoneConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputDoneConfirmVC.h; sourceTree = "<group>"; };
+		9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputDoneConfirmVC.m; sourceTree = "<group>"; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99898DB32005C049004673DC /* ContractPayCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell2.m; sourceTree = "<group>"; };
 		99898DB42005C049004673DC /* ContractPayCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractPayCell2.h; sourceTree = "<group>"; };
@@ -2974,6 +2981,8 @@
 				99CA50B0214A5C7A00DA083E /* AccountFinalListVC.m */,
 				99CA50B2214A5CA600DA083E /* OutputListVC.h */,
 				99CA50B3214A5CA600DA083E /* OutputListVC.m */,
+				9985BBD72152274700792BFD /* OutputDoneConfirmVC.h */,
+				9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3319,6 +3328,8 @@
 		9955439D1FDFDBCC00DC0134 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9985BBD3215226F500792BFD /* icon_czfh@2x.png */,
+				9985BBD4215226F500792BFD /* icon_czfh@3x.png */,
 				99CA50A3214A53F200DA083E /* icon_contract_2@2x.png */,
 				99CA50A5214A53F300DA083E /* icon_contract_2@3x.png */,
 				99CA50A4214A53F300DA083E /* icon_report_2@2x.png */,
@@ -3842,6 +3853,7 @@
 				995546C31FDFDBCD00DC0134 /* work_icon_document@2x.png in Resources */,
 				995546D21FDFDBCD00DC0134 /* work_icon_plan@3x.png in Resources */,
 				995546C21FDFDBCD00DC0134 /* work_icon_chanzhi@3x.png in Resources */,
+				9985BBD6215226F500792BFD /* icon_czfh@3x.png in Resources */,
 				995546571FDFDBCD00DC0134 /* hud_success@3x.png in Resources */,
 				995546711FDFDBCD00DC0134 /* icon_end@3x.png in Resources */,
 				995546C71FDFDBCD00DC0134 /* work_icon_flow@2x.png in Resources */,
@@ -3971,6 +3983,7 @@
 				995546211FDFDBCD00DC0134 /* Settings.plist in Resources */,
 				995547261FE0FF8E00DC0134 /* work_icon_pay@3x.png in Resources */,
 				995547271FE0FF8E00DC0134 /* work_icon_biangeng@3x.png in Resources */,
+				9985BBD5215226F500792BFD /* icon_czfh@2x.png in Resources */,
 				9955466F1FDFDBCD00DC0134 /* icon_done@3x.png in Resources */,
 				995546AC1FDFDBCD00DC0134 /* tab_message_click@2x.png in Resources */,
 				9955465D1FDFDBCD00DC0134 /* icon_attachment@3x.png in Resources */,
@@ -4192,6 +4205,7 @@
 				995545A11FDFDBCC00DC0134 /* NSObject+StoreService.m in Sources */,
 				995545F91FDFDBCD00DC0134 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */,
 				995545D91FDFDBCD00DC0134 /* UIRefreshControl+AFNetworking.m in Sources */,
+				9985BBD92152274700792BFD /* OutputDoneConfirmVC.m in Sources */,
 				995545421FDFDBCC00DC0134 /* WGS84ToGCJ02.m in Sources */,
 				995546081FDFDBCD00DC0134 /* TZImageManager.m in Sources */,
 				995545C81FDFDBCD00DC0134 /* AFHTTPRequestOperation.m in Sources */,
@@ -4533,6 +4547,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 464PDXDQS3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4564,6 +4579,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 464PDXDQS3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

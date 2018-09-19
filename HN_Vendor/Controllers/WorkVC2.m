@@ -82,6 +82,14 @@
                             },
                         
                         @{
+                            @"icon": @"icon_czfh.png",
+                            @"name": @"产值复核",
+                            @"page": @"OutputDoneConfirmVC",
+                            @"color": /*@"213,156,85"*/@"#7FB762",
+                            @"size": @"{28,28}"
+                            },
+                        
+                        @{
                             @"icon": @"icon_jiesuan.png",
                             @"name": @"结算申报",
                             @"page": @"AccountFinalListVC",
