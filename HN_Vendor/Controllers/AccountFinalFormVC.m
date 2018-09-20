@@ -197,7 +197,7 @@
 
 - (void)save
 {
-    
+    [self sendReqForType:1];
 }
 
 - (void)commit
