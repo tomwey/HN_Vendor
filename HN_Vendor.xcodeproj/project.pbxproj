@@ -649,6 +649,8 @@
 		9985BBD5215226F500792BFD /* icon_czfh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9985BBD3215226F500792BFD /* icon_czfh@2x.png */; };
 		9985BBD6215226F500792BFD /* icon_czfh@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9985BBD4215226F500792BFD /* icon_czfh@3x.png */; };
 		9985BBD92152274700792BFD /* OutputDoneConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */; };
+		9985BBDD2153886A00792BFD /* CommListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9985BBDB2153886900792BFD /* CommListView.m */; };
+		9985BBE021538EDB00792BFD /* AccountFinalFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9985BBDF21538EDB00792BFD /* AccountFinalFormVC.m */; };
 		998604F31E540A2D00CE5D4B /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 998604F21E540A2D00CE5D4B /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		99898DB52005C04A004673DC /* ContractPayCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99898DB32005C049004673DC /* ContractPayCell2.m */; };
 		998E43011FEB5A220040E013 /* MessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43001FEB5A220040E013 /* MessageDetailVC.m */; };
@@ -1781,6 +1783,10 @@
 		9985BBD4215226F500792BFD /* icon_czfh@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_czfh@3x.png"; sourceTree = "<group>"; };
 		9985BBD72152274700792BFD /* OutputDoneConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputDoneConfirmVC.h; sourceTree = "<group>"; };
 		9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputDoneConfirmVC.m; sourceTree = "<group>"; };
+		9985BBDB2153886900792BFD /* CommListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommListView.m; sourceTree = "<group>"; };
+		9985BBDC2153886A00792BFD /* CommListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommListView.h; sourceTree = "<group>"; };
+		9985BBDE21538EDB00792BFD /* AccountFinalFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountFinalFormVC.h; sourceTree = "<group>"; };
+		9985BBDF21538EDB00792BFD /* AccountFinalFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountFinalFormVC.m; sourceTree = "<group>"; };
 		998604F21E540A2D00CE5D4B /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		99898DB32005C049004673DC /* ContractPayCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContractPayCell2.m; sourceTree = "<group>"; };
 		99898DB42005C049004673DC /* ContractPayCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractPayCell2.h; sourceTree = "<group>"; };
@@ -2983,6 +2989,8 @@
 				99CA50B3214A5CA600DA083E /* OutputListVC.m */,
 				9985BBD72152274700792BFD /* OutputDoneConfirmVC.h */,
 				9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */,
+				9985BBDE21538EDB00792BFD /* AccountFinalFormVC.h */,
+				9985BBDF21538EDB00792BFD /* AccountFinalFormVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3558,6 +3566,8 @@
 		995544571FDFDBCC00DC0134 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9985BBDC2153886A00792BFD /* CommListView.h */,
+				9985BBDB2153886900792BFD /* CommListView.m */,
 				995544581FDFDBCC00DC0134 /* AWPagerTabStrip.h */,
 				995544591FDFDBCC00DC0134 /* AWPagerTabStrip.m */,
 				9955445A1FDFDBCC00DC0134 /* AWSectionHeaderView.h */,
@@ -4188,6 +4198,7 @@
 				995545CD1FDFDBCD00DC0134 /* AFURLConnectionOperation.m in Sources */,
 				995545841FDFDBCC00DC0134 /* LandPayCell.m in Sources */,
 				995545791FDFDBCC00DC0134 /* FlowSearchVC.m in Sources */,
+				9985BBE021538EDB00792BFD /* AccountFinalFormVC.m in Sources */,
 				9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */,
 				995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */,
 				995545151FDFDBCC00DC0134 /* TYAlertDropDownAnimation.m in Sources */,
@@ -4257,6 +4268,7 @@
 				995545B61FDFDBCD00DC0134 /* PlanFlowFormVC.m in Sources */,
 				995545A51FDFDBCC00DC0134 /* OutputArea.m in Sources */,
 				995545E81FDFDBCD00DC0134 /* DGActivityIndicatorBallTrianglePathAnimation.m in Sources */,
+				9985BBDD2153886A00792BFD /* CommListView.m in Sources */,
 				995545AE1FDFDBCC00DC0134 /* OutputRoomConfirmVC.m in Sources */,
 				995545461FDFDBCC00DC0134 /* UITableView+RefreshControl.m in Sources */,
 				995544EE1FDFDBCC00DC0134 /* FSCalendarScopeHandle.m in Sources */,

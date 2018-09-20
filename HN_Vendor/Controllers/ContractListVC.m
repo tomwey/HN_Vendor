@@ -9,11 +9,17 @@
 #import "ContractListVC.h"
 #import "Defines.h"
 
-@interface ContractListVC () <UITableViewDelegate>
+@interface ContractListVC () <UITableViewDelegate, AWPagerTabStripDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) AWTableViewDataSource *dataSource;
+
+@property (nonatomic, strong) AWPagerTabStrip *tabStrip;
+
+@property (nonatomic, strong) NSArray *tabTitles;
+
+@property (nonatomic, strong) NSArray *rawData;
 
 @end
 
@@ -24,7 +30,66 @@
     
     self.navBar.title = @"合同执行";
     
+    if ( [self.params[@"data"] integerValue] == 1 ) {
+        [self addSegmentControls];
+        
+        self.tableView.top = self.tabStrip.bottom;
+        self.tableView.height -= self.tabStrip.height;
+    }
+    
     [self loadData];
+}
+
+- (void)addSegmentControls
+{
+    self.tabTitles = @[@{
+                           @"name": @"未结算",
+                           @"type": @"0",
+                           @"page": @"",
+                           },
+                       @{
+                           @"name": @"已结算",
+                           @"type": @"1",
+                           @"page": @"",
+                           },
+                       ];
+    
+    self.tabStrip = [[AWPagerTabStrip alloc] init];
+    [self.contentView addSubview:self.tabStrip];
+    self.tabStrip.backgroundColor = [UIColor whiteColor];//MAIN_THEME_COLOR;
+    
+    self.tabStrip.tabWidth = self.contentView.width / 2;
+    
+    self.tabStrip.titleAttributes = @{ NSForegroundColorAttributeName: AWColorFromRGB(168, 168, 168),
+                                       NSFontAttributeName: AWSystemFontWithSize(14, NO) };;
+    self.tabStrip.selectedTitleAttributes = @{ NSForegroundColorAttributeName: MAIN_THEME_COLOR,
+                                               NSFontAttributeName: AWSystemFontWithSize(14, NO) };
+    
+    //    self.tabStrip.delegate   = self;
+    self.tabStrip.dataSource = self;
+    
+    __weak typeof(self) weakSelf = self;
+    self.tabStrip.didSelectBlock = ^(AWPagerTabStrip* stripper, NSUInteger index) {
+        //        weakSelf.swipeView.currentPage = index;
+//        __strong SignListVC *strongSelf = weakSelf;
+//        if ( strongSelf ) {
+//            // 如果duration设置为大于0.0的值，动画滚动，tab stripper动画会有bug
+//            [strongSelf.swipeView scrollToPage:index duration:0.0f]; // 0.35f
+//            [strongSelf swipeViewDidEndDecelerating:strongSelf.swipeView];
+        [weakSelf handleData:index];
+//        }
+    };
+    
+}
+
+- (NSInteger)numberOfTabs:(AWPagerTabStrip *)tabStrip
+{
+    return self.tabTitles.count;
+}
+
+- (NSString *)pagerTabStrip:(AWPagerTabStrip *)tabStrip titleForIndex:(NSInteger)index
+{
+    return self.tabTitles[index][@"name"];
 }
 
 - (void)loadData
@@ -90,14 +155,48 @@
         if ( [result[@"rowcount"] integerValue] == 0 ) {
             [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
             self.dataSource.dataSource = nil;
+            self.rawData = nil;
         } else {
             self.dataSource.dataSource = result[@"data"];
             
             [self.tableView removeErrorOrEmptyTips];
+            
+            self.rawData = result[@"data"];
         }
         
-        [self.tableView reloadData];
+        if ( [self.params[@"data"] integerValue] == 0 ) {
+            [self.tableView reloadData];
+        } else {
+            [self handleData:self.tabStrip.selectedIndex];
+        }
+        
     }
+}
+
+- (void)handleData:(int)type
+{
+    NSMutableArray *temp = [NSMutableArray array];
+    for (id item in self.rawData) {
+        if ( type == 0 ) {
+            if ( ![item[@"issettled"] boolValue] ) {
+                [temp addObject:item];
+            }
+        } else {
+            if ( [item[@"issettled"] boolValue] ) {
+                [temp addObject:item];
+            }
+        }
+    }
+    
+    if ( [temp count] == 0 ) {
+        [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
+        self.dataSource.dataSource = nil;
+    } else {
+        self.dataSource.dataSource = temp;
+         [self.tableView removeErrorOrEmptyTips];
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
