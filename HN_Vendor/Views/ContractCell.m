@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UILabel *noLabel;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *moneyLabel;
+@property (nonatomic, strong) UILabel *outputmoneyLabel;
+@property (nonatomic, strong) UILabel *percentLabel;
 @property (nonatomic, strong) UILabel *stateLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *projNameNoLabel;
@@ -29,15 +31,38 @@
     self.nameLabel.text = data[@"contractname"];
     
     // 设置金额
-    NSString *money = HNFormatMoney2(data[@"contractmoney"], nil);
-    NSString *string = [@"签约金额: " stringByAppendingString:money];
+//    NSString *money = HNFormatMoney2(data[@"contractmoney"], nil);
+//    NSString *string = [@"签约金额: " stringByAppendingString:money];
     
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:string];
-    [attrStr addAttributes:@{
-                              NSFontAttributeName: AWCustomFont(@"PingFang SC", 20),
-                              NSForegroundColorAttributeName: MAIN_THEME_COLOR,
-                              } range:[string rangeOfString:money]];
-    self.moneyLabel.attributedText = attrStr;
+    [self setLabel1:data[@"contractmoney"]
+               name:@"总金额"
+           forLabel:self.moneyLabel color:MAIN_THEME_COLOR];
+    
+    [self setLabel1:data[@"contractoutamount"]
+               name:@"已完成产值"
+           forLabel:self.outputmoneyLabel color:AWColorFromRGB(74, 144, 226)];
+    
+    float total = [data[@"contractmoney"] floatValue];
+    
+    float val1 = [data[@"contractoutamount"] floatValue];
+    
+    float val = val1 / total * 100.0;
+    NSString *ss = nil;
+    if ( val < 100 ) {
+        ss = [NSString stringWithFormat:@"%.1f", val];
+    } else {
+        ss = @"100";
+    }
+    
+    NSString *string = [NSString stringWithFormat:@"%@%%\n已完成产值占比", ss];
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrString addAttributes:@{
+                                NSFontAttributeName: AWCustomFont(@"PingFang SC", 18),
+                                NSForegroundColorAttributeName: AWColorFromRGB(120, 120, 120)
+                                } range:[string rangeOfString:ss]];
+    
+    self.percentLabel.attributedText = attrString;
     
     // 设置状态
     NSString *stateName = nil;
@@ -61,6 +86,20 @@
     self.projNameNoLabel.text = data[@"project_name"];
 }
 
+- (void)setLabel1:(id)value name:(NSString *)name forLabel:(UILabel *)label color:(UIColor *)color
+{
+    NSString *money = [HNFormatMoney(value, @"万") stringByReplacingOccurrencesOfString:@"万" withString:@""];
+    NSString *string = [NSString stringWithFormat:@"%@万\n%@", money, name];
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrString addAttributes:@{
+                                NSFontAttributeName: AWCustomFont(@"PingFang SC", 18),
+                                NSForegroundColorAttributeName: color
+                                } range:[string rangeOfString:money]];
+    
+    label.attributedText = attrString;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -77,14 +116,27 @@
     
     self.timeLabel.frame = self.projNameNoLabel.frame;
     
-    self.moneyLabel.frame = self.noLabel.frame;
-    self.moneyLabel.top = self.timeLabel.top - self.moneyLabel.height;
+//    self.moneyLabel.frame = self.noLabel.frame;
+//    self.moneyLabel.top = self.timeLabel.top - self.moneyLabel.height;
+    
+    CGFloat width = (self.width - 30 - 10) / 3.0;
+    
+    self.moneyLabel.frame =
+    self.outputmoneyLabel.frame  =
+    self.percentLabel.frame    = CGRectMake(0, 0, width, 44);
+    
+    self.moneyLabel.position = CGPointMake(self.noLabel.left, self.timeLabel.top - 44 - 5);
+    self.outputmoneyLabel.position  = CGPointMake(self.moneyLabel.right + 5, self.moneyLabel.top);
+    self.percentLabel.position    = CGPointMake(self.outputmoneyLabel.right + 5, self.moneyLabel.top);
     
     [self.stateLabel sizeToFit];
     self.stateLabel.width += 6;
     self.stateLabel.height += 6;
-    self.stateLabel.position = CGPointMake(self.noLabel.right - self.stateLabel.width,
-                                           self.moneyLabel.midY - self.stateLabel.height / 2);
+    self.stateLabel.position = CGPointMake(self.width - 15 - self.stateLabel.width,
+                                           self.timeLabel.midY - self.stateLabel.height / 2);
+    
+    self.timeLabel.width = 80;
+    self.timeLabel.left = self.stateLabel.left - 10 - 80;
 }
 
 - (UILabel *)noLabel
@@ -123,11 +175,46 @@
         _moneyLabel = AWCreateLabel(CGRectZero,
                                    nil,
                                    NSTextAlignmentLeft,
-                                   AWSystemFontWithSize(12, NO),
+                                   AWSystemFontWithSize(10, NO),
                                    self.noLabel.textColor);
+        _moneyLabel.numberOfLines = 2;
+        _moneyLabel.adjustsFontSizeToFitWidth = YES;
+        
         [self.contentView addSubview:_moneyLabel];
     }
     return _moneyLabel;
+}
+
+- (UILabel *)outputmoneyLabel
+{
+    if ( !_outputmoneyLabel ) {
+        _outputmoneyLabel = AWCreateLabel(CGRectZero,
+                                    nil,
+                                    NSTextAlignmentCenter,
+                                    AWSystemFontWithSize(10, NO),
+                                    self.noLabel.textColor);
+        _outputmoneyLabel.numberOfLines = 2;
+        _outputmoneyLabel.adjustsFontSizeToFitWidth = YES;
+        
+        [self.contentView addSubview:_outputmoneyLabel];
+    }
+    return _outputmoneyLabel;
+}
+
+- (UILabel *)percentLabel
+{
+    if ( !_percentLabel ) {
+        _percentLabel = AWCreateLabel(CGRectZero,
+                                    nil,
+                                    NSTextAlignmentRight,
+                                    AWSystemFontWithSize(10, NO),
+                                    self.noLabel.textColor);
+        _percentLabel.numberOfLines = 2;
+        _percentLabel.adjustsFontSizeToFitWidth = YES;
+        
+        [self.contentView addSubview:_percentLabel];
+    }
+    return _percentLabel;
 }
 
 - (UILabel *)stateLabel

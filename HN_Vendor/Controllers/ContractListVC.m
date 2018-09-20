@@ -104,10 +104,21 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
-                                                                params:
-                            self.dataSource.dataSource[indexPath.row]];
-    [self.navigationController pushViewController:vc animated:YES];
+    if ( [self.params[@"data"] isEqualToString:@"0"] ) {
+        UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
+                                                                    params:
+                                self.dataSource.dataSource[indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if ( [self.params[@"data"] isEqualToString:@"1"] ) {
+        UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AccountFinalListVC"
+                                                                    params:
+                                self.dataSource.dataSource[indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+//    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
+//                                                                params:
+//                            self.dataSource.dataSource[indexPath.row]];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (UITableView *)tableView
@@ -124,7 +135,7 @@
         _tableView.dataSource = self.dataSource;
         _tableView.delegate   = self;
         
-        _tableView.rowHeight = 150;
+        _tableView.rowHeight = 170;
         
         _tableView.backgroundColor = [UIColor clearColor];
     }

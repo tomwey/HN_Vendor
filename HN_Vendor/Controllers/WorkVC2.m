@@ -92,16 +92,18 @@
                         @{
                             @"icon": @"icon_jiesuan.png",
                             @"name": @"结算申报",
-                            @"page": @"AccountFinalListVC",
+                            @"page": @"ContractListVC",
                             @"color": @"#CA5B54",
-                            @"size": @"{26,26}"
+                            @"size": @"{26,26}",
+                            @"params": @"1",
                             },
                         @{
                             @"icon": @"icon_contract_2.png",
                             @"name": @"合同执行",
                             @"page": @"ContractListVC",
                             @"color": @"#5F79C7",
-                            @"size": @"{30,30}"
+                            @"size": @"{30,30}",
+                            @"params": @"0",
                             },
                         @{
                             @"icon": @"icon_report_2.png",
@@ -202,7 +204,11 @@
 - (void)openPage:(id)item
 {
     NSString *vcName = item[@"page"];
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:vcName params:nil];
+    id params = nil;
+    if ( item[@"params"] ) {
+        params = @{ @"data": item[@"params"] };
+    }
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:vcName params:params];
     [AWAppWindow().navController pushViewController:vc animated:YES];
 }
 
