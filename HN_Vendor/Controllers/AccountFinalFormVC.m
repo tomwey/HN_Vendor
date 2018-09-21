@@ -202,7 +202,7 @@
 
 - (void)commit
 {
-    
+    [self sendReqForType:2];
 }
 
 - (void)zfClick

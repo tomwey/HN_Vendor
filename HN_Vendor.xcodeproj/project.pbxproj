@@ -23,6 +23,7 @@
 		990FBD72200C9FB60075DC6E /* icon_declare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD6F200C9FB60075DC6E /* icon_declare@3x.png */; };
 		990FBD73200C9FB60075DC6E /* icon_report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD70200C9FB60075DC6E /* icon_report@3x.png */; };
 		990FBD74200C9FB60075DC6E /* icon_contract@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD71200C9FB60075DC6E /* icon_contract@3x.png */; };
+		9926DADC21548BCC00CFD170 /* AccountFinalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DADB21548BCC00CFD170 /* AccountFinalCell.m */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -720,6 +721,8 @@
 		990FBD6F200C9FB60075DC6E /* icon_declare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_declare@3x.png"; sourceTree = "<group>"; };
 		990FBD70200C9FB60075DC6E /* icon_report@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_report@3x.png"; sourceTree = "<group>"; };
 		990FBD71200C9FB60075DC6E /* icon_contract@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contract@3x.png"; sourceTree = "<group>"; };
+		9926DADA21548BCC00CFD170 /* AccountFinalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountFinalCell.h; sourceTree = "<group>"; };
+		9926DADB21548BCC00CFD170 /* AccountFinalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountFinalCell.m; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -3698,6 +3701,8 @@
 				994E1BAB205B5CB0005333C0 /* SignOptionCell.m */,
 				9927E6A420B53CF50022991B /* ZFBoxView.h */,
 				9927E6A520B53CF50022991B /* ZFBoxView.m */,
+				9926DADA21548BCC00CFD170 /* AccountFinalCell.h */,
+				9926DADB21548BCC00CFD170 /* AccountFinalCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4023,6 +4028,7 @@
 				99E9882F1FEA445500D48248 /* ContractCell.m in Sources */,
 				995545E71FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleRippleMultipleAnimation.m in Sources */,
 				995546051FDFDBCD00DC0134 /* TZAssetModel.m in Sources */,
+				9926DADC21548BCC00CFD170 /* AccountFinalCell.m in Sources */,
 				995545591FDFDBCC00DC0134 /* ApplyLeaveVC.m in Sources */,
 				9955454D1FDFDBCC00DC0134 /* UITableViewCell+RemoveBackground.m in Sources */,
 				995546E71FDFDBCD00DC0134 /* BIChartView.m in Sources */,

@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) AWTableViewDataSource *dataSource;
 
 @end
 
@@ -30,14 +30,6 @@
 
     UIButton *addBtn = HNAddButton(22, self, @selector(add:));
     [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.contentView.bounds
-                                                  style:UITableViewStylePlain];
-    [self.contentView addSubview:self.tableView];
-    
-    self.tableView.dataSource = self;
-    
-    [self.tableView removeBlankCells];
     
     [self loadData];
 }
@@ -78,7 +70,8 @@
         [self.tableView showErrorOrEmptyMessage:@"服务器出错了~" reloadDelegate:nil];
     } else {
         if ([result[@"rowcount"] integerValue] > 0) {
-            self.dataSource = result[@"data"];
+            self.dataSource.dataSource = result[@"data"];
+            [self.tableView removeErrorOrEmptyTips];
         } else {
             [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
             self.dataSource = nil;
@@ -88,19 +81,14 @@
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.dataSource.count;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell.id"];
+//    if ( !cell ) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+//                                      reuseIdentifier:@"cell.id"];
+//    }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell.id"];
-    if ( !cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:@"cell.id"];
-    }
-    
 //    addsignmoney = "4454804.97";
 //    addsignnum = 2;
 //    applycontent = "\U6d4b\U8bd5";
@@ -123,7 +111,28 @@
 //    totalnodeamount = "52177422.45";
 //    totaloutamount = "74539175.05";
     
-    return cell;
+//    return cell;
+//}
+
+- (UITableView *)tableView
+{
+    if ( !_tableView ) {
+        _tableView = [[UITableView alloc] initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
+        [self.contentView addSubview:_tableView];
+        
+        _tableView.dataSource = self.dataSource;
+        _tableView.rowHeight  = 60;
+        [self.tableView removeBlankCells];
+    }
+    return _tableView;
+}
+
+- (AWTableViewDataSource *)dataSource
+{
+    if ( !_dataSource ) {
+        _dataSource = AWTableViewDataSourceCreate(nil, @"AccountFinalCell", @"cell.id");
+    }
+    return _dataSource;
 }
 
 - (void)add:(id)sender
