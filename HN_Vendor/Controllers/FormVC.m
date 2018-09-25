@@ -22,6 +22,8 @@
 // if you want blur efffect contain this
 #import "TYAlertController+BlurEffects.h"
 
+#import <QuickLook/QuickLook.h>
+
 @interface FormVC () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,TZImagePickerControllerDelegate>
 
 @property (nonatomic, strong, readwrite) UITableView *tableView;
@@ -2834,6 +2836,11 @@
                                              selector:@selector(removeAnnex:)
                                                  name:@"kRemoveAnnexNotification"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(remove2:)
+                                                 name:@"kAnnexDidRemoveNotification"
+                                               object:nil];
 }
 
 - (void)removeAnnex:(NSNotification *)noti
@@ -2862,6 +2869,12 @@
 {
     [self.dataSource removeObject:item];
     
+    [self.collectionView reloadData];
+}
+
+- (void)remove2:(NSNotification *)noti
+{
+    [self.dataSource removeObjectAtIndex:[noti.object integerValue]];
     [self.collectionView reloadData];
 }
 
@@ -2961,12 +2974,21 @@
         return;
     }
     
-    AnnexCollectionCell *cell = (AnnexCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    AnnexCollectionCell *cell = (AnnexCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
     //    NSString *msg = cell.titleLabel.text;
     
-    NSLog(@"%@",cell.item);
+//    NSLog(@"%@",cell.item);
+    NSMutableArray *arr = [self.dataSource mutableCopy];
+    [arr removeLastObject];
     
-    [self openPage:cell.item];
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AnnexViewer"
+                                                                params:@{
+                                                                         @"index": @(indexPath.row),
+                                                                         @"attachments": arr
+                                                                         }];
+    [self.navigationController pushViewController:vc animated:YES];
+//    [self openPage:cell.item];
+    
 }
 
 - (void)addImages
@@ -3243,3 +3265,165 @@
 @end
 
 /////////////////////////////////////////////////////////////////////////////////
+
+@interface AnnexViewer () <SwipeViewDataSource, SwipeViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, assign) NSInteger currentIndex;
+
+@property (nonatomic, strong) SwipeView *swipeView;
+
+@end
+
+@implementation AnnexViewer
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.dataSource = [self.params[@"attachments"] ?: @[] mutableCopy];
+    
+    self.currentIndex = [self.params[@"index"] ?: @"0" integerValue];
+    
+    __weak typeof(self) me = self;
+    [self addRightItemWithTitle:@"删除" size:CGSizeMake(60,40) callback:^{
+        [me removeAnnex];
+    }];
+    
+    if ( self.currentIndex < self.dataSource.count ) {
+        self.navBar.title = self.dataSource[self.currentIndex][@"imageName"];
+    }
+    
+    self.swipeView = [[SwipeView alloc] initWithFrame:self.contentView.bounds];
+    [self.contentView addSubview:self.swipeView];
+    self.swipeView.dataSource = self;
+    self.swipeView.delegate   = self;
+    
+    self.swipeView.backgroundColor = [UIColor blackColor];
+    
+    self.swipeView.currentItemIndex = self.currentIndex;
+    
+}
+
+- (void)removeAnnex
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"删除提示"
+                                                                   message:@"您确定要删除吗？"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                
+                                            }]];
+    
+    __weak typeof(self) me = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [me doRemove];
+                                            }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)doRemove
+{
+    NSInteger index = self.swipeView.currentItemIndex;
+    [self.dataSource removeObjectAtIndex:index];
+    
+    [self.swipeView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kAnnexDidRemoveNotification"
+                                                        object:@(index)];
+    
+    if ( self.dataSource.count == 0 ) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return self.dataSource.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    AnnexView *aView = (AnnexView *)[swipeView itemViewAtIndex:index];
+    if ( !aView ) {
+        aView = [[AnnexView alloc] init];
+        aView.frame = self.contentView.bounds;
+        view = aView;
+    }
+    
+    aView.item = self.dataSource[index];
+    
+    return aView;
+}
+
+- (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
+{
+    NSInteger index = swipeView.currentItemIndex;
+    if ( index < self.dataSource.count ) {
+        self.navBar.title = self.dataSource[index][@"imageName"];
+    }
+}
+
+@end
+
+@interface AnnexView() <UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIImageView *imageView;
+
+@end
+
+@implementation AnnexView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        self.scrollView = [[UIScrollView alloc] init];
+        [self addSubview:self.scrollView];
+        
+        self.scrollView.delegate = self;
+        
+        self.scrollView.minimumZoomScale = 1.0;
+        self.scrollView.maximumZoomScale = 4.0;
+        self.scrollView.zoomScale = 1.0;
+        
+        self.imageView = AWCreateImageView(nil);
+        [self.scrollView addSubview:self.imageView];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.scrollView.frame = self.bounds;
+    self.imageView.frame = self.bounds;
+}
+
+- (void)setItem:(id)item
+{
+    _item = item;
+    
+    self.scrollView.zoomScale = 1.0;
+    
+    if ( item[@"image"] ) {
+        self.imageView.image = item[@"image"];
+    } else if (item[@"imageURL"]) {
+        [self.imageView setImageWithURL:[NSURL URLWithString:item[@"imageURL"]]];
+    }
+}
+
+@end

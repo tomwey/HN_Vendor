@@ -72,3 +72,13 @@ static CGFloat ControlHeights[] = {
 @property (nonatomic, strong) id item;
 
 @end
+
+@interface AnnexViewer: BaseNavBarVC
+
+@end
+
+@interface AnnexView: UIView
+
+@property (nonatomic, strong) id item;
+
+@end
