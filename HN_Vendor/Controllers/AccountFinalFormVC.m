@@ -8,6 +8,7 @@
 
 #import "AccountFinalFormVC.h"
 #import "Defines.h"
+#import "ZFBoxView.h"
 
 @interface AccountFinalFormVC ()
 
@@ -17,15 +18,16 @@
 @property (nonatomic, strong) UIButton *commitButton;
 @property (nonatomic, strong) UIButton *zfButton;
 
+@property (nonatomic, strong) NSArray *annexList;
+@property (nonatomic, strong) NSArray *annexData;
+
+@property (nonatomic, assign) NSInteger counter;
+
 @end
 
 @implementation AccountFinalFormVC
 
 - (void)viewDidLoad {
-    
-    NSDate *now = [NSDate date];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat = @"yyyy-MM-dd";
     
     self.inFormControls = [@[
                             @{
@@ -67,11 +69,116 @@
     
     [self initHeader];
     
-    [self addToolButtons];
+//    [self addToolButtons];
+    
+    if ( !self.params[@"state_num"] ) {
+        // 新建
+        self.disableFormInputs = NO;
+//        self.totalCounter = 3;
+        
+        [self addToolButtons];
+    } else {
+        // 添加状态显示
+//        self.totalCounter = 4; // 加载附件
+        
+        if ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5) {
+            // 待申报
+            self.disableFormInputs = NO;
+            [self addToolButtons];
+        } else if ( [self.params[@"state_num"] integerValue] == 10 ) {
+            // 已申报
+            self.disableFormInputs = YES;
+            [self addCancelButton];
+        } else {
+            self.disableFormInputs = YES;
+        }
+        
+    }
+    
+    if ([self.params[@"state_num"] integerValue] == 5) {
+        // 被驳回，显示驳回原因
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"驳回原因"
+                    titleAttributes:@{
+                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
+                                      }
+                               size:CGSizeMake(80,40)
+                        rightMargin:5 callback:^{
+                            [me showZFBox];
+                        }];
+        
+        [self showZFBox];
+    }
+    
+//    self.counter = 2;
     
     [self loadData];
     
-    self.formObjects[@"apply_date"] = [df stringFromDate:now] ?: @"";
+    // 填充数据
+//    [self populateData];
+}
+
+- (void)showZFBox
+{
+    [[[ZFBoxView alloc] init] showReason:self.params[@"returnmemo"]
+                                  inView:self.view
+                             commitBlock:^(ZFBoxView *sender) {
+                                 
+                             }];
+}
+
+- (void)addCancelButton
+{
+    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+                                                        50),
+                                             @"取消",
+                                             [UIColor whiteColor],
+                                             self,
+                                             @selector(cancelClick));
+    [self.contentView addSubview:cancelBtn];
+    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    self.tableView.height -= cancelBtn.height;
+}
+
+- (void)populateData
+{
+    NSDate *now = [NSDate date];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd";
+    
+    self.formObjects[@"apply_date"] = self.params[@"applydate"] ?: [df stringFromDate:now];
+    
+    //    addsignmoney = "4454804.97";
+    //    addsignnum = 2;
+    //    applycontent = "\U6d4b\U8bd5";
+    //    applydate = "2018-09-20";
+    //    applymoney = "4321.00";
+    //    changemoney = "206281.49";
+    //    changenum = 29;
+    //    contractid = 2194740;
+    //    contractmoney = "75926964.9700";
+    //    contractname = "\U6885\U6eaa\U6e56\U4e8c\U671f\U603b\U53056#\U30017#\U680b\U603b\U5305\U65bd\U5de5";
+    //    contractphyno = "HG-B-CQ-MXH-E311-2016-B-5-1";
+    //    "project_id" = 1291439;
+    //    "project_name" = "\U6885\U6eaa\U6e56\U4e8c\U671f";
+    //    regsignmoney = NULL;
+    //    returnmemo = NULL;
+    //    signmoney = "71472160.00";
+    //    "state_desc" = "\U5f85\U7533\U62a5";
+    //    supsettleid = 1;
+    //    syssettlemoney = "76133246.46";
+    //    totalnodeamount = "52177422.45";
+    //    totaloutamount = "74539175.05";
+    
+    if ( self.params[@"applymoney"] ) {
+        self.formObjects[@"money"] = self.params[@"applymoney"];
+    }
+    
+    if ( self.params[@"applycontent"] ) {
+        self.formObjects[@"apply_desc"] = self.params[@"applycontent"];
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)noti
@@ -207,7 +314,16 @@
 
 - (void)zfClick
 {
+    id newParams = [self.params mutableCopy];
+    newParams[@"zf_type"] = @"2";
     
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)cancelClick
+{
+    [self sendReqForType:4];
 }
 
 - (void)sendReqForType:(NSInteger)type
@@ -219,6 +335,34 @@
 //
 //    NSString *IDs = [temp componentsJoinedByString:@","];
     
+    // 附件必填检查
+    for (id item in self.annexList) {
+        NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
+        if ( [item[@"required"] boolValue] ) {
+            if ( [self.formObjects[key] count] == 0 ) {
+                [self.contentView showHUDWithText:[NSString stringWithFormat:@"%@不能为空", item[@"docname"]]];
+                return;
+            }
+        }
+    }
+    
+    NSMutableArray *temp = [NSMutableArray array];
+    for (id key in self.formObjects) {
+        if ( [key hasPrefix:@"annex_"] ) {
+            NSArray *arr = self.formObjects[key];
+            NSLog(@"%@", arr);
+            NSMutableArray *arr2 = [NSMutableArray array];
+            for (id item in arr) {
+                [arr2 addObject:item[@"id"]];
+            }
+            [temp addObject:[NSString stringWithFormat:@"%@:%@",
+                             [[key componentsSeparatedByString:@"_"] lastObject],
+                             [arr2 componentsJoinedByString:@","]]];
+        }
+    }
+    
+    NSString *ids = [temp componentsJoinedByString:@";"];
+    
     // 发请求
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
@@ -227,7 +371,7 @@
 //    NSString *visaID = [self.params[@"supvisaid"] ?: @"0" description];
     
     [self hideKeyboard];
-    
+
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
@@ -238,12 +382,12 @@
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [@(type) description],
-              @"param5": @"0",
+              @"param5": [self.params[@"supsettleid"] ?: @"0" description],
               @"param6": [self.params[@"contractid"] ?: @"0" description],
               @"param7": [self.formObjects[@"money"] description],
               @"param8": [self.formObjects[@"apply_desc"] description],
-              @"param9": @"",
-              @"param10": @"0",
+              @"param9": ids,
+              @"param10": @"1",
               @"param11": @"",
               } completion:^(id result, NSError *error) {
                   [me handleResult2:result error:error];
@@ -281,6 +425,10 @@
 //                    }];
 //                }
                 
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadAccountFinalDataNotification" object:nil];
+                }];
+                
             } else {
                 [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
             }
@@ -305,11 +453,59 @@
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error: error];
               }];
+    
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商取附件文档APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": [userInfo[@"loginname"] ?: @"" description],
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": [self.params[@"supsettleid"] ?: @"0" description],
+              @"param5": @"H_APP_Supplier_Contract_Settle_Apply",
+              } completion:^(id result, NSError *error) {
+                  [me handleResult3:result error: error];
+              }];
+}
+
+- (void)handleResult3:(id)result error:(NSError *)error
+{
+    if ( result && [result[@"rowcount"] integerValue] > 0 ) {
+        NSArray *data = result[@"data"];
+        for (id item in data) {
+            NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"annextypeid"]];
+            NSDictionary *params = [[item[@"annexurl"] description] queryDictionaryUsingEncoding:NSUTF8StringEncoding];
+            
+            NSMutableArray *temp = [self.formObjects[key] ?: @[] mutableCopy];
+            [temp addObject:@{
+                              @"id": item[@"annexkeyid"] ?: @"0",
+                              @"imageURL": [params[@"hnapp://open-file?file"] ?: @"" stringByAppendingPathComponent:@"contents"],
+                              @"imageName": params[@"filename"] ?: @""
+                              }];
+            self.formObjects[key] = [temp copy];
+
+        }
+    }
+    
+    [self loadDone];
+}
+
+- (void)loadDone
+{
+    if ( ++self.counter == 2 ) {
+        self.counter = 0;
+        [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+        
+        [self populateData];
+    }
 }
 
 - (void)handleResult:(id)result error:(NSError *)error
 {
-    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
+//    [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
     
     if ( result && [result[@"rowcount"] integerValue] > 0 ) {
 //        billtypeid = 12;
@@ -329,12 +525,18 @@
 //        typedocid = 2;
         
         NSArray *data = result[@"data"];
+        self.annexList = data;
+        
         for (id item in data) {
+            NSString *key = @"annexid";
+            if ( item[@"typedocid"] ) {
+                key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
+            }
             [self.inFormControls addObject:@{
-                                             @"data_type": @"15",
+                                             @"data_type": @"21",
                                              @"datatype_c": @"相关附件",
                                              @"describe": item[@"docname"] ?: @"相关附件",
-                                             @"field_name": item[@"typedocid"] ?: @"annexid",
+                                             @"field_name": key,
                                              @"item_name": @"",
                                              @"item_value": @"H_APP_Supplier_Annex,AnnexKeyID",
                                              @"required": @(HNIntegerFromObject(item[@"required"], 0))
@@ -343,6 +545,8 @@
         
         [self formControlsDidChange];
     }
+    
+    [self loadDone];
 }
 
 - (void)initHeader
@@ -363,7 +567,7 @@
     NSArray *statsData = @[
                            @{
                                @"name": @"系统结算总金额",
-                               @"money": self.params[@"contracttotalmoney"] ?: @"0",
+                               @"money": self.params[@"contracttotalmoney"] ?: self.params[@"syssettlemoney"] ?: @"0",
                                @"align": @"0",
                                },
                            @{
@@ -388,7 +592,7 @@
                                },
                            @{
                                @"name": @"产值确认金额",
-                               @"money": self.params[@"contractoutamount"] ?: @"0",
+                               @"money": self.params[@"contractoutamount"] ?: self.params[@"totaloutamount"] ?: @"0",
                                @"align": @"2",
                                },
                            ];

@@ -29,10 +29,11 @@ typedef NS_ENUM(NSInteger, FormControlType) {
     FormControlTypeAttendanceException = 18, // 考勤异常
     FormControlTypeUploadImageControl  = 19, // 上传图片
     FormControlTypeOpenSelectPage = 20, // 打开一个新页面
+    FormControlTypeRelatedAnnex2 = 21, // 相关附件
 };
 
 static CGFloat ControlHeights[] = {
-    50,50,50,50,50,0,50,50,50,170,0,50,50,50,50,50,121,118,0,50
+    50,50,50,50,50,0,50,50,50,170,0,50,50,50,50,50,121,118,0,50,50
 };
 
 @interface FormVC : BaseNavBarVC
@@ -59,5 +60,15 @@ static CGFloat ControlHeights[] = {
 
 - (void)keyboardWillShow:(NSNotification *)noti;
 - (void)keyboardWillHide:(NSNotification *)noti;
+
+@end
+
+@interface AnnexsListVC : BaseNavBarVC
+
+@end
+
+@interface AnnexCollectionCell : UICollectionViewCell
+
+@property (nonatomic, strong) id item;
 
 @end

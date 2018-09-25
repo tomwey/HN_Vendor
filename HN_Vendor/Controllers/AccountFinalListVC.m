@@ -9,7 +9,7 @@
 #import "AccountFinalListVC.h"
 #import "Defines.h"
 
-@interface AccountFinalListVC () <UITableViewDelegate,UITableViewDataSource>
+@interface AccountFinalListVC () <UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -30,6 +30,11 @@
 
     UIButton *addBtn = HNAddButton(22, self, @selector(add:));
     [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadData)
+                                                 name:@"kReloadAccountFinalDataNotification"
+                                               object:nil];
     
     [self loadData];
 }
@@ -81,38 +86,12 @@
     }
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell.id"];
-//    if ( !cell ) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                      reuseIdentifier:@"cell.id"];
-//    }
-
-//    addsignmoney = "4454804.97";
-//    addsignnum = 2;
-//    applycontent = "\U6d4b\U8bd5";
-//    applydate = "2018-09-20";
-//    applymoney = "4321.00";
-//    changemoney = "206281.49";
-//    changenum = 29;
-//    contractid = 2194740;
-//    contractmoney = "75926964.9700";
-//    contractname = "\U6885\U6eaa\U6e56\U4e8c\U671f\U603b\U53056#\U30017#\U680b\U603b\U5305\U65bd\U5de5";
-//    contractphyno = "HG-B-CQ-MXH-E311-2016-B-5-1";
-//    "project_id" = 1291439;
-//    "project_name" = "\U6885\U6eaa\U6e56\U4e8c\U671f";
-//    regsignmoney = NULL;
-//    returnmemo = NULL;
-//    signmoney = "71472160.00";
-//    "state_desc" = "\U5f85\U7533\U62a5";
-//    supsettleid = 1;
-//    syssettlemoney = "76133246.46";
-//    totalnodeamount = "52177422.45";
-//    totaloutamount = "74539175.05";
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id item = self.dataSource.dataSource[indexPath.row];
     
-//    return cell;
-//}
+    [self forwardToFinalForm:item];
+}
 
 - (UITableView *)tableView
 {
@@ -121,6 +100,8 @@
         [self.contentView addSubview:_tableView];
         
         _tableView.dataSource = self.dataSource;
+        _tableView.delegate = self;
+        
         _tableView.rowHeight  = 60;
         [self.tableView removeBlankCells];
     }
@@ -137,8 +118,13 @@
 
 - (void)add:(id)sender
 {
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AccountFinalFormVC"
-                                                                params:self.params];
+    [self forwardToFinalForm:self.params];
+}
+
+- (void)forwardToFinalForm:(id)params
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"AccountFinalFormVC"
+                                                                params:params];
     [self presentViewController:vc animated:YES completion:nil];
 }
 

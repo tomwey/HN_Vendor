@@ -53,6 +53,7 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperation *uploadOperation;
 @property (nonatomic, strong) NSMutableArray *attachmentIDs;
+@property (nonatomic, strong) NSArray *currentAttachments;
 
 @property (nonatomic, copy) NSString *currentAttachmentFieldName;
 @property (nonatomic, weak) id currentAttachmentFormControl;
@@ -1292,6 +1293,67 @@
             }
         }
             break;
+            
+        case FormControlTypeRelatedAnnex2:
+        {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            // 相关附件
+            UILabel *detailLabel = AWCreateLabel(CGRectMake(label.right,
+                                                            label.top,
+                                                            self.contentView.width - 20 - 10 - label.right,
+                                                            label.height),
+                                                 nil,
+                                                 NSTextAlignmentLeft,
+                                                 nil,
+                                                 AWColorFromRGB(168, 168, 168));
+            [cell.contentView addSubview:detailLabel];
+            detailLabel.tag = 1002;
+            
+            detailLabel.adjustsFontSizeToFitWidth = YES;
+            
+            NSString *key = [item[@"field_name"] description];
+            
+            if ( self.formObjects[key] && [self.formObjects[key] count] > 0 ) {
+                NSArray *values = self.formObjects[key];
+                detailLabel.text = [NSString stringWithFormat:@"%d个附件", values.count];
+                /*
+                UIButton *btn = AWCreateTextButton(CGRectMake(0, 0, 80, label.height),
+                                                   @"查看附件",
+                                                   [UIColor whiteColor],
+                                                   self, @selector(viewAttachs:));
+                [cell.contentView addSubview:btn];
+                btn.tag = 1003;
+                
+                btn.position = CGPointMake(self.contentView.width - 35 - btn.width, label.top);
+                
+                btn.userData = key;
+                btn.cornerRadius = 2;
+                btn.backgroundColor = AWColorFromHex(@"#999999");
+                
+                btn.titleLabel.font = AWSystemFontWithSize(14, NO);*/
+                
+            } else {
+                detailLabel.text = @"上传附件";
+//                btn.hidden = YES;
+            }
+            
+            UIButton *btn = AWCreateTextButton(CGRectMake(0, 0, 80, label.height),
+                                               @"查看附件",
+                                               [UIColor whiteColor],
+                                               self, @selector(viewAttachs:));
+            [cell.contentView addSubview:btn];
+            btn.tag = 1003;
+            
+            btn.position = CGPointMake(self.contentView.width - 35 - btn.width, label.top);
+            
+            btn.userData = item;
+            btn.cornerRadius = 2;
+            btn.backgroundColor = AWColorFromHex(@"#999999");
+            
+            btn.titleLabel.font = AWSystemFontWithSize(14, NO);
+            
+        }
+            break;
         case FormControlTypeRelatedFlow:
         {
             // 相关流程
@@ -1540,6 +1602,32 @@
     }
 }
 
+- (void)viewAttachs:(UIButton *)sender
+{
+    id item = sender.userData;
+    NSString *key = item[@"field_name"];
+    
+    __weak typeof(self) me = self;
+    void (^saveCallback) (id controlData, NSArray *attachments) =
+        ^(id controlData, NSArray *attachments) {
+            NSLog(@"controlData: %@, attachments: %@", controlData, attachments);
+            me.formObjects[item[@"field_name"]] = attachments;
+            [me.tableView reloadData];
+    };
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AnnexsListVC"
+                                                                params:@{
+                                                                         @"attachments": self.formObjects[key] ?: @[],
+                                                                         @"controlData": item,
+                                                                         @"saveCallback": saveCallback,
+                                                                        }];
+    if ( self.navigationController ) {
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+}
+
 - (void)attendBtnClick:(UIButton *)sender
 {
     [self.firstResponder resignFirstResponder];
@@ -1717,7 +1805,9 @@
     [actionCtrl addAction:selectAction];
     [actionCtrl addAction:cancelAction];
     
-    [self presentViewController:actionCtrl animated:YES completion:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.02 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self presentViewController:actionCtrl animated:YES completion:nil];
+    });
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
@@ -1746,7 +1836,8 @@
         if ( fileData ) {
             id image = @{
                          @"imageData": fileData,
-                         @"imageName": @"IMG_0001.PNG"
+                         @"imageName": @"IMG_0001.PNG",
+                         @"image": info[UIImagePickerControllerOriginalImage],
                          };
             [self uploadImages:@[image] mimeType:mimeName];
         }
@@ -1777,6 +1868,26 @@
 {
     [MBProgressHUD hideHUDForView:self.contentView animated:YES];
     [self.contentView showHUDWithText:@"附件上传成功" succeed:YES];
+    
+    if ( [self.currentAttachmentFormControl[@"data_type"] integerValue] == FormControlTypeRelatedAnnex2) {
+        NSArray *IDs = [responseObject[@"IDS"] componentsSeparatedByString:@","];
+        
+        NSArray *attachments = self.formObjects[self.currentAttachmentFieldName] ?: @[];
+        NSMutableArray *temp = [attachments mutableCopy];
+        for (int i=0; i<IDs.count; i++) {
+            id item = [self.currentAttachments[i] mutableCopy];
+            item[@"id"] = IDs[i];
+            [item removeObjectForKey:@"imageData"];
+            [temp addObject:item];
+        }
+        
+        if ( temp.count > 0 ) {
+            self.formObjects[self.currentAttachmentFieldName] = temp;
+            [self.tableView reloadData];
+        }
+        
+        return;
+    }
     
     NSArray *IDs = [responseObject[@"IDS"] componentsSeparatedByString:@","];
     
@@ -1938,6 +2049,8 @@
 
 - (void)uploadImages:(NSArray *)images mimeType:(NSString *)mimeType
 {
+    self.currentAttachments = images;
+    
     [self uploadFile:@{}
        formDataBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
            for (id image in images) {
@@ -2065,17 +2178,17 @@
     if ( sourceType == UIImagePickerControllerSourceTypeCamera ) {
         self.imagePicker.sourceType = sourceType;
         
-        self.imagePicker.mediaTypes = @[(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage];
+        self.imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];//@[(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage];
         
-        self.imagePicker.videoMaximumDuration = 30;
-        self.imagePicker.videoQuality = UIImagePickerControllerQualityTypeHigh;
+//        self.imagePicker.videoMaximumDuration = 30;
+//        self.imagePicker.videoQuality = UIImagePickerControllerQualityTypeHigh;
         
         [self presentViewController:self.imagePicker animated:YES completion:nil];
     } else {
         TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self];
         
         imagePickerVC.allowTakePicture  = NO;
-        imagePickerVC.allowPickingVideo = YES;
+        imagePickerVC.allowPickingVideo = NO;
         imagePickerVC.allowPickingImage = YES;
         imagePickerVC.allowPickingOriginalPhoto = YES;
         
@@ -2083,12 +2196,14 @@
             NSLog(@"photos: %@, assets: %@, origin: %d", photos, assets, isSelectOriginalPhoto);
             //        [self uploadImages:photos mimeType:@"image/png"];
             NSMutableArray *tempArray = [NSMutableArray array];
+            __block NSInteger index = 0;
             for (id asset in assets) {
                 if ( [asset isKindOfClass:[PHAsset class]] ) {
                     [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename) {
                         if ( data && filename ) {
                             [tempArray addObject:@{ @"imageData": data,
-                                                    @"imageName": filename
+                                                    @"imageName": filename,
+                                                    @"image": photos[index++]
                                                     }];
                         }
                     }];
@@ -2098,16 +2213,16 @@
             [self uploadImages:tempArray mimeType:@"image/png"];
         };
         
-        imagePickerVC.didFinishPickingVideoHandle = ^(UIImage *coverImage,id asset) {
-            NSLog(@"coverImage: %@, asset: %@", coverImage, asset);
-            if ( [asset isKindOfClass:[PHAsset class]] ) {
-                PHAsset *movAsset = (PHAsset *)asset;
-                [[self class] getVideoFromPHAsset:movAsset completion:^(NSData *data, NSString *filename) {
-                    [self uploadData:data fileName:filename mimeType:@"video/mp4"];
-                }];
-            }
-            //        [self uploadData: fileName:@"file.mov" mimeType:@"video/mp4"];
-        };
+//        imagePickerVC.didFinishPickingVideoHandle = ^(UIImage *coverImage,id asset) {
+//            NSLog(@"coverImage: %@, asset: %@", coverImage, asset);
+//            if ( [asset isKindOfClass:[PHAsset class]] ) {
+//                PHAsset *movAsset = (PHAsset *)asset;
+//                [[self class] getVideoFromPHAsset:movAsset completion:^(NSData *data, NSString *filename) {
+//                    [self uploadData:data fileName:filename mimeType:@"video/mp4"];
+//                }];
+//            }
+//            //        [self uploadData: fileName:@"file.mov" mimeType:@"video/mp4"];
+//        };
         
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
@@ -2420,12 +2535,13 @@
             break;
         
         case FormControlTypeRelatedAnnex:
+        case FormControlTypeRelatedAnnex2:
         {
             self.currentAttachmentFormControl = item;
             [self uploadAttachmentForFieldName:item[@"field_name"]];
         }
             break;
-            
+        
         case FormControlTypeRelatedFlow:
         {
             NSArray *flows = self.formObjects[item[@"field_name"]];
@@ -2677,3 +2793,453 @@
 }
 
 @end
+
+//////////////////////////////////////////////////////////////////
+
+@interface AnnexsListVC () <UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
+
+@property (nonatomic, strong) NSArray *currentPhotos;
+
+@property (nonatomic, strong) AFHTTPRequestOperation *uploadOperation;
+
+@end
+
+@implementation AnnexsListVC
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navBar.title = @"附件列表";
+    
+    __weak typeof(self) me = self;
+    [self addRightItemWithTitle:@"确定"
+                           size:CGSizeMake(60, 40)
+                       callback:^{
+//                           NSLog(@"%@, %@", me.attachmentIDs, me.params[@"controlData"]);
+                           [me saveCallback];
+                       }];
+    
+    self.dataSource = [self.params[@"attachments"] mutableCopy];
+
+    [self.dataSource addObject:@{ @"type": @"add" }];
+    
+    [self.collectionView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(removeAnnex:)
+                                                 name:@"kRemoveAnnexNotification"
+                                               object:nil];
+}
+
+- (void)removeAnnex:(NSNotification *)noti
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"删除提示"
+                                                                   message:@"您确定要删除吗？"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                
+                                            }]];
+    
+    __weak typeof(self) me = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [me doRemove: noti.object];
+                                            }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)doRemove:(id)item
+{
+    [self.dataSource removeObject:item];
+    
+    [self.collectionView reloadData];
+}
+
+- (void)saveCallback
+{
+    void (^saveCallback)(id control, NSArray *attachments) = self.params[@"saveCallback"];
+    if ( saveCallback ) {
+        [self.dataSource removeLastObject];
+        saveCallback(self.params[@"controlData"], self.dataSource);
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (UICollectionView *)collectionView
+{
+    if ( !_collectionView ) {
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        
+        layout.sectionInset = UIEdgeInsetsMake(10, 15, 10, 15);
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.contentView.bounds
+                           collectionViewLayout:layout];
+        
+        [self.contentView addSubview:_collectionView];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        
+        [_collectionView registerClass:[AnnexCollectionCell class]
+                    forCellWithReuseIdentifier:@"cell.id"];
+        
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        
+        _collectionView.showsVerticalScrollIndicator = NO;
+    }
+    return _collectionView;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.dataSource.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AnnexCollectionCell *cell = (AnnexCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell.id" forIndexPath:indexPath];
+    
+    //    id secDict = self.dataDict[@"sections"][indexPath.section];
+    //    cell.backgroundColor = [UIColor redColor];
+    
+    id item = self.dataSource[indexPath.row];
+    
+    cell.item = item;
+    
+    return cell;
+}
+
+- (NSInteger)numberOfCols
+{
+    return 4;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(floor((self.contentView.width - 2 * 15 - ([self numberOfCols] - 1) * 10 ) / [self numberOfCols]),
+                      floor((self.contentView.width - 2 * 15 - ([self numberOfCols] - 1) * 10 ) / [self numberOfCols]));
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(15,15,15,15);
+}
+
+//设置每个item水平间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10;
+}
+
+//设置每个item垂直间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10;
+}
+
+//点击item方法
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ( indexPath.row == self.dataSource.count - 1 ) {
+        [self addImages];
+        return;
+    }
+    
+    AnnexCollectionCell *cell = (AnnexCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    //    NSString *msg = cell.titleLabel.text;
+    
+    NSLog(@"%@",cell.item);
+    
+    [self openPage:cell.item];
+}
+
+- (void)addImages
+{
+    TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self];
+    
+    imagePickerVC.allowTakePicture  = YES;
+    imagePickerVC.allowPickingVideo = NO;
+    imagePickerVC.allowPickingImage = YES;
+    imagePickerVC.allowPickingOriginalPhoto = YES;
+    
+    imagePickerVC.didFinishPickingPhotosHandle = ^( NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto ) {
+        NSLog(@"photos: %@, assets: %@, origin: %d", photos, assets, isSelectOriginalPhoto);
+        
+//        self.currentPhotos = photos;s
+        
+        //        [self uploadImages:photos mimeType:@"image/png"];
+        NSMutableArray *tempArray = [NSMutableArray array];
+        __block NSInteger index = 0;
+        for (id asset in assets) {
+            if ( [asset isKindOfClass:[PHAsset class]] ) {
+                [[self class] getImageFromPHAsset:asset
+                                       completion:^(NSData *data, NSString *filename) {
+                    if ( data && filename ) {
+                        [tempArray addObject:@{ //@"imageData": data,
+                                                @"imageName": filename,
+                                                @"image": photos[index]
+                                                //                                                @"imageURL": imageURL ?: @"",
+                                                }];
+                        index ++;
+                    }
+                }];
+            }
+        }
+        
+        self.currentPhotos = tempArray;
+        
+        [self uploadPhotos:tempArray];
+        
+//        [self uploadImages:tempArray mimeType:@"image/png"];
+    };
+    
+    
+    //        imagePickerVC.didFinishPickingVideoHandle = ^(UIImage *coverImage,id asset) {
+    //            NSLog(@"coverImage: %@, asset: %@", coverImage, asset);
+    //            if ( [asset isKindOfClass:[PHAsset class]] ) {
+    //                PHAsset *movAsset = (PHAsset *)asset;
+    //                [[self class] getVideoFromPHAsset:movAsset completion:^(NSData *data, NSString *filename) {
+    //                    [self uploadData:data fileName:filename mimeType:@"video/mp4"];
+    //                }];
+    //            }
+    //            //        [self uploadData: fileName:@"file.mov" mimeType:@"video/mp4"];
+    //        };
+    
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
++ (void)getImageFromPHAsset:(PHAsset *)asset completion:(void (^)(NSData *data, NSString *filename) ) result {
+    __block NSData *data;
+    PHAssetResource *resource = [[PHAssetResource assetResourcesForAsset:asset] firstObject];
+    if (asset.mediaType == PHAssetMediaTypeImage) {
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.version = PHImageRequestOptionsVersionCurrent;
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        options.synchronous = YES;
+        [[PHImageManager defaultManager] requestImageDataForAsset:asset
+                                                          options:options
+                                                    resultHandler:
+         ^(NSData *imageData,
+           NSString *dataUTI,
+           UIImageOrientation orientation,
+           NSDictionary *info) {
+             data = [NSData dataWithData:imageData];
+         }];
+    }
+    
+    if (result) {
+        if (data.length <= 0) {
+            result(nil, nil);
+        } else {
+            result(data, resource.originalFilename);
+        }
+    }
+}
+
+- (void)uploadPhotos:(NSArray *)photos
+{
+    [self uploadFile:@{}
+       formDataBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+           for (id asset in photos) {
+               [formData appendPartWithFileData:UIImagePNGRepresentation(asset[@"image"])
+                                           name:@"file"
+                                       fileName:asset[@"imageName"]
+                                       mimeType:@"image/png"];
+               
+           }
+       }];
+}
+
+- (void)cancelUpload
+{
+    [self.uploadOperation cancel];
+    self.uploadOperation = nil;
+}
+
+- (void)uploadFile:(NSDictionary *)params
+     formDataBlock:( void (^)(id<AFMultipartFormData>  _Nonnull formData) )formDataBlock
+{
+    [self cancelUpload];
+    
+    id user = [[UserService sharedInstance] currentUser];
+    NSString *manID = [user[@"man_id"] description];
+    manID = manID ?: @"0";
+    
+    [[MBProgressHUD appearance] setContentColor:MAIN_THEME_COLOR];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.contentView animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.progress = 0.0f;
+    hud.label.text = @"上传中...";
+    
+    NSString *tableName = @"H_WF_Inst_Opinion";
+    NSString *fieldname = @"Audit_Annex";
+    NSString *mid = self.params[@"mid"] ?: @"0";
+    
+    id currentControl = self.params[@"controlData"];
+    
+    if (currentControl) {
+        //        id val = self.formObjects[self.currentAttachmentFieldName];
+        NSArray *temp = [currentControl[@"item_value"] componentsSeparatedByString:@","];
+        if ( [temp firstObject] ) {
+            tableName = [temp firstObject];
+        }
+        
+        if ([temp lastObject]) {
+            fieldname = [temp lastObject];
+        }
+        
+        mid = @"";
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    NSString *uploadUrl = [NSString stringWithFormat:@"%@/upload", API_HOST];
+    self.uploadOperation =
+    [[AFHTTPRequestOperationManager manager] POST:uploadUrl
+                                       parameters:@{
+                                                    @"mid": mid,
+                                                    @"domanid": manID,
+                                                    @"tablename": tableName,
+                                                    @"fieldname": fieldname,
+                                                    }
+                        constructingBodyWithBlock:formDataBlock
+                                          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
+     {
+         [weakSelf handleAnnexUploadSuccess:responseObject];
+     }
+     
+                                          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error)
+     {
+         //
+         NSLog(@"error: %@",error);
+         [MBProgressHUD hideHUDForView:self.contentView animated:YES];
+         [self.contentView showHUDWithText:@"附件上传失败" succeed:NO];
+     }];
+    [self.uploadOperation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        NSLog(@"%f", totalBytesWritten / (float)totalBytesExpectedToWrite);
+        hud.progress = totalBytesWritten / (float)totalBytesExpectedToWrite;
+    }];
+    
+}
+
+- (void)handleAnnexUploadSuccess:(id)responseObject
+{
+    [MBProgressHUD hideHUDForView:self.contentView animated:YES];
+    [self.contentView showHUDWithText:@"附件上传成功" succeed:YES];
+    
+    NSArray *IDs = [responseObject[@"IDS"] componentsSeparatedByString:@","];
+    
+    if ( IDs.count == 0 ) {
+        return;
+    }
+    
+    [self.dataSource removeLastObject];
+    
+    for (int i=0; i<IDs.count; i++) {
+        id item = [self.currentPhotos[i] mutableCopy];
+        item[@"id"] = IDs[i];
+        [self.dataSource addObject:item];
+    }
+    
+    [self.dataSource addObject:@{ @"type": @"add" }];
+    
+    [self.collectionView reloadData];
+}
+
+- (void)openPage:(id)item
+{
+    
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////
+@interface AnnexCollectionCell ()
+
+@property (nonatomic, strong, readwrite) UIImageView *iconView;
+//@property (nonatomic, strong, readwrite) UILabel *titleLabel;
+
+@property (nonatomic, strong) UIButton *delButton;
+
+@end
+
+@implementation AnnexCollectionCell
+
+- (void)setItem:(id)item
+{
+    _item = item;
+    
+    if ([item[@"type"] isEqualToString:@"add"]) {
+        self.iconView.image = AWImageNoCached(@"icon_default_add.png");
+        
+        self.delButton.hidden = YES;
+        
+    } else {
+        if ( item[@"image"] ) {
+            self.iconView.image = item[@"image"];
+        } else if ( item[@"imageURL"] ) {
+            [self.iconView setImageWithURL:[NSURL URLWithString:item[@"imageURL"]]];
+        }
+        
+        self.delButton.hidden = NO;
+        self.delButton.userData = item;
+    }
+}
+
+- (UIButton *)delButton
+{
+    if ( !_delButton ) {
+        _delButton = AWCreateImageButtonWithSize(@"btn_annex_del.png", CGSizeMake(36, 36),
+                                                 self, @selector(remove:));
+        //AWCreateImageButton(@"btn_annex_del.png", self, @selector(remove:));
+        [self.contentView addSubview:_delButton];
+    }
+    return _delButton;
+}
+
+- (void)remove:(UIButton *)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kRemoveAnnexNotification"
+                                                        object:sender.userData];
+}
+
+- (UIImageView *)iconView
+{
+    if ( !_iconView ) {
+        _iconView = AWCreateImageView(nil);
+        [self.contentView addSubview:_iconView];
+    }
+    return _iconView;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.iconView.frame = self.bounds;
+    
+    self.delButton.center = CGPointMake(self.width - self.delButton.width / 2 + 2,
+                                        self.delButton.height / 2 - 2);
+    
+//    self.iconView.center = CGPointMake(self.width / 2.0, self.iconView.height / 2.0);
+}
+
+@end
+
+/////////////////////////////////////////////////////////////////////////////////

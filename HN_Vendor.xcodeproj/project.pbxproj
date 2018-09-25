@@ -24,6 +24,9 @@
 		990FBD73200C9FB60075DC6E /* icon_report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD70200C9FB60075DC6E /* icon_report@3x.png */; };
 		990FBD74200C9FB60075DC6E /* icon_contract@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 990FBD71200C9FB60075DC6E /* icon_contract@3x.png */; };
 		9926DADC21548BCC00CFD170 /* AccountFinalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DADB21548BCC00CFD170 /* AccountFinalCell.m */; };
+		9926DADE2154DFDF00CFD170 /* icon_default_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DADD2154DFDE00CFD170 /* icon_default_add.png */; };
+		9926DAE12154EF6000CFD170 /* btn_annex_del@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DADF2154EF5F00CFD170 /* btn_annex_del@2x.png */; };
+		9926DAE22154EF6000CFD170 /* btn_annex_del@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -723,6 +726,9 @@
 		990FBD71200C9FB60075DC6E /* icon_contract@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contract@3x.png"; sourceTree = "<group>"; };
 		9926DADA21548BCC00CFD170 /* AccountFinalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountFinalCell.h; sourceTree = "<group>"; };
 		9926DADB21548BCC00CFD170 /* AccountFinalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountFinalCell.m; sourceTree = "<group>"; };
+		9926DADD2154DFDE00CFD170 /* icon_default_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_default_add.png; sourceTree = "<group>"; };
+		9926DADF2154EF5F00CFD170 /* btn_annex_del@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_annex_del@2x.png"; sourceTree = "<group>"; };
+		9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_annex_del@3x.png"; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -2797,6 +2803,9 @@
 				995542241FDFDBCB00DC0134 /* FlowSearchVC.m */,
 				995542251FDFDBCB00DC0134 /* FormVC.h */,
 				995542261FDFDBCB00DC0134 /* FormVC.m */,
+				9926DADD2154DFDE00CFD170 /* icon_default_add.png */,
+				9926DADF2154EF5F00CFD170 /* btn_annex_del@2x.png */,
+				9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */,
 				995542271FDFDBCB00DC0134 /* GuideVC.h */,
 				995542281FDFDBCB00DC0134 /* GuideVC.m */,
 				995542291FDFDBCB00DC0134 /* HelpVC.h */,
@@ -3847,6 +3856,7 @@
 				9955465B1FDFDBCD00DC0134 /* icon_arrow-right@3x.png in Resources */,
 				995546541FDFDBCD00DC0134 /* hud_error@3x.png in Resources */,
 				99CA508F214A425800DA083E /* icon_wgqr@2x.png in Resources */,
+				9926DAE12154EF6000CFD170 /* btn_annex_del@2x.png in Resources */,
 				9955464C1FDFDBCD00DC0134 /* create_sub_dept_line@3x.png in Resources */,
 				995546221FDFDBCD00DC0134 /* flowd.tpl in Resources */,
 				9955466C1FDFDBCD00DC0134 /* icon_doc@2x.png in Resources */,
@@ -3919,6 +3929,7 @@
 				995546701FDFDBCD00DC0134 /* icon_end@2x.png in Resources */,
 				995546AD1FDFDBCD00DC0134 /* tab_message_click@3x.png in Resources */,
 				995546001FDFDBCD00DC0134 /* SVProgressHUD.bundle in Resources */,
+				9926DAE22154EF6000CFD170 /* btn_annex_del@3x.png in Resources */,
 				995546C11FDFDBCD00DC0134 /* work_icon_chanzhi@2x.png in Resources */,
 				995546721FDFDBCD00DC0134 /* icon_feedback@2x.png in Resources */,
 				995546C81FDFDBCD00DC0134 /* work_icon_flow@3x.png in Resources */,
@@ -3977,6 +3988,7 @@
 				995546911FDFDBCD00DC0134 /* icon_update_pass@2x.png in Resources */,
 				995546421FDFDBCD00DC0134 /* btn_search2@3x.png in Resources */,
 				995546BC1FDFDBCD00DC0134 /* tab_work_click@2x.png in Resources */,
+				9926DADE2154DFDF00CFD170 /* icon_default_add.png in Resources */,
 				995546861FDFDBCD00DC0134 /* icon_qrcode@3x.png in Resources */,
 				99CA50AB214A53F300DA083E /* icon_contract_2@3x.png in Resources */,
 				9955465A1FDFDBCD00DC0134 /* icon_arrow-right@2x.png in Resources */,

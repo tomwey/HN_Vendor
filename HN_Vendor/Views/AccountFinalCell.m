@@ -19,6 +19,14 @@
 
 @implementation AccountFinalCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if ( self = [super initWithStyle:style reuseIdentifier:reuseIdentifier] ) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    return self;
+}
+
 - (void)configData:(id)data selectBlock:(void (^)(UIView<AWTableDataConfig> *, id))selectBlock
 {
     //    addsignmoney = "4454804.97";
