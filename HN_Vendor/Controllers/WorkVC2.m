@@ -76,9 +76,10 @@
                         @{
                             @"icon": @"icon_chanzhi.png",
                             @"name": @"产值申报",
-                            @"page": @"OutputListVC",
+                            @"page": @"ContractListVC",
                             @"color": @"#CA5B54",
-                            @"size": @"{28,28}"
+                            @"size": @"{28,28}",
+                            @"params": @"2",
                             },
                         
                         @{

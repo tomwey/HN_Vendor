@@ -38,6 +38,11 @@
     }
     
     [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewApplyHistory:)
+                                                 name:@"kViewApplyHistoryNotification"
+                                               object:nil];
 }
 
 - (void)addSegmentControls
@@ -157,17 +162,26 @@
             self.dataSource.dataSource = nil;
             self.rawData = nil;
         } else {
-            self.dataSource.dataSource = result[@"data"];
+            NSMutableArray *temp = [NSMutableArray array];
+            for (id item in result[@"data"]) {
+                id obj = [item mutableCopy];
+                obj[@"d_type"] = self.params[@"data"] ?: @"";
+                
+                [temp addObject:obj];
+            }
+            
+            self.dataSource.dataSource = temp;
             
             [self.tableView removeErrorOrEmptyTips];
             
             self.rawData = result[@"data"];
         }
         
-        if ( [self.params[@"data"] integerValue] == 0 ) {
-            [self.tableView reloadData];
-        } else {
+        if ( [self.params[@"data"] integerValue] == 1 ) {
             [self handleData:self.tabStrip.selectedIndex];
+        } else {
+            
+            [self.tableView reloadData];
         }
         
     }
@@ -213,11 +227,19 @@
                                                                     params:
                                 self.dataSource.dataSource[indexPath.row]];
         [self.navigationController pushViewController:vc animated:YES];
+    } else if ( [self.params[@"data"] isEqualToString:@"2"] ) {
+        
     }
 //    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
 //                                                                params:
 //                            self.dataSource.dataSource[indexPath.row]];
 //    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)viewApplyHistory:(NSNotification *)noti
+{
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"OutputApplyHistoryVC" params:noti.object];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (UITableView *)tableView

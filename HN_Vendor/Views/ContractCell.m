@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *projNameNoLabel;
 
+@property (nonatomic, strong) UIButton *historyBtn;
+
 @end
 
 @implementation ContractCell
@@ -84,6 +86,14 @@
     
     self.timeLabel.text = HNDateFromObject(data[@"signdate"], @"T");
     self.projNameNoLabel.text = data[@"project_name"];
+    
+    if ( [data[@"d_type"] isEqualToString:@"2"] ) {
+        self.historyBtn.hidden = NO;
+    } else {
+        self.historyBtn.hidden = YES;
+    }
+    
+    self.historyBtn.userData = data;
 }
 
 - (void)setLabel1:(id)value name:(NSString *)name forLabel:(UILabel *)label color:(UIColor *)color
@@ -104,7 +114,10 @@
 {
     [super layoutSubviews];
     
-    self.noLabel.frame = CGRectMake(15, 10, self.width - 30, 30);
+    self.noLabel.frame = CGRectMake(15, 10, self.width - 30 - self.historyBtn.width, 30);
+    
+    self.historyBtn.position = CGPointMake(self.width - 10 - self.historyBtn.width,
+                                           self.noLabel.midY - self.historyBtn.height / 2);
     
     self.nameLabel.frame = CGRectMake(15, self.noLabel.bottom, self.noLabel.width,
                                       50);
@@ -139,13 +152,32 @@
     self.timeLabel.left = self.stateLabel.left - 10 - 80;
 }
 
+- (void)viewHistory:(UIButton *)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kViewApplyHistoryNotification"
+                                                        object:sender.userData];
+}
+
+- (UIButton *)historyBtn
+{
+    if ( !_historyBtn ) {
+        _historyBtn = AWCreateTextButton(CGRectMake(0, 0, 80, 40),
+                                         @"申报历史 »",
+                                         AWColorFromHex(@"#999999"),
+                                         self, @selector(viewHistory:));
+        [self.contentView addSubview:_historyBtn];
+        _historyBtn.titleLabel.font = AWSystemFontWithSize(14, NO);
+    }
+    return _historyBtn;
+}
+
 - (UILabel *)noLabel
 {
     if ( !_noLabel ) {
         _noLabel = AWCreateLabel(CGRectZero,
                                  nil,
                                  NSTextAlignmentLeft,
-                                 AWSystemFontWithSize(14, NO),
+                                 AWSystemFontWithSize(12, NO),
                                  AWColorFromRGB(186, 186, 186));
         [self.contentView addSubview:_noLabel];
         
