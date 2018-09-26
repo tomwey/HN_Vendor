@@ -6,11 +6,11 @@
 //  Copyright © 2018 tomwey. All rights reserved.
 //
 
-#import "AccountFinalFormVC.h"
+#import "WorkDoneFormVC.h"
 #import "Defines.h"
 #import "ZFBoxView.h"
 
-@interface AccountFinalFormVC ()
+@interface WorkDoneFormVC ()
 
 @property (nonatomic, strong) NSMutableArray *inFormControls;
 
@@ -23,13 +23,60 @@
 
 @property (nonatomic, assign) NSInteger counter;
 
+@property (nonatomic, strong) id confirmData;
+
 @end
 
-@implementation AccountFinalFormVC
+@implementation WorkDoneFormVC
 
 - (void)viewDidLoad {
     
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd";
+    NSString *dateStr = [df stringFromDate:[NSDate date]];
+    NSString *value = [NSString stringWithFormat:@",%@", dateStr];
+    
     self.inFormControls = [@[
+                             @{
+                                 @"data_type": @"1",
+                                 @"datatype_c": @"文本框",
+                                 @"describe": @"项目名称",
+                                 @"field_name": @"proj_name",
+                                 @"item_name": @"",
+                                 @"item_value": @"",
+                                 @"readonly": @"1",
+                                 @"required": @"0"
+                                 },
+                             @{
+                                 @"data_type": @"1",
+                                 @"datatype_c": @"文本框",
+                                 @"describe": @"合同名称",
+                                 @"field_name": @"contract_name",
+                                 @"item_name": @"",
+                                 @"item_value": @"",
+                                 @"readonly": @"1",
+                                 @"required": @"0"
+                                 },
+                             @{
+                                 @"data_type": @"1",
+                                 @"datatype_c": @"文本框",
+                                 @"describe": @"合同金额",
+                                 @"field_name": @"contract_money",
+                                 @"item_name": @"",
+                                 @"item_value": @"",
+                                 @"readonly": @"1",
+                                 @"required": @"0"
+                                 },
+                             @{
+                                 @"data_type": @"10",
+                                 @"datatype_c": @"多行文本框",
+                                 @"describe": @"指令/变更主题",
+                                 @"field_name": @"change_theme",
+                                 @"item_name": @"",
+                                 @"item_value": @"",
+                                 @"readonly": @"1",
+                                 @"required": @"0"
+                                 },
                             @{
                                 @"data_type": @"1",
                                 @"datatype_c": @"文本框",
@@ -37,23 +84,33 @@
                                 @"field_name": @"money",
                                 @"item_name": @"",
                                 @"item_value": @"",
-                                @"keyboard_type": @(UIKeyboardTypeNumberPad),
-                                },
-                            @{
-                                @"data_type": @"1",
-                                @"datatype_c": @"文本框",
-                                @"describe": @"申报日期",
-                                @"field_name": @"apply_date",
-                                @"item_name": @"",
-                                @"item_value": @"",
                                 @"readonly": @"1",
                                 @"required": @"0"
+//                                @"keyboard_type": @(UIKeyboardTypeNumbersAndPunctuation),
                                 },
+                            @{
+                                @"data_type": @"2",
+                                @"datatype_c": @"日期控件",
+                                @"describe": @"实际开工日期",
+                                @"field_name": @"start_date",
+                                @"item_name": @"",
+                                @"item_value": value,
+                                @"required": @"1"
+                                },
+                             @{
+                                 @"data_type": @"2",
+                                 @"datatype_c": @"日期控件",
+                                 @"describe": @"实际完工日期",
+                                 @"field_name": @"end_date",
+                                 @"item_name": @"",
+                                 @"item_value": value,
+                                 @"required": @"1",
+                                 },
                             @{
                                 @"data_type": @"10",
                                 @"datatype_c": @"多行文本",
-                                @"describe": @"申报说明",
-                                @"field_name": @"apply_desc",
+                                @"describe": @"完工说明",
+                                @"field_name": @"done_desc",
                                 @"item_name": @"",
                                 @"item_value": @"",
                                 },
@@ -61,26 +118,26 @@
                             ] mutableCopy];
     [super viewDidLoad];
     
-    self.navBar.title = @"发起结算申报";
+    self.navBar.title = @"发起完工确认";
     
     [self addLeftItemWithView:HNCloseButton(34, self, @selector(close))];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self initHeader];
+//    [self initHeader];
     
 //    [self addToolButtons];
-    
+    /*
     if ( !self.params[@"state_num"] ) {
         // 新建
         self.disableFormInputs = NO;
 //        self.totalCounter = 3;
-        
+
         [self addToolButtons];
     } else {
         // 添加状态显示
 //        self.totalCounter = 4; // 加载附件
-        
+
         if ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5) {
             // 待申报
             self.disableFormInputs = NO;
@@ -92,23 +149,23 @@
         } else {
             self.disableFormInputs = YES;
         }
-        
-    }
+
+    }*/
     
-    if ([self.params[@"state_num"] integerValue] == 5) {
-        // 被驳回，显示驳回原因
-        __weak typeof(self) me = self;
-        [self addRightItemWithTitle:@"驳回原因"
-                    titleAttributes:@{
-                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
-                                      }
-                               size:CGSizeMake(80,40)
-                        rightMargin:5 callback:^{
-                            [me showZFBox];
-                        }];
-        
-        [self showZFBox];
-    }
+//    if ([self.params[@"state_num"] integerValue] == 5) {
+//        // 被驳回，显示驳回原因
+//        __weak typeof(self) me = self;
+//        [self addRightItemWithTitle:@"驳回原因"
+//                    titleAttributes:@{
+//                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
+//                                      }
+//                               size:CGSizeMake(80,40)
+//                        rightMargin:5 callback:^{
+//                            [me showZFBox];
+//                        }];
+//
+//        [self showZFBox];
+//    }
     
 //    self.counter = 2;
     
@@ -118,66 +175,66 @@
 //    [self populateData];
 }
 
-- (void)showZFBox
-{
-    [[[ZFBoxView alloc] init] showReason:self.params[@"returnmemo"]
-                                  inView:self.view
-                             commitBlock:^(ZFBoxView *sender) {
-                                 
-                             }];
-}
-
-- (void)addCancelButton
-{
-    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
-                                                        50),
-                                             @"取消",
-                                             [UIColor whiteColor],
-                                             self,
-                                             @selector(cancelClick));
-    [self.contentView addSubview:cancelBtn];
-    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
-    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
-    
-    self.tableView.height -= cancelBtn.height;
-}
-
 - (void)populateData
 {
-    NSDate *now = [NSDate date];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat = @"yyyy-MM-dd";
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//    df.dateFormat = @"yyyy-MM-dd";
     
-    self.formObjects[@"apply_date"] = self.params[@"applydate"] ?: [df stringFromDate:now];
+//    canconfirm = 1;
+//    canvisa = 0;
+//    changecontent = NULL;
+//    changedate = "2018-07-03T11:23:14+08:00";
+//    changemoney = NULL;
+//    changereasonid = NULL;
+//    changetheme = "\U5173\U4e8e\U6885\U6eaa\U6e56\U4e8c\U671f5#\U680b\U6869\U57fa\U5355\U4f4d\U4f4f\U5bbf\U533a\U57df\U5783\U573e\U6e05\U7406\U7684\U5de5\U4f5c\U6307\U4ee4";
+//    changetype = "\U6307\U4ee4";
+//    "confirm_desc" = "\U672a\U786e\U8ba4";
+//    "confirm_state" = 1;
+//    contractid = 2194750;
+//    contractmoney = "37186802.9200";
+//    contractname = "\U6885\U6eaa\U6e56\U4e8c\U671f5#\U680b\U603b\U5305\U65bd\U5de5";
+//    contractphyno = "HG-B-CQ-MXH-E311-2016-B-4-1";
+//    "create_date" = "2018-07-03T11:23:14+08:00";
+//    "flow_mid" = NULL;
+//    iscost = 1;
+//    order = 1;
+//    progress = NULL;
+//    "project_id" = 1291439;
+//    "project_name" = "\U6885\U6eaa\U6e56\U4e8c\U671f";
+//    returnmemo = NULL;
+//    signdate = "2016-09-07";
+//    "state_desc" = "\U5df2\U5ba1\U6279";
+//    "state_num" = 40;
+//    "submit_date" = NULL;
+//    supchangeid = 21163;
+//    supconfirmid = NULL;
+//    visamoney = NULL;
     
-    //    addsignmoney = "4454804.97";
-    //    addsignnum = 2;
-    //    applycontent = "\U6d4b\U8bd5";
-    //    applydate = "2018-09-20";
-    //    applymoney = "4321.00";
-    //    changemoney = "206281.49";
-    //    changenum = 29;
-    //    contractid = 2194740;
-    //    contractmoney = "75926964.9700";
-    //    contractname = "\U6885\U6eaa\U6e56\U4e8c\U671f\U603b\U53056#\U30017#\U680b\U603b\U5305\U65bd\U5de5";
-    //    contractphyno = "HG-B-CQ-MXH-E311-2016-B-5-1";
-    //    "project_id" = 1291439;
-    //    "project_name" = "\U6885\U6eaa\U6e56\U4e8c\U671f";
-    //    regsignmoney = NULL;
-    //    returnmemo = NULL;
-    //    signmoney = "71472160.00";
-    //    "state_desc" = "\U5f85\U7533\U62a5";
-    //    supsettleid = 1;
-    //    syssettlemoney = "76133246.46";
-    //    totalnodeamount = "52177422.45";
-    //    totaloutamount = "74539175.05";
+    self.formObjects[@"proj_name"] = self.params[@"project_name"] ?: @"";
+    self.formObjects[@"contract_name"] = self.params[@"contractname"] ?: @"";
+    self.formObjects[@"contract_money"] = self.params[@"contractmoney"] ?: @"";
+    self.formObjects[@"change_theme"] = self.params[@"changetheme"] ?: @"";
+    self.formObjects[@"money"] = self.params[@"changemoney"] ?: @"";
     
-    if ( self.params[@"applymoney"] ) {
-        self.formObjects[@"money"] = self.params[@"applymoney"];
-    }
-    
-    if ( self.params[@"applycontent"] ) {
-        self.formObjects[@"apply_desc"] = self.params[@"applycontent"];
+    if ( self.confirmData ) {
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat = @"yyyy-MM-dd";
+        
+        self.formObjects[@"start_date"] = [df dateFromString:HNDateFromObject(self.confirmData[@"startdate"], @"T")];
+        self.formObjects[@"end_date"] = [df dateFromString:HNDateFromObject(self.confirmData[@"completedate"], @"T")];
+        self.formObjects[@"done_desc"] = self.confirmData[@"completememo"];
+        
+        if ( [self.confirmData[@"state_num"] integerValue] != 10 &&
+            [self.confirmData[@"state_num"] integerValue] != 40) {
+            [self addToolButtons];
+        } else {
+            self.disableFormInputs = YES;
+        }
+    } else {
+        self.formObjects[@"end_date"] = [NSDate date];
+        
+        [self addToolButtons];
     }
 }
 
@@ -222,21 +279,21 @@
     CGFloat width = self.contentView.width / 2.0;
     CGFloat left = 0;
     
-    if ( [self.params[@"state_num"] integerValue] == 5 ) {
-        width = self.contentView.width / 3.0;
-        
-        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
-                                             @"作废",
-                                             [UIColor whiteColor],
-                                             self, @selector(zfClick));
-        [self.contentView addSubview:zfBtn];
-        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
-        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
-        
-        self.zfButton = zfBtn;
-        
-        left = self.zfButton.right;
-    }
+//    if ( [self.params[@"state_num"] integerValue] == 5 ) {
+//        width = self.contentView.width / 3.0;
+//
+//        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+//                                             @"作废",
+//                                             [UIColor whiteColor],
+//                                             self, @selector(zfClick));
+//        [self.contentView addSubview:zfBtn];
+//        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+//        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+//        self.zfButton = zfBtn;
+//
+//        left = self.zfButton.right;
+//    }
     
     UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                         50),
@@ -267,38 +324,6 @@
                                                         inView:moreBtn];
     hairLine.position = CGPointMake(0,0);
     
-    //    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
-    //                                                        50),
-    //                                             @"提交",
-    //                                             [UIColor whiteColor],
-    //                                             self,
-    //                                             @selector(commit));
-    //    [self.contentView addSubview:commitBtn];
-    //    commitBtn.backgroundColor = MAIN_THEME_COLOR;
-    //    commitBtn.position = CGPointMake(0, self.contentView.height - 50);
-    //
-    //    self.commitButton = commitBtn;
-    //
-    //    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
-    //                                                      50),
-    //                                           @"保存",
-    //                                           MAIN_THEME_COLOR,
-    //                                           self,
-    //                                           @selector(save));
-    //    [self.contentView addSubview:moreBtn];
-    //    moreBtn.backgroundColor = [UIColor whiteColor];
-    //    moreBtn.position = CGPointMake(commitBtn.right, self.contentView.height - 50);
-    //
-    //    self.saveButton = moreBtn;
-    //
-    //    UIView *hairLine = [AWHairlineView horizontalLineWithWidth:moreBtn.width
-    //                                                         color:IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR
-    //                                                        inView:moreBtn];
-    //    hairLine.position = CGPointMake(0,0);
-    //
-    //    commitBtn.left = 0;
-    //    moreBtn.left = commitBtn.right;
-    
     self.tableView.height -= moreBtn.height;
 }
 
@@ -312,19 +337,19 @@
     [self sendReqForType:2];
 }
 
-- (void)zfClick
-{
-    id newParams = [self.params mutableCopy];
-    newParams[@"zf_type"] = @"2";
-    
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
-    [self presentViewController:vc animated:YES completion:nil];
-}
-
-- (void)cancelClick
-{
-    [self sendReqForType:4];
-}
+//- (void)zfClick
+//{
+//    id newParams = [self.params mutableCopy];
+//    newParams[@"zf_type"] = @"2";
+//
+//    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+//    [self presentViewController:vc animated:YES completion:nil];
+//}
+//
+//- (void)cancelClick
+//{
+//    [self sendReqForType:4];
+//}
 
 - (void)sendReqForType:(NSInteger)type
 {
@@ -335,13 +360,26 @@
 //
 //    NSString *IDs = [temp componentsJoinedByString:@","];
     
-    if ( !self.formObjects[@"money"] ) {
-        [self.contentView showHUDWithText:@"申报金额不能为空" offset:CGPointMake(0,20)];
+    if ( !self.formObjects[@"start_date"] ) {
+        [self.contentView showHUDWithText:@"实际开工日期不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
-    if ( !self.formObjects[@"apply_desc"] ) {
-        [self.contentView showHUDWithText:@"申报说明不能为空" offset:CGPointMake(0,20)];
+    if ( !self.formObjects[@"end_date"] ) {
+        [self.contentView showHUDWithText:@"实际完工日期不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    NSDate *startDate = self.formObjects[@"start_date"];
+    NSDate *endDate   = self.formObjects[@"end_date"];
+    
+    if ( [startDate compare:endDate] == NSOrderedDescending ) {
+        [self.contentView showHUDWithText:@"开工日期不能大于完工日期" offset:CGPointMake(0,20)];
+        return;
+    }
+    
+    if ( !self.formObjects[@"done_desc"] ) {
+        [self.contentView showHUDWithText:@"完工说明不能为空" offset:CGPointMake(0,20)];
         return;
     }
     
@@ -381,24 +419,28 @@
 //    NSString *visaID = [self.params[@"supvisaid"] ?: @"0" description];
     
     [self hideKeyboard];
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd";
 
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"供应商提交结算申报APP",
+              @"funname": @"供应商变更指令完工确认APP",
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [@(type) description],
-              @"param5": [self.params[@"supsettleid"] ?: @"0" description],
-              @"param6": [self.params[@"contractid"] ?: @"0" description],
-              @"param7": [self.formObjects[@"money"] description],
-              @"param8": [self.formObjects[@"apply_desc"] description],
-              @"param9": ids,
-              @"param10": @"1",
-              @"param11": @"",
+              @"param5": HNStringFromObject(self.params[@"supconfirmid"], @"0"),
+              @"param6": [self.params[@"supchangeid"] ?: @"0" description],
+              @"param7": [df stringFromDate:startDate] ?: @"",
+              @"param8": [df stringFromDate:endDate] ?: @"",
+              @"param9": [self.formObjects[@"done_desc"] description],
+              @"param10": ids,
+              @"param11": @"1",
+              @"param12": @"",
               } completion:^(id result, NSError *error) {
                   [me handleResult2:result error:error];
               }];
@@ -422,22 +464,16 @@
                 NSString *msg = item[@"hint"] ?: @"操作成功";
                 [AWAppWindow() showHUDWithText:msg succeed:YES];
                 
-//                if ( self.params[@"_flag"] ) {
-//                    //                    [self.presentingViewController dismissViewControllerAnimated:YES
-//                    //                                                                  completion:^{
-//                    //                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
-//                    //                                                                  }];
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kNeedDismissNotification"
-//                                                                        object:nil];
-//                } else {
-//                    [self dismissViewControllerAnimated:YES completion:^{
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
-//                    }];
-//                }
-                
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadAccountFinalDataNotification" object:nil];
-                }];
+                if ( self.params[@"_flag"] ) {
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kNeedDismissNotification" object:nil];
+                    }];
+//
+                } else {
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadWorkDoneDataNotification" object:nil];
+                    }];
+                }
                 
             } else {
                 [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
@@ -459,7 +495,7 @@
               @"funname": @"供应商取附件清单APP",
               @"param1": [self.params[@"contracttypeid"] ?: @"0" description],
               @"param2": @"1",
-              @"param3": @"12"
+              @"param3": @"110"
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error: error];
               }];
@@ -474,11 +510,36 @@
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-              @"param4": [self.params[@"supsettleid"] ?: @"0" description],
-              @"param5": @"H_APP_Supplier_Contract_Settle_Apply",
+              @"param4": HNStringFromObject(self.params[@"supconfirmid"], @"0"),
+              @"param5": @"H_APP_Supplier_Contract_Change_Confirm",
               } completion:^(id result, NSError *error) {
                   [me handleResult3:result error: error];
               }];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商查询完工确认单信息APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": [userInfo[@"loginname"] ?: @"" description],
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": HNStringFromObject(self.params[@"supconfirmid"], @"0"),
+              } completion:^(id result, NSError *error) {
+//                  NSLog(@"%@", result);
+                  [me handleResult4:result error: error];
+              }];
+}
+
+- (void)handleResult4:(id)result error:(NSError *)error
+{
+    if ( result && [result[@"rowcount"] integerValue] > 0 ) {
+        id item = result[@"data"][0];
+        
+        self.confirmData = item;
+    }
+    
+    [self loadDone];
 }
 
 - (void)handleResult3:(id)result error:(NSError *)error
@@ -505,7 +566,7 @@
 
 - (void)loadDone
 {
-    if ( ++self.counter == 2 ) {
+    if ( ++self.counter == 3 ) {
         self.counter = 0;
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         

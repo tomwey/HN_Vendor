@@ -198,6 +198,10 @@
         } else {
             self.disableFormInputs = YES;
             
+            if ( [self.params[@"canconfirm"] boolValue] ) {
+                [self addConfirmButton];
+            }
+            
             if ( [self.params[@"canvisa"] boolValue] && ![self.userData isEqualToString:@"1"] ) {
                 [self addVisaButton];
             }
@@ -288,6 +292,21 @@
     self.tableView.height -= cancelBtn.height;
 }
 
+- (void)addConfirmButton
+{
+    UIButton *visaBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+                                                      50),
+                                           @"发起完工确认",
+                                           [UIColor whiteColor],
+                                           self,
+                                           @selector(confirmClick));
+    [self.contentView addSubview:visaBtn];
+    visaBtn.backgroundColor = MAIN_THEME_COLOR;
+    visaBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    self.tableView.height -= visaBtn.height;
+}
+
 - (void)addVisaButton
 {
     UIButton *visaBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
@@ -301,6 +320,15 @@
     visaBtn.position = CGPointMake(0, self.contentView.height - 50);
     
     self.tableView.height -= visaBtn.height;
+}
+
+- (void)confirmClick
+{
+    NSMutableDictionary *dict = [self.params mutableCopy];
+    dict[@"_flag"] = @"1"; // 只是用来做页面交互的
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName: @"WorkDoneFormVC" params:dict];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)visaClick
@@ -908,7 +936,8 @@
 
 - (void)closeMe:(id)sender
 {
-    [self.navigationController ?: self dismissViewControllerAnimated:YES completion:^{
+    UIViewController *vc = self.navigationController ?: self;
+    [vc dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDeclareDataNotification" object:nil];
     }];
 }

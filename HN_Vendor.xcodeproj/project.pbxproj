@@ -27,6 +27,7 @@
 		9926DADE2154DFDF00CFD170 /* icon_default_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DADD2154DFDE00CFD170 /* icon_default_add.png */; };
 		9926DAE12154EF6000CFD170 /* btn_annex_del@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DADF2154EF5F00CFD170 /* btn_annex_del@2x.png */; };
 		9926DAE22154EF6000CFD170 /* btn_annex_del@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */; };
+		9926DAE8215B30B300CFD170 /* WorkDoneFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAE7215B30B300CFD170 /* WorkDoneFormVC.m */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -729,6 +730,8 @@
 		9926DADD2154DFDE00CFD170 /* icon_default_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_default_add.png; sourceTree = "<group>"; };
 		9926DADF2154EF5F00CFD170 /* btn_annex_del@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_annex_del@2x.png"; sourceTree = "<group>"; };
 		9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_annex_del@3x.png"; sourceTree = "<group>"; };
+		9926DAE6215B30B200CFD170 /* WorkDoneFormVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkDoneFormVC.h; sourceTree = "<group>"; };
+		9926DAE7215B30B300CFD170 /* WorkDoneFormVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkDoneFormVC.m; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -3003,6 +3006,8 @@
 				9985BBD82152274700792BFD /* OutputDoneConfirmVC.m */,
 				9985BBDE21538EDB00792BFD /* AccountFinalFormVC.h */,
 				9985BBDF21538EDB00792BFD /* AccountFinalFormVC.m */,
+				9926DAE6215B30B200CFD170 /* WorkDoneFormVC.h */,
+				9926DAE7215B30B300CFD170 /* WorkDoneFormVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4366,6 +4371,7 @@
 				995547091FDFDBCD00DC0134 /* PlanDocView.m in Sources */,
 				9955460D1FDFDBCD00DC0134 /* TZPhotoPreviewController.m in Sources */,
 				99CA50B1214A5C7A00DA083E /* AccountFinalListVC.m in Sources */,
+				9926DAE8215B30B300CFD170 /* WorkDoneFormVC.m in Sources */,
 				995544D41FDFDBCC00DC0134 /* FAKFontAwesome.m in Sources */,
 				995DF707205F903A008D63D8 /* ContractDetailSignView.m in Sources */,
 				995546EB1FDFDBCD00DC0134 /* CustomSearchBar.m in Sources */,

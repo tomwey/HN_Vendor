@@ -181,6 +181,8 @@
             UploadImageControl *control = (UploadImageControl *)[cell.contentView viewWithTag:1002];
             control.enabled = !disableFormInputs;
             cell.userInteractionEnabled = YES;
+        } else if ([item[@"data_type"] integerValue] == FormControlTypeRelatedAnnex2) {
+            cell.userInteractionEnabled = YES;
         } else {
             cell.userInteractionEnabled = !disableFormInputs;
         }
@@ -552,6 +554,8 @@
         UploadImageControl *control = (UploadImageControl *)[cell.contentView viewWithTag:1002];
         control.enabled = !self.disableFormInputs;
         
+    } else if ( [item[@"data_type"] integerValue] == FormControlTypeRelatedAnnex2 ) {
+        cell.userInteractionEnabled = YES;
     } else {
         cell.userInteractionEnabled = !self.disableFormInputs;
     }
@@ -1516,6 +1520,11 @@
             textView.font = [UIFont systemFontOfSize:16];
             self.textView = textView;
             
+            if ( [item[@"readonly"] boolValue] ) {
+                textView.editable = NO;
+                textView.textColor = AWColorFromHex(@"#999999");
+            }
+            
             textView.userData = item;
             
             textView.tintColor = MAIN_THEME_COLOR;
@@ -1622,6 +1631,7 @@
                                                                          @"attachments": self.formObjects[key] ?: @[],
                                                                          @"controlData": item,
                                                                          @"saveCallback": saveCallback,
+                                                                         @"readonly": @(self.disableFormInputs)
                                                                         }];
     if ( self.navigationController ) {
         [self.navigationController pushViewController:vc animated:YES];
@@ -1783,6 +1793,10 @@
 
 - (void)uploadAttachmentForFieldName:(NSString *)fieldName
 {
+    if ( self.disableFormInputs ) {
+        return;
+    }
+    
     self.currentAttachmentFieldName = fieldName;
     
     UIAlertAction *selectAction = [UIAlertAction actionWithTitle:@"从相册选择"
@@ -2453,6 +2467,7 @@
             [picker showPickerInView:self.contentView];
             picker.currentSelectedDate = self.formObjects[item[@"field_name"]] ?: [NSDate date];
             
+            /*
             NSString *values = [item[@"item_value"] description];
             if ( values.length > 0 ) {
                 NSArray *distValues = [values componentsSeparatedByString:@","];
@@ -2473,6 +2488,51 @@
                     NSDate *now = [NSDate date];
                     NSDate *minDate = [now dateByAddingTimeInterval:firstVal * 24 * 3600];
                     picker.minimumDate = minDate;
+                }
+            }*/
+            
+            NSString *values = [item[@"item_value"] description];
+            if ( values.length > 0 ) {
+                /*
+                 NSArray *distValues = [values componentsSeparatedByString:@","];
+                 if ( distValues.count == 2 ) {
+                 NSInteger firstVal = [[distValues firstObject] integerValue];
+                 NSInteger lastVal  = [[distValues lastObject] integerValue];
+                 
+                 NSDate *now = [NSDate date];
+                 NSDate *minDate = [now dateByAddingTimeInterval:firstVal * 24 * 3600];
+                 NSDate *maxDate = [now dateByAddingTimeInterval:lastVal * 24 * 3600];
+                 
+                 picker.minimumDate = minDate;
+                 picker.maximumDate = maxDate;
+                 } else {
+                 //
+                 NSInteger firstVal = [[distValues firstObject] integerValue];
+                 
+                 NSDate *now = [NSDate date];
+                 NSDate *minDate = [now dateByAddingTimeInterval:firstVal * 24 * 3600];
+                 picker.minimumDate = minDate;
+                 }*/
+                NSArray *distValues = [values componentsSeparatedByString:@","];
+                if (distValues.count == 1) {
+                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                    df.dateFormat = @"yyyy-MM-dd";
+                    NSDate *date = [df dateFromString:distValues[0]];
+                    if (date) {
+                        picker.minimumDate = date;
+                    }
+                } else if (distValues.count == 2) {
+                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                    df.dateFormat = @"yyyy-MM-dd";
+                    NSDate *date1 = [df dateFromString:distValues[0]];
+                    NSDate *date2 = [df dateFromString:distValues[1]];
+                    if (date1) {
+                        picker.minimumDate = date1;
+                    }
+                    
+                    if (date2) {
+                        picker.maximumDate = date2;
+                    }
                 }
             }
             
@@ -2931,8 +2991,8 @@
     //    id secDict = self.dataDict[@"sections"][indexPath.section];
     //    cell.backgroundColor = [UIColor redColor];
     
-    id item = self.dataSource[indexPath.row];
-    
+    id item = [self.dataSource[indexPath.row] mutableCopy];
+    item[@"readonly"] = self.params[@"readonly"];
     cell.item = item;
     
     return cell;
@@ -2984,7 +3044,8 @@
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"AnnexViewer"
                                                                 params:@{
                                                                          @"index": @(indexPath.row),
-                                                                         @"attachments": arr
+                                                                         @"attachments": arr,
+                                                                         @"readonly": self.params[@"readonly"]
                                                                          }];
     [self.navigationController pushViewController:vc animated:YES];
 //    [self openPage:cell.item];
@@ -2993,6 +3054,10 @@
 
 - (void)addImages
 {
+    if ( [self.params[@"readonly"] boolValue] ) {
+        return;
+    }
+    
     TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self];
     
     imagePickerVC.allowTakePicture  = YES;
@@ -3221,6 +3286,10 @@
         
         self.delButton.hidden = NO;
         self.delButton.userData = item;
+        
+        if ( [item[@"readonly"] boolValue] ) {
+            self.delButton.hidden = YES;
+        }
     }
 }
 
@@ -3285,10 +3354,12 @@
     
     self.currentIndex = [self.params[@"index"] ?: @"0" integerValue];
     
-    __weak typeof(self) me = self;
-    [self addRightItemWithTitle:@"删除" size:CGSizeMake(60,40) callback:^{
-        [me removeAnnex];
-    }];
+    if ( ![self.params[@"readonly"] boolValue] ) {
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"删除" size:CGSizeMake(60,40) callback:^{
+            [me removeAnnex];
+        }];
+    }
     
     if ( self.currentIndex < self.dataSource.count ) {
         self.navBar.title = self.dataSource[self.currentIndex][@"imageName"];

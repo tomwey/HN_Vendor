@@ -46,6 +46,7 @@
                       @"param7": [params[@"state"] ?: @"-1" description],
                       @"param8": params[@"begin_time"] ?: @"",
                       @"param9": params[@"end_time"] ?: @"",
+                      @"param10": [params[@"status"] ?: @"1" description]
                       };
     
     __weak typeof(self) me = self;
@@ -173,11 +174,23 @@
 //            NSLog(@"%@", selectedData);
             UIViewController *owner = me.userData[@"owner"];
             
-            NSString *pageName = [me.userData[@"funname"] isEqualToString:@"供应商查询变更签证列表APP"]
-            ? @"SignFormVC" : @"DeclareFormVC";
+            NSString *pageName;
+            UIViewController *vc;
+            if ( me.userData[@"status"] ) {
+                pageName = @"WorkDoneFormVC";
+                vc = [[AWMediator sharedInstance] openNavVCWithName:pageName
+                                                          params:selectedData];
+            } else {
+                pageName = [me.userData[@"funname"] isEqualToString:@"供应商查询变更签证列表APP"]
+                ? @"SignFormVC" : @"DeclareFormVC";
+                vc = [[AWMediator sharedInstance] openVCWithName:pageName
+                                                          params:selectedData];
+            }
+//            NSString *pageName = [me.userData[@"funname"] isEqualToString:@"供应商查询变更签证列表APP"]
+//            ? @"SignFormVC" : @"DeclareFormVC";
             
-            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:pageName
-                                                                        params:selectedData];
+//            UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:pageName
+//                                                                        params:selectedData];
             [owner presentViewController:vc animated:YES completion:nil];
         };
     }
