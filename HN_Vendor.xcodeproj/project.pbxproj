@@ -29,6 +29,12 @@
 		9926DAE22154EF6000CFD170 /* btn_annex_del@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAE02154EF6000CFD170 /* btn_annex_del@3x.png */; };
 		9926DAE8215B30B300CFD170 /* WorkDoneFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAE7215B30B300CFD170 /* WorkDoneFormVC.m */; };
 		9926DAEC215B8B7F00CFD170 /* OutputApplyHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAEB215B8B7F00CFD170 /* OutputApplyHistoryVC.m */; };
+		9926DAF0215B8F9B00CFD170 /* OutputConfirmListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAEF215B8F9B00CFD170 /* OutputConfirmListVC.m */; };
+		9926DAF3215B8FBF00CFD170 /* OutputNodeConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAF2215B8FBF00CFD170 /* OutputNodeConfirmCell.m */; };
+		9926DAF6215B8FD800CFD170 /* AWFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAF4215B8FD800CFD170 /* AWFilterView.m */; };
+		9926DAFB215C784700CFD170 /* btn_info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAF9215C784700CFD170 /* btn_info@3x.png */; };
+		9926DAFC215C784700CFD170 /* btn_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAFA215C784700CFD170 /* btn_info@2x.png */; };
+		9926DAFF215C786300CFD170 /* OutputInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAFE215C786300CFD170 /* OutputInfoVC.m */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -735,6 +741,16 @@
 		9926DAE7215B30B300CFD170 /* WorkDoneFormVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkDoneFormVC.m; sourceTree = "<group>"; };
 		9926DAEA215B8B7F00CFD170 /* OutputApplyHistoryVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputApplyHistoryVC.h; sourceTree = "<group>"; };
 		9926DAEB215B8B7F00CFD170 /* OutputApplyHistoryVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputApplyHistoryVC.m; sourceTree = "<group>"; };
+		9926DAEE215B8F9A00CFD170 /* OutputConfirmListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputConfirmListVC.h; sourceTree = "<group>"; };
+		9926DAEF215B8F9B00CFD170 /* OutputConfirmListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputConfirmListVC.m; sourceTree = "<group>"; };
+		9926DAF1215B8FBF00CFD170 /* OutputNodeConfirmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputNodeConfirmCell.h; sourceTree = "<group>"; };
+		9926DAF2215B8FBF00CFD170 /* OutputNodeConfirmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputNodeConfirmCell.m; sourceTree = "<group>"; };
+		9926DAF4215B8FD800CFD170 /* AWFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWFilterView.m; sourceTree = "<group>"; };
+		9926DAF5215B8FD800CFD170 /* AWFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWFilterView.h; sourceTree = "<group>"; };
+		9926DAF9215C784700CFD170 /* btn_info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_info@3x.png"; sourceTree = "<group>"; };
+		9926DAFA215C784700CFD170 /* btn_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_info@2x.png"; sourceTree = "<group>"; };
+		9926DAFD215C786300CFD170 /* OutputInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputInfoVC.h; sourceTree = "<group>"; };
+		9926DAFE215C786300CFD170 /* OutputInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputInfoVC.m; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -2739,6 +2755,10 @@
 		995541E01FDFDBCB00DC0134 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9926DAEE215B8F9A00CFD170 /* OutputConfirmListVC.h */,
+				9926DAEF215B8F9B00CFD170 /* OutputConfirmListVC.m */,
+				9926DAFD215C786300CFD170 /* OutputInfoVC.h */,
+				9926DAFE215C786300CFD170 /* OutputInfoVC.m */,
 				9976B1FA204E377A0035AFD9 /* SignListVC.h */,
 				9976B1F9204E37790035AFD9 /* SignListVC.m */,
 				9976B1FC204E385F0035AFD9 /* SignFormVC.h */,
@@ -3358,6 +3378,8 @@
 		9955439D1FDFDBCC00DC0134 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9926DAFA215C784700CFD170 /* btn_info@2x.png */,
+				9926DAF9215C784700CFD170 /* btn_info@3x.png */,
 				9985BBD3215226F500792BFD /* icon_czfh@2x.png */,
 				9985BBD4215226F500792BFD /* icon_czfh@3x.png */,
 				99CA50A3214A53F200DA083E /* icon_contract_2@2x.png */,
@@ -3588,6 +3610,10 @@
 		995544571FDFDBCC00DC0134 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9926DAF5215B8FD800CFD170 /* AWFilterView.h */,
+				9926DAF4215B8FD800CFD170 /* AWFilterView.m */,
+				9926DAF1215B8FBF00CFD170 /* OutputNodeConfirmCell.h */,
+				9926DAF2215B8FBF00CFD170 /* OutputNodeConfirmCell.m */,
 				9985BBDC2153886A00792BFD /* CommListView.h */,
 				9985BBDB2153886900792BFD /* CommListView.m */,
 				995544581FDFDBCC00DC0134 /* AWPagerTabStrip.h */,
@@ -3866,6 +3892,7 @@
 				9955465B1FDFDBCD00DC0134 /* icon_arrow-right@3x.png in Resources */,
 				995546541FDFDBCD00DC0134 /* hud_error@3x.png in Resources */,
 				99CA508F214A425800DA083E /* icon_wgqr@2x.png in Resources */,
+				9926DAFB215C784700CFD170 /* btn_info@3x.png in Resources */,
 				9926DAE12154EF6000CFD170 /* btn_annex_del@2x.png in Resources */,
 				9955464C1FDFDBCD00DC0134 /* create_sub_dept_line@3x.png in Resources */,
 				995546221FDFDBCD00DC0134 /* flowd.tpl in Resources */,
@@ -3942,6 +3969,7 @@
 				9926DAE22154EF6000CFD170 /* btn_annex_del@3x.png in Resources */,
 				995546C11FDFDBCD00DC0134 /* work_icon_chanzhi@2x.png in Resources */,
 				995546721FDFDBCD00DC0134 /* icon_feedback@2x.png in Resources */,
+				9926DAFC215C784700CFD170 /* btn_info@2x.png in Resources */,
 				995546C81FDFDBCD00DC0134 /* work_icon_flow@3x.png in Resources */,
 				995544DD1FDFDBCC00DC0134 /* Info.plist in Resources */,
 				995544E01FDFDBCC00DC0134 /* octicons.ttf in Resources */,
@@ -4083,6 +4111,7 @@
 				995544D71FDFDBCC00DC0134 /* FAKIonIcons.m in Sources */,
 				995545A91FDFDBCC00DC0134 /* OutputContractListVC.m in Sources */,
 				995544EC1FDFDBCC00DC0134 /* FSCalendarExtensions.m in Sources */,
+				9926DAF3215B8FBF00CFD170 /* OutputNodeConfirmCell.m in Sources */,
 				995546031FDFDBCD00DC0134 /* NSBundle+TZImagePicker.m in Sources */,
 				99CA50B4214A5CA600DA083E /* OutputListVC.m in Sources */,
 				995545E61FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleRippleAnimation.m in Sources */,
@@ -4119,6 +4148,7 @@
 				995544D31FDFDBCC00DC0134 /* CTPersistanceTransaction.m in Sources */,
 				995544E31FDFDBCC00DC0134 /* FSCalendar.m in Sources */,
 				995546F31FDFDBCD00DC0134 /* FlowSubmitAlert.m in Sources */,
+				9926DAF6215B8FD800CFD170 /* AWFilterView.m in Sources */,
 				995544FA1FDFDBCC00DC0134 /* JTSImageViewController.m in Sources */,
 				995545B91FDFDBCD00DC0134 /* RelatedFlowListVC.m in Sources */,
 				995546F01FDFDBCD00DC0134 /* EmployCell.m in Sources */,
@@ -4159,6 +4189,7 @@
 				995544EF1FDFDBCC00DC0134 /* FSCalendarStickyHeader.m in Sources */,
 				995544C11FDFDBCC00DC0134 /* NSString+SQL.m in Sources */,
 				9955452A1FDFDBCC00DC0134 /* APIDictionaryReformer.m in Sources */,
+				9926DAFF215C786300CFD170 /* OutputInfoVC.m in Sources */,
 				995546EF1FDFDBCD00DC0134 /* DocumentView.m in Sources */,
 				9949F51920FCA60C00955CFC /* UpdatePasswordVC.m in Sources */,
 				995546D81FDFDBCD00DC0134 /* APIService.m in Sources */,
@@ -4245,6 +4276,7 @@
 				995545A11FDFDBCC00DC0134 /* NSObject+StoreService.m in Sources */,
 				995545F91FDFDBCD00DC0134 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */,
 				995545D91FDFDBCD00DC0134 /* UIRefreshControl+AFNetworking.m in Sources */,
+				9926DAF0215B8F9B00CFD170 /* OutputConfirmListVC.m in Sources */,
 				9985BBD92152274700792BFD /* OutputDoneConfirmVC.m in Sources */,
 				995545421FDFDBCC00DC0134 /* WGS84ToGCJ02.m in Sources */,
 				995546081FDFDBCD00DC0134 /* TZImageManager.m in Sources */,

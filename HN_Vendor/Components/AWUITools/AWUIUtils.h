@@ -287,6 +287,24 @@ UILabel* AWCreateLabel(CGRect frame, NSString* text, NSTextAlignment alignment, 
 UITableView* AWCreateTableView(CGRect frame, UITableViewStyle style, UIView* superView, id <UITableViewDataSource> dataSource);
 
 /**
+ * 格式化显示文本信息
+ * @param label 文本控件
+ * @param name  文本显示名字
+ * @param value 文本显示值
+ * @param unit  文本值的单位
+ * @param valueFont 文本值字体
+ * @param valueColor 文本值颜色
+ * @param horizontal 文本值是否与文本名在同一行显示
+ */
+void AWLabelFormatShow(UILabel *label,
+                       NSString *name,
+                       id value,
+                       NSString *unit,
+                       UIFont *valueFont,
+                       UIColor *valueColor,
+                       BOOL horizontal);
+
+/**
  * 创建一根线
  * @param size 线的大小
  * @param color 线的颜色

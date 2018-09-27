@@ -538,3 +538,31 @@ UIView* AWCreateLineInView(CGSize size, UIColor* color, UIView* containerView)
     }
     return line;
 }
+
+void AWLabelFormatShow(UILabel *label,
+                       NSString *name,
+                       id value,
+                       NSString *unit,
+                       UIFont *valueFont,
+                       UIColor *valueColor,
+                       BOOL horizontal)
+{
+    NSString *val = [value description];
+    
+    NSString *string = nil;
+    if (horizontal) {
+        string = [NSString stringWithFormat:@"%@: %@%@", name, value, unit];
+    } else {
+        string = [NSString stringWithFormat:@"%@%@\n%@", value, unit, name];
+    }
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrString addAttributes:@{
+                                NSFontAttributeName: valueFont,
+                                NSForegroundColorAttributeName: valueColor
+                                } range:[string rangeOfString:val]];
+    
+    label.attributedText = attrString;
+    
+}
+

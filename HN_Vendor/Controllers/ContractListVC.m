@@ -228,6 +228,10 @@
                                 self.dataSource.dataSource[indexPath.row]];
         [self.navigationController pushViewController:vc animated:YES];
     } else if ( [self.params[@"data"] isEqualToString:@"2"] ) {
+        UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"OutputConfirmListVC"
+                                                                    params:
+                                self.dataSource.dataSource[indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
         
     }
 //    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ContractDetailVC"
