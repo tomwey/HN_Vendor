@@ -9,7 +9,7 @@
 #import "OutputApplyHistoryVC.h"
 #import "Defines.h"
 
-@interface OutputApplyHistoryVC ()
+@interface OutputApplyHistoryVC () <UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -161,6 +161,17 @@
     };
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id item = self.dataSource.dataSource[indexPath.row];
+    id params = [item mutableCopy];
+    params[@"contractid"] = self.params[@"contractid"] ?: @"0";
+    params[@"contractname"] = self.params[@"contractname"] ?: @"";
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"OutputApplyDetailVC" params:params];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)loadData
 {
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
@@ -260,6 +271,7 @@
         [self.contentView addSubview:_tableView];
         
         _tableView.dataSource = self.dataSource;
+        _tableView.delegate   = self;
         
         _tableView.rowHeight = 60;
         
