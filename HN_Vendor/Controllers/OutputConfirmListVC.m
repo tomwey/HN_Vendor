@@ -137,7 +137,7 @@
     [[self apiServiceWithName:@"APIService"]
      POST:nil params:@{
                        @"dotype": @"GetData",
-                       @"funname": @"产值确认获取待申报列表APP",
+                       @"funname": @"供应商查询产值确认待申报节点APP",
                        @"param1": [self.params[@"contractid"] description] ?: @"",
                        @"param2": @"2",
                        @"param3": @"0",

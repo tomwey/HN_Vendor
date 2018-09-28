@@ -50,9 +50,16 @@
 @property (nonatomic, strong) id annexData;
 @property (nonatomic, strong) NSError *annexError;
 
+@property (nonatomic, strong) id confirmHisData;
+@property (nonatomic, strong) NSError *confirmHisError;
+
 @property (nonatomic, assign) NSInteger counter;
 
 @property (nonatomic, strong) UIView *fixedControlContainer;
+
+@property (nonatomic, strong) UIView *confirmHistoryContainer;
+
+@property (nonatomic, weak) UIButton *currentConfirmBtn;
 
 @end
 
@@ -76,7 +83,7 @@
     self.scrollView.delegate = self;
     
     self.fixedControlContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width,
-                                                                          300)];
+                                                                          240)];
     [self.scrollView addSubview:self.fixedControlContainer];
 //    self.fixedControlContainer.backgroundColor = [UIColor redColor];
     
@@ -260,29 +267,73 @@
     NSString *outNodeId = [[self.params[@"floor"][@"outnodeid"] description] isEqualToString:@"NULL"] ? @"0" : [self.params[@"floor"][@"outnodeid"] description];
     NSString *payOutNodeId = [[self.params[@"floor"][@"contractpaynodeid"] description] isEqualToString:@"NULL"] ? @"0" : [self.params[@"floor"][@"contractpaynodeid"] description];
     // 合同：2220895 节点ID: 0 payoutnodeid: 5594217
+    
     __weak typeof(self) me = self;
+    
+    [self checkIsCommit:payOutNodeId completion:^(id res, NSError *err) {
+        if ( err ) {
+            [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
+            
+            [me.contentView showHUDWithText:err.localizedDescription succeed:NO];
+        } else {
+            if ( [res[@"rowcount"] integerValue] == 0 ) {
+                [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
+                
+                [me.contentView showHUDWithText:@"未知错误" succeed:NO];
+            } else {
+                id item = res[@"data"][0];
+                NSInteger type = [item[@"hinttype"] integerValue];
+                if (type == 0) {
+                    [HNProgressHUDHelper hideHUDForView:me.contentView animated:YES];
+                    [me.contentView showHUDWithText:item[@"hint"] succeed:NO];
+                } else {
+                    // 产值确认
+                    id userInfo = [[UserService sharedInstance] currentUser];
+                    
+                    [[me apiServiceWithName:@"APIService"]
+                     POST:nil
+                     params:@{
+                              @"dotype": @"GetData",
+                              @"funname": @"供应商合同产值节点确认APP",
+                              @"param1": [userInfo[@"supid"] ?: @"0" description],
+                              @"param2": userInfo[@"loginname"] ?: @"",
+                              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                              @"param4": [me.params[@"floor"][@"contractid"] description],
+                              @"param5": outNodeId,
+                              @"param6": payOutNodeId,
+                              @"param7": [me.params[@"floor"][@"roomids"] description],
+                              @"param8": beginVal,
+                              @"param9": endVal,
+                              @"param10": confirmDesc,
+                              @"param11": annexIDs,
+                              @"param12": @"1",
+                              @"param13": @"0",
+                              @"param14": @"",
+                              @"param15": [me.date1Btn currentTitle] ?: @"",
+                              @"param16": [me.date2Btn currentTitle] ?: @"",
+                              @"param17": @"2",
+                              @"param18": [me.uploadControl.deletedAttachmentIDs componentsJoinedByString:@","],
+                              } completion:^(id result, NSError *error) {
+                                  [me handleResult2:result error:error];
+                              }];
+                }
+            }
+        }
+    }];
+}
+
+- (void)checkIsCommit:(id)nodeID completion:(void (^)(id res, NSError *err))completion
+{
     [[self apiServiceWithName:@"APIService"]
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"产值确认保存确认产值APP",
-              @"param1": [self.params[@"floor"][@"contractid"] description],
-              @"param2": outNodeId,
-              @"param3": payOutNodeId,
-              @"param4": [self.params[@"floor"][@"roomids"] description],
-              @"param5": beginVal,
-              @"param6": endVal,
-              @"param7": confirmDesc,
-              @"param8": annexIDs,
-              @"param9": @"1",
-              @"param10": manID,
-              @"param11": @"",
-              @"param12": [self.date1Btn currentTitle] ?: @"",
-              @"param13": [self.date2Btn currentTitle] ?: @"",
-              @"param14": @"2",
-              @"param15": [self.uploadControl.deletedAttachmentIDs componentsJoinedByString:@","],
+              @"funname": @"供应商判断当前节点可否进行产值确认APP",
+              @"param1": [nodeID description]
               } completion:^(id result, NSError *error) {
-                  [me handleResult2:result error:error];
+                  if ( completion ) {
+                      completion(result, error);
+                  }
               }];
 }
 
@@ -324,6 +375,7 @@
     NSString *outNodeId = [[self.params[@"floor"][@"outnodeid"] description] isEqualToString:@"NULL"] ? @"0" : [self.params[@"floor"][@"outnodeid"] description];
     NSString *payOutNodeId = [[self.params[@"floor"][@"contractpaynodeid"] description] isEqualToString:@"NULL"] ? @"0" : [self.params[@"floor"][@"contractpaynodeid"] description];
     
+    id userInfo = [[UserService sharedInstance] currentUser];
     
     __weak typeof(self) me = self;
     
@@ -336,22 +388,40 @@
              POST:nil
              params:@{
                       @"dotype": @"GetData",
-                      @"funname": @"产值确认保存确认产值APP",
-                      @"param1": [me.params[@"floor"][@"contractid"] description],
-                      @"param2": outNodeId,
-                      @"param3": payOutNodeId,
-                      @"param4": [me.params[@"floor"][@"roomids"] description],
-                      @"param5": endVal,
-                      @"param6": beginVal,
-                      @"param7": confirmDesc,
-                      @"param8": annexIDs,
-                      @"param9": @"-1",
-                      @"param10": manID,
-                      @"param11": @"",
-                      @"param12": [me.date1Btn currentTitle] ?: @"",
-                      @"param13": [me.date2Btn currentTitle] ?: @"",
-                      @"param14": @"2",
-                      @"param15": @"",
+                      @"funname": @"供应商合同产值节点确认APP",
+                      @"param1": [userInfo[@"supid"] ?: @"0" description],
+                      @"param2": userInfo[@"loginname"] ?: @"",
+                      @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+                      @"param4": [self.params[@"floor"][@"contractid"] description],
+                      @"param5": outNodeId,
+                      @"param6": payOutNodeId,
+                      @"param7": [self.params[@"floor"][@"roomids"] description],
+                      @"param8": endVal,
+                      @"param9": beginVal,
+                      @"param10": confirmDesc,
+                      @"param11": annexIDs,
+                      @"param12": @"-1",
+                      @"param13": @"0",
+                      @"param14": @"",
+                      @"param15": [self.date1Btn currentTitle] ?: @"",
+                      @"param16": [self.date2Btn currentTitle] ?: @"",
+                      @"param17": @"2",
+                      @"param18": @"",
+//                      @"param1": [me.params[@"floor"][@"contractid"] description],
+//                      @"param2": outNodeId,
+//                      @"param3": payOutNodeId,
+//                      @"param4": [me.params[@"floor"][@"roomids"] description],
+//                      @"param5": endVal,
+//                      @"param6": beginVal,
+//                      @"param7": confirmDesc,
+//                      @"param8": annexIDs,
+//                      @"param9": @"-1",
+//                      @"param10": manID,
+//                      @"param11": @"",
+//                      @"param12": [me.date1Btn currentTitle] ?: @"",
+//                      @"param13": [me.date2Btn currentTitle] ?: @"",
+//                      @"param14": @"2",
+//                      @"param15": @"",
                       } completion:^(id result, NSError *error) {
                           [me handleResult3:result error:error];
                       }];
@@ -486,6 +556,30 @@
               } completion:^(id result, NSError *error) {
                   [me handleResult4:result error:error];
               }];
+    
+    id userInfo = [[UserService sharedInstance] currentUser];
+    
+    [[self apiServiceWithName:@"APIService"]
+     POST:nil
+     params:@{
+              @"dotype": @"GetData",
+              @"funname": @"供应商查询合同产值节点确认记录APP",
+              @"param1": [userInfo[@"supid"] ?: @"0" description],
+              @"param2": userInfo[@"loginname"] ?: @"",
+              @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
+              @"param4": [@(HNIntegerFromObject(self.params[@"floor"][@"contractid"], 0)) description],
+              @"param5": [@(HNIntegerFromObject(self.params[@"floor"][@"contractpaynodeid"], 0)) description],
+              } completion:^(id result, NSError *error) {
+                  [me handleResult5:result error:error];
+              }];
+}
+
+- (void)handleResult5:(id)result error:(NSError *)error
+{
+    self.confirmHisData = result;
+    self.confirmHisError = error;
+    
+    [self loadDone];
 }
 
 - (void)handleResult4:(id)result error:(NSError *)error
@@ -513,7 +607,7 @@
 
 - (void)loadDone
 {
-    if ( ++self.counter == 2 ) {
+    if ( ++self.counter == 3 ) {
         [HNProgressHUDHelper hideHUDForView:self.contentView animated:YES];
         
         self.counter = 0;
@@ -522,8 +616,191 @@
         
         [self initCommitButton];
         
+        [self initConfirmHis];
+        
         [self updateDates];
     }
+}
+
+- (void)initConfirmHis
+{
+    self.confirmHistoryContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.fixedControlContainer.bottom + 10, self.contentView.width, 100)];
+    
+    [self.scrollView addSubview:self.confirmHistoryContainer];
+    
+    UIView *tag = [[UIView alloc] initWithFrame:CGRectMake(15, 9, 4, 12)];
+    [self.confirmHistoryContainer addSubview:tag];
+    tag.backgroundColor = MAIN_THEME_COLOR;
+    
+    UILabel *label = AWCreateLabel(CGRectMake(tag.right + 5, 0, 180, 30), @"产值确认记录",
+                                   NSTextAlignmentLeft,
+                                   AWSystemFontWithSize(15, YES),
+                                   AWColorFromHex(@"#333333"));
+    [self.confirmHistoryContainer addSubview:label];
+    
+    NSString *errorMsg = nil;
+    if ( self.confirmHisError ) {
+        errorMsg = self.confirmHisError.localizedDescription;
+    } else {
+        if ([self.confirmHisData[@"rowcount"] integerValue] == 0) {
+            errorMsg = @"无数据显示";
+        }
+    }
+    
+    if ( !errorMsg ) {
+        [self initConfirmProgressBar:label.bottom];
+    } else {
+        UILabel *errorLabel = AWCreateLabel(CGRectMake(15, label.bottom + 10,
+                                                       self.contentView.width - 30, 50),
+                                            errorMsg, NSTextAlignmentCenter,
+                                            AWSystemFontWithSize(14, NO), AWColorFromHex(@"#cccccc"));
+        [self.confirmHistoryContainer addSubview:errorLabel];
+        errorLabel.numberOfLines = 2;
+        errorLabel.adjustsFontSizeToFitWidth = YES;
+    }
+    
+    self.scrollView.contentSize = CGSizeMake(self.contentView.width,
+                                             self.confirmHistoryContainer.bottom + 5);
+}
+
+- (void)initConfirmProgressBar:(CGFloat)pos
+{
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(15, pos + 56,
+                                                            self.contentView.width - 30, 2)];
+    line.backgroundColor = AWColorFromHex(@"#999999");
+    [self.confirmHistoryContainer addSubview:line];
+    
+    NSArray *data = self.confirmHisData[@"data"];
+    NSMutableArray *temp = [NSMutableArray array];
+    [temp addObject:@{
+                      @"endvalue": @"0",
+                      }];
+    
+    BOOL has100 = NO;
+    for (id item in data) {
+        if ( [item[@"endvalue"] floatValue] == 100 ) {
+            has100 = YES;
+        }
+        
+        [temp addObject:item];
+    }
+    
+    if ( !has100 ) {
+        [temp addObject:@{
+                          @"endvalue": @"100",
+                          @"not_value": @"1"
+                          }];
+    }
+    
+    for (id item in temp) {
+        NSString *suffix = @"●";
+        if ( [item[@"endvalue"] floatValue] == 0 ||
+            ([item[@"endvalue"] floatValue] == 100 && [item[@"not_value"] integerValue] == 1)
+            ) {
+            suffix = @"";
+        }
+        UIButton *btn = AWCreateTextButton(CGRectMake(0, 0, 50, 60),
+                                           [NSString stringWithFormat:@"%d%%\n\n%@",
+                                            [item[@"endvalue"] integerValue], suffix],
+                                           AWColorFromHex(@"#666666"),
+                                           self, @selector(showDetail:));
+        [self.confirmHistoryContainer addSubview:btn];
+        btn.titleLabel.numberOfLines = 3;
+        btn.titleLabel.font = AWSystemFontWithSize(14, NO);
+        btn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        //        btn.backgroundColor = [UIColor redColor];
+        btn.center = CGPointMake(15 + (self.contentView.width - 90) * [item[@"endvalue"] floatValue] / 100.0 + btn.width / 2, pos + 10 + btn.height / 2);
+        
+        btn.userData = item;
+        
+        btn.userInteractionEnabled = [suffix length] > 0;
+        
+        id lastItem = [data lastObject];
+        if ( [item[@"endvalue"] floatValue] == [lastItem[@"endvalue"] floatValue] ) {
+            [self showDetail:btn];
+        }
+    }
+}
+
+- (void)showDetail:(UIButton *)sender
+{
+    if ( self.currentConfirmBtn == sender ) {
+        return;
+    }
+    
+    if ( self.currentConfirmBtn ) {
+//        self.currentConfirmBtn.titleLabel.textColor = AWColorFromHex(@"#666666");
+        [self.currentConfirmBtn setTitleColor:AWColorFromHex(@"#666666") forState:UIControlStateNormal];
+    }
+    
+//    sender.titleLabel.textColor = MAIN_THEME_COLOR;
+    [sender setTitleColor:MAIN_THEME_COLOR forState:UIControlStateNormal];
+    
+    self.currentConfirmBtn = sender;
+    
+    [self showConfirmDesc:sender.userData];
+}
+
+- (void)showConfirmDesc:(id)item
+{
+    
+    [[self.confirmHistoryContainer viewWithTag:1011011] removeFromSuperview];
+    [[self.confirmHistoryContainer viewWithTag:1011012] removeFromSuperview];
+    [[self.confirmHistoryContainer viewWithTag:1011013] removeFromSuperview];
+    [[self.confirmHistoryContainer viewWithTag:1011014] removeFromSuperview];
+    
+    UILabel *label1 = AWCreateLabel(CGRectMake(15, 100, 80, 30),
+                                    @"完成时间",
+                                    NSTextAlignmentLeft,
+                                    AWSystemFontWithSize(14, NO),
+                                    AWColorFromHex(@"#999999"));
+    [self.confirmHistoryContainer addSubview:label1];
+    
+    label1.tag = 1011011;
+    
+    UILabel *label1_1 = AWCreateLabel(CGRectMake(label1.right,
+                                                 label1.top,
+                                                 160, 30),
+                                      HNDateTimeFromObject(item[@"confirm_date"], @"T"),
+                                      NSTextAlignmentLeft,
+                                      AWSystemFontWithSize(14, NO), AWColorFromHex(@"#333333"));
+    [self.confirmHistoryContainer addSubview:label1_1];
+    
+    label1_1.tag = 1011012;
+    
+    UILabel *label2 = AWCreateLabel(CGRectMake(15, label1.bottom + 5, 80, 30),
+                                    @"完成说明",
+                                    NSTextAlignmentLeft,
+                                    AWSystemFontWithSize(14, NO),
+                                    AWColorFromHex(@"#999999"));
+    [self.confirmHistoryContainer addSubview:label2];
+    
+    label2.tag = 1011013;
+    
+    CGFloat width = self.contentView.width - label1.right - 15;
+    UILabel *label2_2 = AWCreateLabel(CGRectMake(label1.right,
+                                                 label1.bottom + 5,
+                                                 width,
+                                                 2000),
+                                      item[@"memo"],
+                                      NSTextAlignmentLeft,
+                                      AWSystemFontWithSize(14, NO),
+                                      label1_1.textColor);
+    label2_2.numberOfLines = 0;
+    
+    [self.confirmHistoryContainer addSubview:label2_2];
+    
+    label2_2.tag = 1011014;
+    
+    [label2_2 sizeToFit];
+    
+    label2_2.width = width;
+    label2_2.top = label1.bottom + 11;
+    
+    self.confirmHistoryContainer.height = label2_2.bottom + 15;
+    
+    self.scrollView.contentSize = CGSizeMake(self.contentView.width, self.confirmHistoryContainer.bottom + 10);
 }
 
 - (BOOL)hasConfirmAbility
@@ -582,6 +859,12 @@
     }
     
     self.confirmDescText.top = self.confirmLabel.bottom + 5;
+    
+    self.fixedControlContainer.height = self.confirmDescText.bottom;
+    
+    self.confirmHistoryContainer.top = self.fixedControlContainer.bottom + 10;
+    
+    self.scrollView.contentSize = CGSizeMake(self.contentView.width, self.confirmHistoryContainer.bottom + 5);
 }
 
 - (void)updateDates
@@ -1082,8 +1365,10 @@
         
         me.fixedControlContainer.top = me.currentBottom;
         
+        me.confirmHistoryContainer.top = me.fixedControlContainer.bottom + 10;
+        
         me.scrollView.contentSize = CGSizeMake(me.contentView.width,
-                                               me.fixedControlContainer.bottom);
+                                               me.confirmHistoryContainer.bottom + 5);
     };
     
     self.currentBottom = uploadControl.bottom + 30;

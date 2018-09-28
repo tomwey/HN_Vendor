@@ -103,6 +103,9 @@ NSString *HNDateTimeFromObject(id obj, NSString *splitor)
     }
     
     dateTime = [dateTime stringByReplacingOccurrencesOfString:splitor withString:@" "];
-    dateTime = [dateTime substringToIndex:19];
+    if ( dateTime.length > 19 ) {
+        dateTime = [dateTime substringToIndex:19];
+    }
+    
     return dateTime;
 }

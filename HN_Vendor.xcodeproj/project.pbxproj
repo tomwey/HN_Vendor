@@ -46,6 +46,8 @@
 		9926DB1B215DCA9900CFD170 /* icon_checkbox_yes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */; };
 		9926DB1C215DCA9900CFD170 /* icon_checkbox_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */; };
 		9926DB1D215DCA9900CFD170 /* icon_checkbox_no@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */; };
+		9926DB22215E17F500CFD170 /* OutputCommitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DB21215E17F500CFD170 /* OutputCommitVC.m */; };
+		9926DB26215E21D300CFD170 /* ApplyHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DB25215E21D300CFD170 /* ApplyHisCell.m */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -776,6 +778,10 @@
 		9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_yes@3x.png"; sourceTree = "<group>"; };
 		9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_no@2x.png"; sourceTree = "<group>"; };
 		9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_no@3x.png"; sourceTree = "<group>"; };
+		9926DB20215E17F400CFD170 /* OutputCommitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputCommitVC.h; sourceTree = "<group>"; };
+		9926DB21215E17F500CFD170 /* OutputCommitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputCommitVC.m; sourceTree = "<group>"; };
+		9926DB24215E21D300CFD170 /* ApplyHisCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyHisCell.h; sourceTree = "<group>"; };
+		9926DB25215E21D300CFD170 /* ApplyHisCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyHisCell.m; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -2780,6 +2786,8 @@
 		995541E01FDFDBCB00DC0134 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9926DB20215E17F400CFD170 /* OutputCommitVC.h */,
+				9926DB21215E17F500CFD170 /* OutputCommitVC.m */,
 				9926DAEE215B8F9A00CFD170 /* OutputConfirmListVC.h */,
 				9926DAEF215B8F9B00CFD170 /* OutputConfirmListVC.m */,
 				9926DB09215DC86300CFD170 /* OutputDeclareListVC.h */,
@@ -3787,6 +3795,8 @@
 				9927E6A520B53CF50022991B /* ZFBoxView.m */,
 				9926DADA21548BCC00CFD170 /* AccountFinalCell.h */,
 				9926DADB21548BCC00CFD170 /* AccountFinalCell.m */,
+				9926DB24215E21D300CFD170 /* ApplyHisCell.h */,
+				9926DB25215E21D300CFD170 /* ApplyHisCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4211,6 +4221,7 @@
 				995545F81FDFDBCD00DC0134 /* DGActivityIndicatorTriplePulseAnimation.m in Sources */,
 				9955458D1FDFDBCC00DC0134 /* MeetingCell.m in Sources */,
 				995547031FDFDBCD00DC0134 /* OACell.m in Sources */,
+				9926DB26215E21D300CFD170 /* ApplyHisCell.m in Sources */,
 				995546061FDFDBCD00DC0134 /* TZGifPhotoPreviewController.m in Sources */,
 				995544C41FDFDBCC00DC0134 /* CTPersistanceDatabasePool.m in Sources */,
 				9955458C1FDFDBCC00DC0134 /* MeetingBaseInfoView.m in Sources */,
@@ -4323,6 +4334,7 @@
 				995545E51FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleMultipleAnimation.m in Sources */,
 				995545741FDFDBCC00DC0134 /* FloorButton.m in Sources */,
 				995545A11FDFDBCC00DC0134 /* NSObject+StoreService.m in Sources */,
+				9926DB22215E17F500CFD170 /* OutputCommitVC.m in Sources */,
 				995545F91FDFDBCD00DC0134 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */,
 				995545D91FDFDBCD00DC0134 /* UIRefreshControl+AFNetworking.m in Sources */,
 				9926DAF0215B8F9B00CFD170 /* OutputConfirmListVC.m in Sources */,

@@ -64,10 +64,14 @@
     [[self apiServiceWithName:@"APIService"]
      POST:nil params:@{
                        @"dotype": @"GetData",
-                       @"funname": @"产值确认获取待申报列表APP",
+                       @"funname": @"供应商查询产值确认待申报节点APP",
                        @"param1": [self.params[@"item"][@"contractid"] description] ?: @"",
                        @"param2": @"2",
-                       @"param3": manID,
+                       @"param3": @"0",
+//                       @"funname": @"产值确认获取待申报列表APP",
+//                       @"param1": [self.params[@"item"][@"contractid"] description] ?: @"",
+//                       @"param2": @"2",
+//                       @"param3": manID,
                        } completion:^(id result, NSError *error) {
                            [me handleResult2:result error:error];
                        }];
@@ -181,17 +185,21 @@
 {
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
-    id user = [[UserService sharedInstance] currentUser];
-    NSString *manID = [user[@"man_id"] ?: @"0" description];
+//    id user = [[UserService sharedInstance] currentUser];
+//    NSString *manID = [user[@"man_id"] ?: @"0" description];
     
     __weak typeof(self) me = self;
     [[self apiServiceWithName:@"APIService"]
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"产值确认提交待申报列表APP",
-              @"param1": [self.params[@"contractid"] ?: @"0" description],
-              @"param2": manID,
+              @"funname": @"供应商查询产值确认待申报节点APP",
+              @"param1": [self.params[@"contractid"] description] ?: @"",
+              @"param2": @"2",
+              @"param3": @"0",
+//              @"funname": @"产值确认提交待申报列表APP",
+//              @"param1": [self.params[@"contractid"] ?: @"0" description],
+//              @"param2": manID,
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error: error];
               }];
@@ -199,39 +207,95 @@
 
 - (void)initCommitButtons
 {
-    UIButton *saveBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
-                                                      50),
-                                           @"保存到ERP待办",
-                                           MAIN_THEME_COLOR,
-                                           self,
-                                           @selector(save2Todo));
-    [self.contentView addSubview:saveBtn];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.contentView.height - 44, self.contentView.width, 44)];
+    [self.contentView addSubview:view];
     
-    //    self.save2TodoBtn = saveBtn;
+    view.backgroundColor = [UIColor whiteColor];
     
-    saveBtn.backgroundColor = [UIColor whiteColor];
-    saveBtn.position = CGPointMake(0, self.contentView.height - 50);
+    // 线
+    AWHairlineView *line = [AWHairlineView horizontalLineWithWidth:view.width
+                                                             color:AWColorFromHex(@"#e6e6e6")
+                                                            inView:view];
+    line.position = CGPointZero;
     
-    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
-                                                        50),
-                                             @"确认提交",
-                                             [UIColor whiteColor],
-                                             self,
-                                             @selector(commit));
-    [self.contentView addSubview:commitBtn];
+    // 申报总数
+    UILabel *label = AWCreateLabel(CGRectMake(15, 0, view.width - 15 - 5 - 120,
+                                              view.height),
+                                   nil,
+                                   NSTextAlignmentLeft,
+                                   AWSystemFontWithSize(14, NO),
+                                   AWColorFromRGB(74, 74, 74));
+    [view addSubview:label];
     
-    //    self.commitBtn = commitBtn;
+//    self.totalApprovingLabel = label;
     
-    commitBtn.backgroundColor = MAIN_THEME_COLOR;
-    commitBtn.position = CGPointMake(saveBtn.right, self.contentView.height - 50);
+    label.adjustsFontSizeToFitWidth = YES;
     
-    UIView *hairLine = [AWHairlineView horizontalLineWithWidth:saveBtn.width
-                                                         color:IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR
-                                                        inView:saveBtn];
-    hairLine.position = CGPointMake(0,0);
+    [self updateApprovingCount:[self.params[@"data"] count] forLabel:label];
     
-    commitBtn.titleLabel.font = AWSystemFontWithSize(15, NO);
-    saveBtn.titleLabel.font   = AWSystemFontWithSize(15, NO);
+    // 提交按钮
+    UIButton *btn = AWCreateTextButton(CGRectMake(view.width - 120, 0, 120, 44),
+                                       @"确认提交",
+                                       [UIColor whiteColor],
+                                       self,
+                                       @selector(commit));
+    btn.backgroundColor = MAIN_THEME_COLOR;
+    [view addSubview:btn];
+    
+//    self.commitBtn = btn;
+    
+    btn.titleLabel.font = AWSystemFontWithSize(15, NO);
+    
+//    [self updateApprovingCount:0];
+    
+//    UIButton *saveBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+//                                                      50),
+//                                           @"保存到ERP待办",
+//                                           MAIN_THEME_COLOR,
+//                                           self,
+//                                           @selector(save2Todo));
+//    [self.contentView addSubview:saveBtn];
+//
+//    //    self.save2TodoBtn = saveBtn;
+//
+//    saveBtn.backgroundColor = [UIColor whiteColor];
+//    saveBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+//    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width / 2,
+//                                                        50),
+//                                             @"确认提交",
+//                                             [UIColor whiteColor],
+//                                             self,
+//                                             @selector(commit));
+//    [self.contentView addSubview:commitBtn];
+//
+//    //    self.commitBtn = commitBtn;
+//
+//    commitBtn.backgroundColor = MAIN_THEME_COLOR;
+//    commitBtn.position = CGPointMake(saveBtn.right, self.contentView.height - 50);
+//
+//    UIView *hairLine = [AWHairlineView horizontalLineWithWidth:saveBtn.width
+//                                                         color:IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR
+//                                                        inView:saveBtn];
+//    hairLine.position = CGPointMake(0,0);
+//
+//    commitBtn.titleLabel.font = AWSystemFontWithSize(15, NO);
+//    saveBtn.titleLabel.font   = AWSystemFontWithSize(15, NO);
+}
+
+- (void)updateApprovingCount:(NSInteger)count forLabel:(UILabel *)label
+{
+    NSString *total = [@(count) description];
+    
+    NSString *string = [NSString stringWithFormat:@"共 %@ 项可以申报", total];
+    NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:string];
+    
+    [attrText addAttributes:@{
+                              NSFontAttributeName: AWCustomFont(@"PingFang SC", 16),
+                              NSForegroundColorAttributeName: MAIN_THEME_COLOR
+                              } range:[string rangeOfString:total]];
+    
+    label.attributedText = attrText;
 }
 
 - (void)save2Todo
