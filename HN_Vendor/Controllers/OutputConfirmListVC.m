@@ -442,7 +442,7 @@
                              @"isNew": @"1",
                              @"contractid":[self.params[@"contractid"] description] ?: @"",
                              @"data": self.approvingData[@"data"] ?: @[],
-                             @"item": self.params[@"item"] ?: @{},
+                             @"item": self.params ?: @{},
                              };
     UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:@"OutputDeclareListVC"
                                                                    params:params];

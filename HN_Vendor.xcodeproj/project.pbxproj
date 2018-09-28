@@ -35,6 +35,17 @@
 		9926DAFB215C784700CFD170 /* btn_info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAF9215C784700CFD170 /* btn_info@3x.png */; };
 		9926DAFC215C784700CFD170 /* btn_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DAFA215C784700CFD170 /* btn_info@2x.png */; };
 		9926DAFF215C786300CFD170 /* OutputInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DAFE215C786300CFD170 /* OutputInfoVC.m */; };
+		9926DB07215DC81700CFD170 /* icon_approved.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB05215DC81700CFD170 /* icon_approved.png */; };
+		9926DB08215DC81700CFD170 /* icon_approving.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB06215DC81700CFD170 /* icon_approving.png */; };
+		9926DB0B215DC86300CFD170 /* OutputDeclareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DB0A215DC86300CFD170 /* OutputDeclareListVC.m */; };
+		9926DB0E215DC88000CFD170 /* OutputDeclareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DB0D215DC87F00CFD170 /* OutputDeclareCell.m */; };
+		9926DB11215DC9C900CFD170 /* OutputConfirmCommitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9926DB0F215DC9C900CFD170 /* OutputConfirmCommitVC.m */; };
+		9926DB14215DCA7900CFD170 /* icon_triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB12215DCA7800CFD170 /* icon_triangle@2x.png */; };
+		9926DB15215DCA7900CFD170 /* icon_triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB13215DCA7900CFD170 /* icon_triangle@3x.png */; };
+		9926DB1A215DCA9900CFD170 /* icon_checkbox_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB16215DCA9800CFD170 /* icon_checkbox_yes@2x.png */; };
+		9926DB1B215DCA9900CFD170 /* icon_checkbox_yes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */; };
+		9926DB1C215DCA9900CFD170 /* icon_checkbox_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */; };
+		9926DB1D215DCA9900CFD170 /* icon_checkbox_no@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */; };
 		9927E6A620B53CF50022991B /* ZFBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A520B53CF50022991B /* ZFBoxView.m */; };
 		9927E6A920B54B140022991B /* ZFBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9927E6A820B54B140022991B /* ZFBoxVC.m */; };
 		9947AB3D1FF1E0580091A2AD /* ContractPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB3C1FF1E0580091A2AD /* ContractPayCell.m */; };
@@ -751,6 +762,20 @@
 		9926DAFA215C784700CFD170 /* btn_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_info@2x.png"; sourceTree = "<group>"; };
 		9926DAFD215C786300CFD170 /* OutputInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputInfoVC.h; sourceTree = "<group>"; };
 		9926DAFE215C786300CFD170 /* OutputInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputInfoVC.m; sourceTree = "<group>"; };
+		9926DB05215DC81700CFD170 /* icon_approved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_approved.png; sourceTree = "<group>"; };
+		9926DB06215DC81700CFD170 /* icon_approving.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_approving.png; sourceTree = "<group>"; };
+		9926DB09215DC86300CFD170 /* OutputDeclareListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputDeclareListVC.h; sourceTree = "<group>"; };
+		9926DB0A215DC86300CFD170 /* OutputDeclareListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputDeclareListVC.m; sourceTree = "<group>"; };
+		9926DB0C215DC87F00CFD170 /* OutputDeclareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputDeclareCell.h; sourceTree = "<group>"; };
+		9926DB0D215DC87F00CFD170 /* OutputDeclareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputDeclareCell.m; sourceTree = "<group>"; };
+		9926DB0F215DC9C900CFD170 /* OutputConfirmCommitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputConfirmCommitVC.m; sourceTree = "<group>"; };
+		9926DB10215DC9C900CFD170 /* OutputConfirmCommitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputConfirmCommitVC.h; sourceTree = "<group>"; };
+		9926DB12215DCA7800CFD170 /* icon_triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_triangle@2x.png"; sourceTree = "<group>"; };
+		9926DB13215DCA7900CFD170 /* icon_triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_triangle@3x.png"; sourceTree = "<group>"; };
+		9926DB16215DCA9800CFD170 /* icon_checkbox_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_yes@2x.png"; sourceTree = "<group>"; };
+		9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_yes@3x.png"; sourceTree = "<group>"; };
+		9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_no@2x.png"; sourceTree = "<group>"; };
+		9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_checkbox_no@3x.png"; sourceTree = "<group>"; };
 		9927E6A420B53CF50022991B /* ZFBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxView.h; sourceTree = "<group>"; };
 		9927E6A520B53CF50022991B /* ZFBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZFBoxView.m; sourceTree = "<group>"; };
 		9927E6A720B54B140022991B /* ZFBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFBoxVC.h; sourceTree = "<group>"; };
@@ -2757,6 +2782,10 @@
 			children = (
 				9926DAEE215B8F9A00CFD170 /* OutputConfirmListVC.h */,
 				9926DAEF215B8F9B00CFD170 /* OutputConfirmListVC.m */,
+				9926DB09215DC86300CFD170 /* OutputDeclareListVC.h */,
+				9926DB0A215DC86300CFD170 /* OutputDeclareListVC.m */,
+				9926DB10215DC9C900CFD170 /* OutputConfirmCommitVC.h */,
+				9926DB0F215DC9C900CFD170 /* OutputConfirmCommitVC.m */,
 				9926DAFD215C786300CFD170 /* OutputInfoVC.h */,
 				9926DAFE215C786300CFD170 /* OutputInfoVC.m */,
 				9976B1FA204E377A0035AFD9 /* SignListVC.h */,
@@ -3378,6 +3407,14 @@
 		9955439D1FDFDBCC00DC0134 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */,
+				9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */,
+				9926DB16215DCA9800CFD170 /* icon_checkbox_yes@2x.png */,
+				9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */,
+				9926DB12215DCA7800CFD170 /* icon_triangle@2x.png */,
+				9926DB13215DCA7900CFD170 /* icon_triangle@3x.png */,
+				9926DB05215DC81700CFD170 /* icon_approved.png */,
+				9926DB06215DC81700CFD170 /* icon_approving.png */,
 				9926DAFA215C784700CFD170 /* btn_info@2x.png */,
 				9926DAF9215C784700CFD170 /* btn_info@3x.png */,
 				9985BBD3215226F500792BFD /* icon_czfh@2x.png */,
@@ -3610,6 +3647,8 @@
 		995544571FDFDBCC00DC0134 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9926DB0C215DC87F00CFD170 /* OutputDeclareCell.h */,
+				9926DB0D215DC87F00CFD170 /* OutputDeclareCell.m */,
 				9926DAF5215B8FD800CFD170 /* AWFilterView.h */,
 				9926DAF4215B8FD800CFD170 /* AWFilterView.m */,
 				9926DAF1215B8FBF00CFD170 /* OutputNodeConfirmCell.h */,
@@ -3831,6 +3870,7 @@
 				995546351FDFDBCD00DC0134 /* guide_3.png in Resources */,
 				995546891FDFDBCD00DC0134 /* icon_read@2x.png in Resources */,
 				995546941FDFDBCD00DC0134 /* icon_upgrade@3x.png in Resources */,
+				9926DB14215DCA7900CFD170 /* icon_triangle@2x.png in Resources */,
 				99CA508E214A425800DA083E /* icon_wgqr@3x.png in Resources */,
 				995546C91FDFDBCD00DC0134 /* work_icon_land@2x.png in Resources */,
 				995546801FDFDBCD00DC0134 /* icon_pass@2x.png in Resources */,
@@ -3869,10 +3909,12 @@
 				9955462F1FDFDBCD00DC0134 /* 72.png in Resources */,
 				995546871FDFDBCD00DC0134 /* icon_read1@2x.png in Resources */,
 				9955462B1FDFDBCD00DC0134 /* 57@2x.png in Resources */,
+				9926DB1D215DCA9900CFD170 /* icon_checkbox_no@3x.png in Resources */,
 				9955468A1FDFDBCD00DC0134 /* icon_read@3x.png in Resources */,
 				995546A41FDFDBCD00DC0134 /* tab_contact_click@2x.png in Resources */,
 				995547391FE3A25400DC0134 /* icon_report@2x.png in Resources */,
 				990FBD6E200C9FA80075DC6E /* icon_contract@2x.png in Resources */,
+				9926DB07215DC81700CFD170 /* icon_approved.png in Resources */,
 				995546231FDFDBCD00DC0134 /* 29.png in Resources */,
 				995546B71FDFDBCD00DC0134 /* tab_setting@3x.png in Resources */,
 				9955467B1FDFDBCD00DC0134 /* icon_invest@3x.png in Resources */,
@@ -3894,6 +3936,7 @@
 				99CA508F214A425800DA083E /* icon_wgqr@2x.png in Resources */,
 				9926DAFB215C784700CFD170 /* btn_info@3x.png in Resources */,
 				9926DAE12154EF6000CFD170 /* btn_annex_del@2x.png in Resources */,
+				9926DB1C215DCA9900CFD170 /* icon_checkbox_no@2x.png in Resources */,
 				9955464C1FDFDBCD00DC0134 /* create_sub_dept_line@3x.png in Resources */,
 				995546221FDFDBCD00DC0134 /* flowd.tpl in Resources */,
 				9955466C1FDFDBCD00DC0134 /* icon_doc@2x.png in Resources */,
@@ -3912,6 +3955,7 @@
 				995546981FDFDBCD00DC0134 /* icon_xlsx@2x.png in Resources */,
 				99CA5098214A4DA900DA083E /* icon_jiesuan@2x.png in Resources */,
 				995546931FDFDBCD00DC0134 /* icon_upgrade@2x.png in Resources */,
+				9926DB08215DC81700CFD170 /* icon_approving.png in Resources */,
 				995546C31FDFDBCD00DC0134 /* work_icon_document@2x.png in Resources */,
 				995546D21FDFDBCD00DC0134 /* work_icon_plan@3x.png in Resources */,
 				995546C21FDFDBCD00DC0134 /* work_icon_chanzhi@3x.png in Resources */,
@@ -3939,6 +3983,7 @@
 				9955462D1FDFDBCD00DC0134 /* 60@2x.png in Resources */,
 				995546611FDFDBCD00DC0134 /* icon_calendar_no_done@3x.png in Resources */,
 				995546C51FDFDBCD00DC0134 /* work_icon_feedback@2x.png in Resources */,
+				9926DB1A215DCA9900CFD170 /* icon_checkbox_yes@2x.png in Resources */,
 				995546901FDFDBCD00DC0134 /* icon_unread@3x.png in Resources */,
 				9955464B1FDFDBCD00DC0134 /* create_sub_dept_line@2x.png in Resources */,
 				995546CC1FDFDBCD00DC0134 /* work_icon_map_bi@3x.png in Resources */,
@@ -3955,6 +4000,7 @@
 				995546301FDFDBCD00DC0134 /* 72@2x.png in Resources */,
 				99CA509E214A4E6500DA083E /* icon_sign@3x.png in Resources */,
 				995546C41FDFDBCD00DC0134 /* work_icon_document@3x.png in Resources */,
+				9926DB1B215DCA9900CFD170 /* icon_checkbox_yes@3x.png in Resources */,
 				995546AA1FDFDBCD00DC0134 /* tab_message@2x.png in Resources */,
 				995546321FDFDBCD00DC0134 /* 76@2x.png in Resources */,
 				995546661FDFDBCD00DC0134 /* icon_checkbox_click@2x.png in Resources */,
@@ -4013,6 +4059,7 @@
 				995546551FDFDBCD00DC0134 /* hud_success.png in Resources */,
 				9955463C1FDFDBCD00DC0134 /* btn_back@3x.png in Resources */,
 				9955468F1FDFDBCD00DC0134 /* icon_unread@2x.png in Resources */,
+				9926DB15215DCA7900CFD170 /* icon_triangle@3x.png in Resources */,
 				99CA509F214A4E6500DA083E /* icon_sign@2x.png in Resources */,
 				995546B41FDFDBCD00DC0134 /* tab_plan_click@2x.png in Resources */,
 				995546CB1FDFDBCD00DC0134 /* work_icon_map_bi@2x.png in Resources */,
@@ -4131,6 +4178,7 @@
 				995545BE1FDFDBCD00DC0134 /* SelectContactVC.m in Sources */,
 				995544CA1FDFDBCC00DC0134 /* CTPersistanceQueryCommand+SchemaManipulations.m in Sources */,
 				995546161FDFDBCD00DC0134 /* Breadcrumb.m in Sources */,
+				9926DB0B215DC86300CFD170 /* OutputDeclareListVC.m in Sources */,
 				995545531FDFDBCC00DC0134 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				995547171FDFDBCD00DC0134 /* YearMonthPickerView.m in Sources */,
 				995545771FDFDBCC00DC0134 /* FlowOperationVC.m in Sources */,
@@ -4183,6 +4231,7 @@
 				995545BF1FDFDBCD00DC0134 /* SettingVC.m in Sources */,
 				995545D61FDFDBCD00DC0134 /* UIButton+AFNetworking.m in Sources */,
 				995545A61FDFDBCC00DC0134 /* OutputCatalog.m in Sources */,
+				9926DB11215DC9C900CFD170 /* OutputConfirmCommitVC.m in Sources */,
 				995544E51FDFDBCC00DC0134 /* FSCalendarCalculator.m in Sources */,
 				99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */,
 				995545031FDFDBCC00DC0134 /* PNChartLabel.m in Sources */,
@@ -4374,6 +4423,7 @@
 				995545711FDFDBCC00DC0134 /* EmploySearchVC.m in Sources */,
 				995545361FDFDBCC00DC0134 /* NSObject+UserData.m in Sources */,
 				995545701FDFDBCC00DC0134 /* EmployeeListVC.m in Sources */,
+				9926DB0E215DC88000CFD170 /* OutputDeclareCell.m in Sources */,
 				995547161FDFDBCD00DC0134 /* UIView+MBProgressHUD.m in Sources */,
 				9955456E1FDFDBCC00DC0134 /* DocSearchVC.m in Sources */,
 				9955459D1FDFDBCC00DC0134 /* NewsListVC.m in Sources */,
