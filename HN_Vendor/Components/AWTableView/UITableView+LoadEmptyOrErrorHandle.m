@@ -201,7 +201,10 @@ static char kLoadEmptyOrErrorHandleGestureKey;
                                       alpha:1.0];//[self inverseColor:self.superview.backgroundColor];
     
     // 添加点击操作
-    [self.superview addGestureRecognizer:[self tapGesture]];
+    if ( delegate ) {
+        [self.superview addGestureRecognizer:[self tapGesture]];
+    }
+    
 }
 
 - (void)showCustomView:(UIView *)aView

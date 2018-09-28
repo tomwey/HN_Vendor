@@ -205,10 +205,10 @@
         NSMutableDictionary *dict = [item.userData ?: @{} mutableCopy];
         if ( label.tag == 100 ) {
             // 设置开始日期
-            [dict setObject:[self.dateFormater stringFromDate:selectedDate] forKey:@"startDate"];
+            [dict setObject:[me.dateFormater stringFromDate:selectedDate] forKey:@"startDate"];
         } else if ( label.tag == 101 ) {
             // 设置截止日期
-            [dict setObject:[self.dateFormater stringFromDate:selectedDate] forKey:@"endDate"];
+            [dict setObject:[me.dateFormater stringFromDate:selectedDate] forKey:@"endDate"];
         }
         
         label.text = [me.dateFormater stringFromDate:selectedDate];
@@ -300,6 +300,7 @@
 //                     } completion:^(BOOL finished) {
 //                         [self removeFromSuperview];
 //                     }];
+    self.selectBlock = nil;
     
     [self removeFromSuperview];
 }
@@ -350,8 +351,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"ddddd");
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     self.selectedIndex = indexPath.row;
@@ -402,7 +401,7 @@
         _tableView.dataSource = self;
         _tableView.delegate   = self;
         
-        _tableView.backgroundColor = [UIColor redColor];
+        _tableView.backgroundColor = [UIColor whiteColor];
         
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         

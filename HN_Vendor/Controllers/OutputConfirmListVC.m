@@ -287,11 +287,12 @@
 {
     [self.searchBar resignFirstResponder];
     
-    [[self.contentView viewWithTag:11022] removeFromSuperview];
+    [[self.contentView viewWithTag:110221] removeFromSuperview];
     
     AWFilterView *filterView = [[AWFilterView alloc] init];
 //    self.filterView = filterView;
-    filterView.tag = 11022;
+    
+    filterView.tag = 110221;
     
     filterView.frame = CGRectMake(0, 41, self.contentView.width,
                                   self.contentView.height - 41);
