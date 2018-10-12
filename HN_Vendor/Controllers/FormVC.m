@@ -119,6 +119,8 @@
     self.tableView.sectionFooterHeight = 0;
     self.tableView.sectionHeaderHeight = 1;
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     self.tableView.delegate = self;
     
     self.dataSource = [NSMutableArray array];
@@ -1867,6 +1869,16 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.000000001;
+}
+
 - (void)uploadData:(NSData *)fileData
           fileName:(NSString *)fileName
           mimeType:(NSString *)mimeType
@@ -2355,15 +2367,15 @@
     [self.tableView reloadData];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 10;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 0;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

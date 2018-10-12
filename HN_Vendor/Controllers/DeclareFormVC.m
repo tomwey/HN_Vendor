@@ -221,6 +221,8 @@
         }
     }
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification
                                                object:nil];
@@ -320,6 +322,16 @@
     visaBtn.position = CGPointMake(0, self.contentView.height - 50);
     
     self.tableView.height -= visaBtn.height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.000000001;
 }
 
 - (void)confirmClick
