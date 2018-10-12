@@ -30,6 +30,12 @@
     
     self.navBar.title = @"合同执行";
     
+    if ([self.params[@"data"] integerValue] == 1) {
+        self.navBar.title = @"结算申报";
+    } else if ( [self.params[@"data"] integerValue] == 2 ) {
+        self.navBar.title = @"产值申报";
+    }
+    
     if ( [self.params[@"data"] integerValue] == 1 ) {
         [self addSegmentControls];
         
