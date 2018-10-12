@@ -226,7 +226,7 @@
     self.orderLabel.text = data[@"order"];
     
     self.nameLabel.text  = data[@"visatheme"] ?: data[@"changetheme"];
-    
+    NSLog(@"data:####:%@", data);
     if ( data[@"state_num"] ) {
 //        self.stateLabel.hidden = NO;
         

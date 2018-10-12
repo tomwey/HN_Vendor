@@ -46,7 +46,7 @@
                       @"param7": [params[@"state"] ?: @"-1" description],
                       @"param8": params[@"begin_time"] ?: @"",
                       @"param9": params[@"end_time"] ?: @"",
-                      @"param10": [params[@"status"] ?: @"1" description]
+                      @"param10": [params[@"status"] ?: @"-1" description]
                       };
     
     __weak typeof(self) me = self;
