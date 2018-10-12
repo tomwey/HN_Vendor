@@ -108,20 +108,20 @@
                                         AWColorFromRGB(51, 51, 51));
     [self.scrollView addSubview:titleLabel];
     
-    UILabel *label1 = [self addLabelValue:item[@"contracttotalmoney"]
+    UILabel *label1 = [self addLabelValue:HNFormatMoney2(item[@"contracttotalmoney"], @"元")
                                   forName:@"合同总金额"
                                      date:nil
                                     color:MAIN_THEME_COLOR];
     label1.position = CGPointMake(15, titleLabel.bottom + 10);
     
-    UILabel *label2 = [self addLabelValue:item[@"signmoney"]
+    UILabel *label2 = [self addLabelValue:HNFormatMoney2(item[@"signmoney"], @"元")
                                   forName:@"主合同金额"
                                      date:HNDateFromObject(item[@"signdate"], @"T")
                                     color:AWColorFromRGB(74, 144, 226)];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.position = CGPointMake(label1.right, titleLabel.bottom + 10);
     
-    UILabel *label3 = [self addLabelValue:item[@"addsignmoney"]
+    UILabel *label3 = [self addLabelValue:HNFormatMoney2(item[@"addsignmoney"], @"元")
                                   forName:@"补充合同金额"
                                      date:HNDateFromObject(item[@"addsigndate"], @"T")
                                     color:AWColorFromRGB(74, 74, 74)];
@@ -274,7 +274,7 @@
     moreLabel.center = CGPointMake(self.width - 15 - moreLabel.width / 2,
                                    titleLabel.midY);
     
-    UILabel *label1 = [self addLabelValue:item[@"visamoney"]
+    UILabel *label1 = [self addLabelValue:HNFormatMoney2(item[@"visamoney"], @"元")
                                   forName:@"累计签证金额"
                                      date:nil
                                     color:MAIN_THEME_COLOR];

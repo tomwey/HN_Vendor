@@ -692,6 +692,10 @@
                           }];
     }
     
+    NSInteger count = temp.count;
+    
+    CGFloat percent = 100.0 / (count - 1);
+    NSInteger index = 0;
     for (id item in temp) {
         NSString *suffix = @"●";
         if ( [item[@"endvalue"] floatValue] == 0 ||
@@ -709,8 +713,10 @@
         btn.titleLabel.font = AWSystemFontWithSize(14, NO);
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
         
+        CGFloat progress = percent * index++;
+        
         //        btn.backgroundColor = [UIColor redColor];
-        btn.center = CGPointMake(15 + (self.contentView.width - 90) * [item[@"endvalue"] floatValue] / 100.0 + btn.width / 2, pos + 10 + btn.height / 2);
+        btn.center = CGPointMake(15 + (self.contentView.width - 90) * progress / 100.0 + btn.width / 2, pos + 10 + btn.height / 2);
         
         btn.userData = item;
         

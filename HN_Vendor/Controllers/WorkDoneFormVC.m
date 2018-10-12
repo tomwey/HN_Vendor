@@ -215,7 +215,7 @@
     self.formObjects[@"contract_name"] = self.params[@"contractname"] ?: @"";
     self.formObjects[@"contract_money"] = self.params[@"contractmoney"] ?: @"";
     self.formObjects[@"change_theme"] = self.params[@"changetheme"] ?: @"";
-    self.formObjects[@"money"] = self.params[@"changemoney"] ?: @"";
+    self.formObjects[@"money"] = HNFormatMoney2(self.params[@"changemoney"], @"元");
     
     if ( self.confirmData ) {
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
