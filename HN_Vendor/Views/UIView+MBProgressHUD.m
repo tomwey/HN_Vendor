@@ -31,6 +31,7 @@
     hud.detailsLabel.font = AWSystemFontWithSize(16, YES);
     hud.detailsLabel.textColor = MAIN_THEME_COLOR;
     hud.userInteractionEnabled = NO;
+    hud.detailsLabel.adjustsFontSizeToFitWidth = YES;
     hud.offset = offset;
     [hud hideAnimated:YES afterDelay:2.0];
 }
@@ -51,7 +52,7 @@
     hud.userInteractionEnabled = NO;
     
     hud.label.text = text;
-    
+    hud.label.adjustsFontSizeToFitWidth = YES;
     [hud hideAnimated:YES afterDelay:duration];
 }
 
