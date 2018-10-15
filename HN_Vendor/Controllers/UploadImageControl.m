@@ -71,9 +71,14 @@
         
         [self.imageButtons addObject:self.addButton];
         
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(deleteImage:)
+//                                                     name:@"kUploadedImageDidDeleteNotification"
+//                                                   object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(deleteImage:)
-                                                     name:@"kUploadedImageDidDeleteNotification"
+                                                     name:@"kAnnexDidRemoveNotification"
                                                    object:nil];
         
         self.uploadImages = attachments;
@@ -333,11 +338,16 @@
 
 - (void)deleteImage:(NSNotification *)noti
 {
-    UIButton *sender = noti.object;
-    
-    [self.deletedAttachments addObject:[sender.userData[@"id"] description]];
-    
-    [self close:sender];
+    NSInteger index = [noti.object integerValue];
+    if ( index < self.imageButtons.count ) {
+        UIButton *sender = self.imageButtons[index];
+        
+        if ( sender.userData && sender.userData[@"id"]) {
+            [self.deletedAttachments addObject:[sender.userData[@"id"] description]];
+        }
+        
+        [self close:sender];
+    }
 }
 
 - (NSArray *)deletedAttachmentIDs
@@ -365,10 +375,18 @@
 
 - (void)openImage:(UIButton *)sender
 {
+    NSMutableArray *temp = [@[] mutableCopy];
+    for (UIButton *btn in self.imageButtons) {
+        if (btn.userData) {
+            [temp addObject:btn.userData];
+        }
+    }
+    
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ImagePreviewVC"
                                                                 params:@{
-                                                                         @"imageButton": sender,
-                                                                         @"enabled": @(self.enabled),
+                                                                         @"attachments": temp,
+                                                                         @"index": @([self.imageButtons indexOfObject:sender]),
+                                                                         @"readonly": self.enabled ? @"0" : @"1",
                                                                          }];
     [self.owner presentViewController:vc animated:YES completion:nil];
 }
@@ -463,67 +481,228 @@
 
 @end
 
-@interface ImagePreviewVC () <UIAlertViewDelegate>
+@interface ImagePreviewVC () <SwipeViewDataSource, SwipeViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, assign) NSInteger currentIndex;
+
+@property (nonatomic, strong) SwipeView *swipeView;
 
 @end
 
 @implementation ImagePreviewVC
 
+- (BOOL)supportsSwipeToBack
+{
+    return NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    id data  = [self.params[@"imageButton"] userData];
-    self.navBar.title = data[@"imageName"];
+    self.dataSource = [self.params[@"attachments"] ?: @[] mutableCopy];
     
+    self.currentIndex = [self.params[@"index"] ?: @"0" integerValue];
+    
+    if ( ![self.params[@"readonly"] boolValue] ) {
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"删除" size:CGSizeMake(60,40) callback:^{
+            [me removeAnnex];
+        }];
+    }
+    
+    if ( self.currentIndex < self.dataSource.count ) {
+        self.navBar.title = self.dataSource[self.currentIndex][@"imageName"];
+    }
+    
+    self.swipeView = [[SwipeView alloc] initWithFrame:self.contentView.bounds];
+    [self.contentView addSubview:self.swipeView];
+    self.swipeView.dataSource = self;
+    self.swipeView.delegate   = self;
+    
+    self.swipeView.backgroundColor = [UIColor blackColor];
+    
+    self.swipeView.currentItemIndex = self.currentIndex;
+    
+//    id data  = [self.params[@"imageButton"] userData];
+//    self.navBar.title = data[@"imageName"];
+//
     UIButton *closeBtn = HNCloseButton(34, self, @selector(close));
     [self addLeftItemWithView:closeBtn leftMargin:2];
-    
-    BOOL enabled = [self.params[@"enabled"] boolValue];
-    
-    if (enabled) {
-        __weak typeof(self) me = self;
-        [self addRightItemWithTitle:@"删除"
-                    titleAttributes:@{  }
-                               size:CGSizeMake(44, 40)
-                        rightMargin:5
-                           callback:^{
-                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确定要删除吗？" message:@""
-                                                                              delegate:me
-                                                                     cancelButtonTitle:nil
-                                                                     otherButtonTitles:@"取消", @"确定", nil];
-                               [alert show];
-                           }];
-    }
-    
-    UIImageView *imageView = AWCreateImageView(nil);
-    [self.contentView addSubview:imageView];
-    imageView.frame = self.contentView.bounds;
-    
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    if (data[@"imageURL"]) {
-        [imageView setImageWithURL:[NSURL URLWithString:data[@"imageURL"]]];
-    } else {
-        imageView.image = [UIImage imageWithData:data[@"imageData"]];
-    }
+//
+//    BOOL enabled = [self.params[@"enabled"] boolValue];
+//
+//    if (enabled) {
+//        __weak typeof(self) me = self;
+//        [self addRightItemWithTitle:@"删除"
+//                    titleAttributes:@{  }
+//                               size:CGSizeMake(44, 40)
+//                        rightMargin:5
+//                           callback:^{
+//                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确定要删除吗？" message:@""
+//                                                                              delegate:me
+//                                                                     cancelButtonTitle:nil
+//                                                                     otherButtonTitles:@"取消", @"确定", nil];
+//                               [alert show];
+//                           }];
+//    }
+//
+//    UIImageView *imageView = AWCreateImageView(nil);
+//    [self.contentView addSubview:imageView];
+//    imageView.frame = self.contentView.bounds;
+//
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//
+//    if (data[@"imageURL"]) {
+//        [imageView setImageWithURL:[NSURL URLWithString:data[@"imageURL"]]];
+//    } else {
+//        imageView.image = [UIImage imageWithData:data[@"imageData"]];
+//    }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)removeAnnex
 {
-    if ( buttonIndex == 1 ) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"删除提示"
+                                                                   message:@"您确定要删除吗？"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                
+                                            }]];
+    
+    __weak typeof(self) me = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [me doRemove];
+                                            }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)doRemove
+{
+    NSInteger index = self.swipeView.currentItemIndex;
+    [self.dataSource removeObjectAtIndex:index];
+    
+    [self.swipeView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kAnnexDidRemoveNotification"
+                                                        object:@(index)];
+    
+    if ( self.dataSource.count == 0 ) {
+//        [self.navigationController popViewControllerAnimated:YES];
         [self close];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kUploadedImageDidDeleteNotification"
-                                                            object:self.params[@"imageButton"]];
     }
 }
 
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return self.dataSource.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    ImageScrollView *aView = (ImageScrollView *)[swipeView itemViewAtIndex:index];
+    if ( !aView ) {
+        aView = [[ImageScrollView alloc] init];
+        aView.frame = self.contentView.bounds;
+        view = aView;
+    }
+    
+    aView.item = self.dataSource[index];
+    
+    return aView;
+}
+
+- (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
+{
+    NSInteger index = swipeView.currentItemIndex;
+    if ( index < self.dataSource.count ) {
+        self.navBar.title = self.dataSource[index][@"imageName"];
+    }
+}
+
+//
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if ( buttonIndex == 1 ) {
+//        [self close];
+//
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kUploadedImageDidDeleteNotification"
+//                                                            object:self.params[@"imageButton"]];
+//    }
+//}
+//
 - (void)close
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
+
+//////////////////////////////////////////////////////////////
+
+@interface ImageScrollView() <UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIImageView *imageView;
+
+@end
+
+@implementation ImageScrollView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        self.scrollView = [[UIScrollView alloc] init];
+        [self addSubview:self.scrollView];
+        
+        self.scrollView.delegate = self;
+        
+        self.scrollView.minimumZoomScale = 1.0;
+        self.scrollView.maximumZoomScale = 4.0;
+        self.scrollView.zoomScale = 1.0;
+        
+        self.imageView = AWCreateImageView(nil);
+        [self.scrollView addSubview:self.imageView];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.scrollView.frame = self.bounds;
+    self.imageView.frame = self.bounds;
+}
+
+- (void)setItem:(id)item
+{
+    _item = item;
+    
+    self.scrollView.zoomScale = 1.0;
+    
+    if ( item[@"imageData"] ) {
+        self.imageView.image = [UIImage imageWithData:item[@"imageData"]];
+    } else if (item[@"imageURL"]) {
+        [self.imageView setImageWithURL:[NSURL URLWithString:item[@"imageURL"]]];
+    }
+}
+
+@end
+
+//////////////////////////////////////////////////////////////
 
 @implementation UIButton (ImageData)
 

@@ -1602,10 +1602,11 @@
             
             [uploadControl updateHeight];
             
+            __weak typeof(self) me = self;
             uploadControl.didUploadedImagesBlock = ^(UploadImageControl *sender) {
 //                self.formObjects[item[@"field_name"]] = sender.attachmentIDs;
-                self.formObjects[item[@"field_name"]] = sender.attachments;
-                [self.tableView reloadData];
+                me.formObjects[item[@"field_name"]] = sender.attachments;
+                [me.tableView reloadData];
             };
         }
             break;

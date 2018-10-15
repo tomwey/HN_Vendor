@@ -39,3 +39,9 @@
                       forState:(UIControlState)state;
 
 @end
+
+@interface ImageScrollView: UIView
+
+@property (nonatomic, strong) id item;
+
+@end
