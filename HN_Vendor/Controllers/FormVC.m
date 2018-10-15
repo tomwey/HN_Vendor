@@ -2940,6 +2940,12 @@
 - (void)doRemove:(id)item
 {
     [self.dataSource removeObject:item];
+    for (id obj in self.dataSource) {
+        if ( [[obj[@"id"] description] isEqualToString:[item[@"id"] description]] ) {
+            [self.dataSource removeObject:obj];
+            break;
+        }
+    }
     
     [self.collectionView reloadData];
 }

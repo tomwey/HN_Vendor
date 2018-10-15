@@ -62,6 +62,10 @@
     
     if ( error ) {
         [self.tableView showErrorOrEmptyMessage:error.localizedDescription reloadDelegate:nil];
+        
+        self.dataSource.dataSource = nil;
+        
+        [self.tableView reloadData];
     } else {
         if ( [result[@"rowcount"] integerValue] == 0 ) {
             [self.tableView showErrorOrEmptyMessage:@"无数据显示" reloadDelegate:nil];
