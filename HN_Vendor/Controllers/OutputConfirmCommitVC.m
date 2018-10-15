@@ -895,7 +895,7 @@
                                                           options:0]];
         }
     } else {
-        date1 = HNDateFromObject(self.params[@"floor"][@"factenddate"], @"T");
+        date1 = HNDateFromObject(self.params[@"floor"][@"factenddate"] ?: self.params[@"floor"][@"appcompletedate"], @"T");
         date2 = HNDateFromObject(self.params[@"floor"][@"planpaydate"], @"T");
     }
     

@@ -52,7 +52,7 @@
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
               @"param4": [self.params[@"contractid"] ?: @"0" description],
               @"param5": @"0",
-              @"param6": @"2018-09-28",
+              @"param6": HNDateFromObject(self.params[@"submit_date"], @"T"),//@"2018-09-28",
               } completion:^(id result, NSError *error) {
                   [me handleResult: result error: error];
               }];
