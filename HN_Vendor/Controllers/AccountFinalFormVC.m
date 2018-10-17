@@ -116,6 +116,20 @@
     
     // 填充数据
 //    [self populateData];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeMe)
+                                                 name:@"kNeedDismissNotification"
+                                               object:nil];
+    
+    // 填充数据
+    //    [self populateData];
+}
+
+- (void)closeMe
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadAccountFinalDataNotification"
+                                                        object:nil];
 }
 
 - (void)showZFBox
