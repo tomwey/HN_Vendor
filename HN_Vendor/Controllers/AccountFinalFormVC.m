@@ -129,17 +129,70 @@
 
 - (void)addCancelButton
 {
-    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+    CGFloat width = self.contentView.width / 2.0;
+        
+    UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+                                         @"作废",
+                                         [UIColor whiteColor],
+                                         self, @selector(zfClick));
+    [self.contentView addSubview:zfBtn];
+    zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+    zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                         50),
-                                             @"取消",
+                                             @"撤回",
                                              [UIColor whiteColor],
                                              self,
-                                             @selector(cancelClick));
-    [self.contentView addSubview:cancelBtn];
-    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
-    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+                                             @selector(reback));
+    [self.contentView addSubview:commitBtn];
+    commitBtn.backgroundColor = MAIN_THEME_COLOR;
+    commitBtn.position = CGPointMake(zfBtn.right, self.contentView.height - 50);
     
-    self.tableView.height -= cancelBtn.height;
+//    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+//                                                        50),
+//                                             @"取消",
+//                                             [UIColor whiteColor],
+//                                             self,
+//                                             @selector(cancelClick));
+//    [self.contentView addSubview:cancelBtn];
+//    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+//    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+    self.tableView.height -= commitBtn.height;
+}
+
+- (void)zfClick
+{
+    id newParams = [self.params mutableCopy];
+    newParams[@"zf_type"] = @"4";
+    
+    NSMutableArray *temp = [NSMutableArray array];
+    for (id key in self.formObjects) {
+        if ( [key hasPrefix:@"annex_"] ) {
+            NSArray *arr = self.formObjects[key];
+            NSLog(@"%@", arr);
+            NSMutableArray *arr2 = [NSMutableArray array];
+            for (id item in arr) {
+                [arr2 addObject:item[@"id"]];
+            }
+            [temp addObject:[NSString stringWithFormat:@"%@:%@",
+                             [[key componentsSeparatedByString:@"_"] lastObject],
+                             [arr2 componentsJoinedByString:@","]]];
+        }
+    }
+    
+    NSString *ids = [temp componentsJoinedByString:@";"];
+    
+    newParams[@"attachmentIDs"] = ids;
+    
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)reback
+{
+    [self sendReqForType:4];
 }
 
 - (void)populateData
@@ -312,14 +365,14 @@
     [self sendReqForType:2];
 }
 
-- (void)zfClick
-{
-    id newParams = [self.params mutableCopy];
-    newParams[@"zf_type"] = @"2";
-    
-    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
-    [self presentViewController:vc animated:YES completion:nil];
-}
+//- (void)zfClick
+//{
+//    id newParams = [self.params mutableCopy];
+//    newParams[@"zf_type"] = @"2";
+//
+//    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+//    [self presentViewController:vc animated:YES completion:nil];
+//}
 
 - (void)cancelClick
 {
@@ -346,12 +399,14 @@
     }
     
     // 附件必填检查
-    for (id item in self.annexList) {
-        NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
-        if ( [item[@"required"] boolValue] ) {
-            if ( [self.formObjects[key] count] == 0 ) {
-                [self.contentView showHUDWithText:[NSString stringWithFormat:@"%@不能为空", item[@"docname"]]];
-                return;
+    if ( type != 4 && type != 5 ) {
+        for (id item in self.annexList) {
+            NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
+            if ( [item[@"required"] boolValue] ) {
+                if ( [self.formObjects[key] count] == 0 ) {
+                    [self.contentView showHUDWithText:[NSString stringWithFormat:@"%@不能为空", item[@"docname"]]];
+                    return;
+                }
             }
         }
     }

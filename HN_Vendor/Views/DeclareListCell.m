@@ -253,7 +253,11 @@
     
     if ( data[@"_workdone"] ) {
         self.stateLabel.text = data[@"confirm_desc"];
-        UIColor *color = [self colorByState:data[@"confirm_state"]];
+        NSString *state = data[@"confirm_state"];
+        if ([data[@"confirm_desc"] isEqualToString:@"被驳回"]) {
+            state = @"5";
+        }
+        UIColor *color = [self colorByState:state];
         
         self.stateLabel.textColor = color;
         self.stateLabel.layer.borderColor = color.CGColor;

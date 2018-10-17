@@ -281,17 +281,54 @@
 
 - (void)addCancelButton
 {
-    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
-                                  50),
-                       @"取消",
-                       [UIColor whiteColor],
-                       self,
-                       @selector(cancelClick));
-    [self.contentView addSubview:cancelBtn];
-    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
-    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+//    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+//                                  50),
+//                       @"取消",
+//                       [UIColor whiteColor],
+//                       self,
+//                       @selector(cancelClick));
+//    [self.contentView addSubview:cancelBtn];
+//    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+//    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+//    self.tableView.height -= cancelBtn.height;
     
-    self.tableView.height -= cancelBtn.height;
+    CGFloat width = self.contentView.width / 2.0;
+    
+    UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+                                         @"作废",
+                                         [UIColor whiteColor],
+                                         self, @selector(zfClick));
+    [self.contentView addSubview:zfBtn];
+    zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+    zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
+                                                        50),
+                                             @"撤回",
+                                             [UIColor whiteColor],
+                                             self,
+                                             @selector(reback));
+    [self.contentView addSubview:commitBtn];
+    commitBtn.backgroundColor = MAIN_THEME_COLOR;
+    commitBtn.position = CGPointMake(zfBtn.right, self.contentView.height - 50);
+    
+    //    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+    //                                                        50),
+    //                                             @"取消",
+    //                                             [UIColor whiteColor],
+    //                                             self,
+    //                                             @selector(cancelClick));
+    //    [self.contentView addSubview:cancelBtn];
+    //    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+    //    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+    //
+    self.tableView.height -= commitBtn.height;
+}
+
+- (void)reback
+{
+    [self sendReqForType:4];
 }
 
 - (void)addConfirmButton

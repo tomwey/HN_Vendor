@@ -175,6 +175,15 @@
 //    [self populateData];
 }
 
+- (void)showZFBox
+{
+    [[[ZFBoxView alloc] init] showReason:self.confirmData[@"returnmemo"]
+                                  inView:self.view
+                             commitBlock:^(ZFBoxView *sender) {
+                                 
+                             }];
+}
+
 - (void)populateData
 {
 //    NSDate *now = [NSDate date];
@@ -230,12 +239,100 @@
             [self addToolButtons];
         } else {
             self.disableFormInputs = YES;
+            if ( [self.confirmData[@"state_num"] integerValue] == 10 ) {
+                [self addCancelButtons];
+            }
         }
     } else {
         self.formObjects[@"end_date"] = [NSDate date];
         
         [self addToolButtons];
     }
+    
+    if ( [self.confirmData[@"state_num"] integerValue] == 5 ) {
+//        if ([self.params[@"state_num"] integerValue] == 5) {
+            // 被驳回，显示驳回原因
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"驳回原因"
+                    titleAttributes:@{
+                                      NSFontAttributeName: AWSystemFontWithSize(15, NO)
+                                      }
+                               size:CGSizeMake(80,40)
+                        rightMargin:5 callback:^{
+                            [me showZFBox];
+                        }];
+        
+        [self showZFBox];
+//        }
+    }
+}
+
+- (void)addCancelButtons
+{
+    CGFloat width = self.contentView.width / 2.0;
+    
+    UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+                                         @"作废",
+                                         [UIColor whiteColor],
+                                         self, @selector(zfClick));
+    [self.contentView addSubview:zfBtn];
+    zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+    zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
+                                                        50),
+                                             @"撤回",
+                                             [UIColor whiteColor],
+                                             self,
+                                             @selector(reback));
+    [self.contentView addSubview:commitBtn];
+    commitBtn.backgroundColor = MAIN_THEME_COLOR;
+    commitBtn.position = CGPointMake(zfBtn.right, self.contentView.height - 50);
+    
+    //    UIButton *cancelBtn = AWCreateTextButton(CGRectMake(0, 0, self.contentView.width,
+    //                                                        50),
+    //                                             @"取消",
+    //                                             [UIColor whiteColor],
+    //                                             self,
+    //                                             @selector(cancelClick));
+    //    [self.contentView addSubview:cancelBtn];
+    //    cancelBtn.backgroundColor = MAIN_THEME_COLOR;
+    //    cancelBtn.position = CGPointMake(0, self.contentView.height - 50);
+    //
+    self.tableView.height -= commitBtn.height;
+}
+
+- (void)zfClick
+{
+    id newParams = [self.params mutableCopy];
+    newParams[@"zf_type"] = @"3";
+    NSMutableArray *temp = [NSMutableArray array];
+    for (id key in self.formObjects) {
+        if ( [key hasPrefix:@"annex_"] ) {
+            NSArray *arr = self.formObjects[key];
+            NSLog(@"%@", arr);
+            NSMutableArray *arr2 = [NSMutableArray array];
+            for (id item in arr) {
+                [arr2 addObject:item[@"id"]];
+            }
+            [temp addObject:[NSString stringWithFormat:@"%@:%@",
+                             [[key componentsSeparatedByString:@"_"] lastObject],
+                             [arr2 componentsJoinedByString:@","]]];
+        }
+    }
+    
+    NSString *ids = [temp componentsJoinedByString:@";"];
+    newParams[@"attachmentIDs"] = ids;
+    newParams[@"startdate"] = HNDateFromObject(self.confirmData[@"startdate"], @"T");
+    newParams[@"completedate"] = HNDateFromObject(self.confirmData[@"completedate"], @"T");
+    newParams[@"completememo"] = self.confirmData[@"completememo"];
+    UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)reback
+{
+    [self sendReqForType:4];
 }
 
 - (void)keyboardWillShow:(NSNotification *)noti
@@ -373,7 +470,10 @@
     NSDate *startDate = self.formObjects[@"start_date"];
     NSDate *endDate   = self.formObjects[@"end_date"];
     
-    if ( [startDate compare:endDate] == NSOrderedDescending ) {
+    NSString *sds = HNDateFromObject(startDate, @" ");
+    NSString *eds = HNDateFromObject(endDate, @" ");
+    
+    if ( [sds compare:eds options:NSNumericSearch] == NSOrderedDescending ) {
         [self.contentView showHUDWithText:@"开工日期不能大于完工日期" offset:CGPointMake(0,20)];
         return;
     }
@@ -384,12 +484,14 @@
     }
     
     // 附件必填检查
-    for (id item in self.annexList) {
-        NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
-        if ( [item[@"required"] boolValue] ) {
-            if ( [self.formObjects[key] count] == 0 ) {
-                [self.contentView showHUDWithText:[NSString stringWithFormat:@"%@不能为空", item[@"docname"]]];
-                return;
+    if ( type != 4 && type != 5 ) {
+        for (id item in self.annexList) {
+            NSString *key = [NSString stringWithFormat:@"annex_%@", item[@"typedocid"]];
+            if ( [item[@"required"] boolValue] ) {
+                if ( [self.formObjects[key] count] == 0 ) {
+                    [self.contentView showHUDWithText:[NSString stringWithFormat:@"%@不能为空", item[@"docname"]]];
+                    return;
+                }
             }
         }
     }
