@@ -182,6 +182,7 @@
     
     switch (val) {
         case 0:
+        case 1:
         {
             return AWColorFromRGB(100,100,100);
         }
@@ -194,6 +195,7 @@
             return AWColorFromRGB(201, 92, 84);
         }
         case 10:
+        case 2:
         {
             return AWColorFromRGB(116,182,102);
         }
@@ -247,6 +249,17 @@
     self.timeLabel.text = HNDateFromObject(obj, @"T");
     
     NSInteger visaid = [data[@"supvisaid"] integerValue];
+//    NSInteger supconfirmid = [data[@"supconfirmid"] integerValue];
+    
+    if ( data[@"_workdone"] ) {
+        self.stateLabel.text = data[@"confirm_desc"];
+        UIColor *color = [self colorByState:data[@"confirm_state"]];
+        
+        self.stateLabel.textColor = color;
+        self.stateLabel.layer.borderColor = color.CGColor;
+        
+        self.stateLabel.hidden = [data[@"confirm_desc"] length] == 0;
+    }
     
     BOOL showMoney = NO;
     if ( visaid > 0 ) {

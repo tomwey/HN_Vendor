@@ -78,9 +78,14 @@
             [self.contractDeclares removeAllObjects];
             
 //
-            for (id item in result[@"data"]) {
+            for (id obj in result[@"data"]) {
 //                NSString *name = item[@"contractname"];
 //                NSString *contractID = [item[@"contractid"] description];
+                id item = [obj mutableCopy];
+                if ( self.userData[@"_workdone"] ) {
+                    item[@"_workdone"] = @"1";
+                }
+                
                 NSString *contractname = [item[@"contractname"] description];
                 
                 if (!contractname) {

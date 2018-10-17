@@ -54,12 +54,12 @@
 - (void)addSegmentControls
 {
     self.tabTitles = @[@{
-                           @"name": @"未确认",
+                           @"name": @"待申报",
                            @"type": @"1",
                            @"page": @"",
                            },
                        @{
-                           @"name": @"已确认",
+                           @"name": @"已申报",
                            @"type": @"2",
                            @"page": @"",
                            },
@@ -167,7 +167,7 @@
     NSString *state = self.swipeView.currentPage == 0 ? @"1" : @"2";
     
     __weak typeof(self) me = self;
-    listView.userData = @{ @"status": state, @"owner": me };
+    listView.userData = @{ @"status": state, @"owner": me, @"_workdone": @"1" };
     
     [listView startLoading:^(BOOL succeed, NSError *error) {
         
