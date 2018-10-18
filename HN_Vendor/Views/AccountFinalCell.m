@@ -75,6 +75,8 @@
         self.stateLabel.backgroundColor = AWColorFromRGB(166, 166, 166);
     } else if ( [data[@"state_desc"] isEqualToString:@"已取消"] ) {
         self.stateLabel.backgroundColor = AWColorFromRGB(201, 92, 84);
+    } else if ( [data[@"state_desc"] isEqualToString:@"被驳回"] ) {
+        self.stateLabel.backgroundColor = AWColorFromRGB(230, 176, 95);
     } else {
         self.stateLabel.backgroundColor = AWColorFromRGB(100,100,100);
     }

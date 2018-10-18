@@ -289,21 +289,21 @@
     CGFloat width = self.contentView.width / 2.0;
     CGFloat left = 0;
     
-    if ( [self.params[@"state_num"] integerValue] == 5 ) {
-        width = self.contentView.width / 3.0;
-        
-        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
-                                             @"作废",
-                                             [UIColor whiteColor],
-                                             self, @selector(zfClick));
-        [self.contentView addSubview:zfBtn];
-        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
-        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
-        
-        self.zfButton = zfBtn;
-        
-        left = self.zfButton.right;
-    }
+//    if ( [self.params[@"state_num"] integerValue] == 5 ) {
+//        width = self.contentView.width / 3.0;
+//
+//        UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
+//                                             @"作废",
+//                                             [UIColor whiteColor],
+//                                             self, @selector(zfClick));
+//        [self.contentView addSubview:zfBtn];
+//        zfBtn.backgroundColor = AWColorFromRGB(102, 102, 102);
+//        zfBtn.position = CGPointMake(0, self.contentView.height - 50);
+//
+//        self.zfButton = zfBtn;
+//
+//        left = self.zfButton.right;
+//    }
     
     UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
                                                         50),
