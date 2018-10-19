@@ -684,6 +684,7 @@
 		998E43031FEB64640040E013 /* msg.tpl in Resources */ = {isa = PBXBuildFile; fileRef = 998E43021FEB64640040E013 /* msg.tpl */; };
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
+		99B474ED217976C300C8FC4B /* UIImage+AWCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B474EC217976C300C8FC4B /* UIImage+AWCompress.m */; };
 		99CA508E214A425800DA083E /* icon_wgqr@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA508C214A425700DA083E /* icon_wgqr@3x.png */; };
 		99CA508F214A425800DA083E /* icon_wgqr@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA508D214A425800DA083E /* icon_wgqr@2x.png */; };
 		99CA5093214A43AE00DA083E /* WorkVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CA5091214A43AD00DA083E /* WorkVC2.m */; };
@@ -1865,6 +1866,8 @@
 		998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchVC.m; sourceTree = "<group>"; };
 		998E43071FEBA1C80040E013 /* DeclareSearchResultVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeclareSearchResultVC.h; sourceTree = "<group>"; };
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
+		99B474EB217976C300C8FC4B /* UIImage+AWCompress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+AWCompress.h"; sourceTree = "<group>"; };
+		99B474EC217976C300C8FC4B /* UIImage+AWCompress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AWCompress.m"; sourceTree = "<group>"; };
 		99CA508C214A425700DA083E /* icon_wgqr@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_wgqr@3x.png"; sourceTree = "<group>"; };
 		99CA508D214A425800DA083E /* icon_wgqr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_wgqr@2x.png"; sourceTree = "<group>"; };
 		99CA5091214A43AD00DA083E /* WorkVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkVC2.m; sourceTree = "<group>"; };
@@ -2487,6 +2490,7 @@
 		9955415D1FDFDBCB00DC0134 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				99B474EA2179769D00C8FC4B /* AWImageCompress */,
 				9955415E1FDFDBCB00DC0134 /* AWAPIManager */,
 				9955416F1FDFDBCB00DC0134 /* AWButton */,
 				995541741FDFDBCB00DC0134 /* AWButtonLoading */,
@@ -3819,6 +3823,15 @@
 			path = "Other Resources";
 			sourceTree = "<group>";
 		};
+		99B474EA2179769D00C8FC4B /* AWImageCompress */ = {
+			isa = PBXGroup;
+			children = (
+				99B474EB217976C300C8FC4B /* UIImage+AWCompress.h */,
+				99B474EC217976C300C8FC4B /* UIImage+AWCompress.m */,
+			);
+			path = AWImageCompress;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4328,6 +4341,7 @@
 				995544CD1FDFDBCC00DC0134 /* CTPersistanceRecord.m in Sources */,
 				995545CD1FDFDBCD00DC0134 /* AFURLConnectionOperation.m in Sources */,
 				995545841FDFDBCC00DC0134 /* LandPayCell.m in Sources */,
+				99B474ED217976C300C8FC4B /* UIImage+AWCompress.m in Sources */,
 				995545791FDFDBCC00DC0134 /* FlowSearchVC.m in Sources */,
 				9985BBE021538EDB00792BFD /* AccountFinalFormVC.m in Sources */,
 				9947AB401FF1E5570091A2AD /* ContractDeclareCell.m in Sources */,

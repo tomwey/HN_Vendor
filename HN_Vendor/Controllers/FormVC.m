@@ -23,6 +23,7 @@
 #import "TYAlertController+BlurEffects.h"
 
 #import <QuickLook/QuickLook.h>
+#import "UIImage+AWCompress.h"
 
 @interface FormVC () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,TZImagePickerControllerDelegate>
 
@@ -1853,8 +1854,10 @@
         mimeName = @"image/png";
         
         if ( fileData ) {
+            UIImage *newImage = [UIImage imageWithData:fileData];
+            NSData *newData = [newImage compressBySizeWithLengthLimit:500 * 1024.0f];
             id image = @{
-                         @"imageData": fileData,
+                         @"imageData": newData,
                          @"imageName": @"IMG_0001.PNG",
                          @"image": info[UIImagePickerControllerOriginalImage],
                          };

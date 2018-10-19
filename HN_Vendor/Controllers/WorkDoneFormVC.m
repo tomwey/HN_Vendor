@@ -388,8 +388,7 @@
     CGFloat width = self.contentView.width / 2.0;
     CGFloat left = 0;
     
-    if ( [HNStringFromObject(self.params[@"confirm_desc"], @"") isEqualToString:@""] ||
-        [HNStringFromObject(self.params[@"confirm_desc"], @"") isEqualToString:@"未申报"] ||
+    if ( [HNStringFromObject(self.params[@"confirm_desc"], @"") isEqualToString:@"未申报"] ||
         [HNStringFromObject(self.params[@"confirm_desc"], @"") isEqualToString:@"被驳回"]
         ) {
         width = self.contentView.width / 3.0;

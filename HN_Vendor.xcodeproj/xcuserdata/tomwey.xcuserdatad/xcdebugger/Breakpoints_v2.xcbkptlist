@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HN_Vendor/Controllers/FormVC.m"
-            timestampString = "561461843.518195"
+            timestampString = "561609624.24572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3328"
-            endingLineNumber = "3328"
+            startingLineNumber = "3331"
+            endingLineNumber = "3331"
             landmarkName = "-remove:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,27 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HN_Vendor/Controllers/FormVC.m"
-            timestampString = "561461843.518294"
+            timestampString = "561609624.2458121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1834"
-            endingLineNumber = "1834"
-            landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HN_Vendor/Controllers/FormVC.m"
-            timestampString = "561461843.518376"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2081"
-            endingLineNumber = "2081"
+            startingLineNumber = "2084"
+            endingLineNumber = "2084"
             landmarkName = "-uploadImages:mimeType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HN_Vendor/Controllers/FormVC.m"
-            timestampString = "561461843.5184489"
+            timestampString = "561609624.2459691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2019"
-            endingLineNumber = "2019"
+            startingLineNumber = "2022"
+            endingLineNumber = "2022"
             landmarkName = "-uploadFile:formDataBlock:"
             landmarkType = "7">
          </BreakpointContent>

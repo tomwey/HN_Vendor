@@ -13,6 +13,7 @@
 #import "TZImagePickerController.h"
 #import "UIButton+AFNetworking.h"
 #import <objc/runtime.h>
+#import "UIImage+AWCompress.h"
 
 //#import <PhotosUI/PhotosUI.h>
 
@@ -154,7 +155,9 @@
             if ( [asset isKindOfClass:[PHAsset class]] ) {
                 [[self class] getImageFromPHAsset:asset completion:^(NSData *data, NSString *filename, NSString *imageUTI) {
                     if ( data && filename ) {
-                        [tempArray addObject:@{ @"imageData": data,
+                        UIImage *image = [UIImage imageWithData:data];
+                        NSData *newData = [image compressBySizeWithLengthLimit:500 * 1024.0f];
+                        [tempArray addObject:@{ @"imageData": newData,
                                                 @"imageName": filename,
                                                 @"imageUTI": imageUTI,
 //                                                @"imageURL": imageURL ?: @"",
