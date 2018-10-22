@@ -170,15 +170,15 @@
         self.disableFormInputs = NO;
         self.totalCounter = 4;
         
-        [self addToolButtons];
+//        [self addToolButtons];
     } else {
         // 添加状态显示
         self.totalCounter = 5; // 加载附件
         
         if ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5) {
             // 待申报
-            self.disableFormInputs = NO;
-            [self addToolButtons];
+            self.disableFormInputs = YES;
+//            [self addToolButtons];
         } else if ( [self.params[@"state_num"] integerValue] == 10 ) {
             // 已申报
             self.disableFormInputs = YES;
@@ -194,7 +194,7 @@
 //                                                      @"readonly": @"1",
 //                                                      @"keyboard_type": @(UIKeyboardTypeNumberPad),
 //                                                      } atIndex:self.inFormControls.count - 1];
-            [self addCancelButton];
+//            [self addCancelButton];
         } else {
             self.disableFormInputs = YES;
             

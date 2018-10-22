@@ -39,8 +39,8 @@
     UIButton *searchBtn = HNSearchButton(22, self, @selector(search:));
     [self.navBar addFluidBarItem:searchBtn atPosition:FluidBarItemPositionTitleRight];
     
-    UIButton *addBtn = HNAddButton(22, self, @selector(add:));
-    [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
+//    UIButton *addBtn = HNAddButton(22, self, @selector(add:));
+//    [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
     
     [self addSegmentControls];
     

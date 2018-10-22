@@ -57,7 +57,9 @@
               @"funname": @"供应商可发起签证的变更列表APP",
               @"param1": self.params[@"contract_id"],
               @"param2": @"40",
-              @"param3": @"0"
+              @"param3": @"0",
+              @"param4": @"1",
+              @"param5": @"-1"
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];
