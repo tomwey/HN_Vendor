@@ -243,10 +243,10 @@
     NSString *endVal   = [@(value) description];
     
     NSString *confirmDesc = [self.confirmDescText.text trim];
-//    if ( confirmDesc.length == 0 ) {
-//        [self.contentView showHUDWithText:@"进度说明不能为空" offset:CGPointMake(0,20)];
-//        return;
-//    }
+    if ( confirmDesc.length == 0 ) {
+        [self.contentView showHUDWithText:@"进度说明不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
     
     //    NSString *annexIDs = @"";
     NSArray *IDs = self.uploadControl.attachmentIDs;

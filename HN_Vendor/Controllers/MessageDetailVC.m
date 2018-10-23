@@ -46,7 +46,10 @@
     html = [html stringByReplacingOccurrencesOfString:@"${content}" withString:content];
     
     if ( [self.params[@"msgtypeid"] integerValue] == 10 ||
-         [self.params[@"msgtypeid"] integerValue] == 20) {
+         [self.params[@"msgtypeid"] integerValue] == 20 ||
+        [self.params[@"msgtypeid"] integerValue] == 50 ||
+        [self.params[@"msgtypeid"] integerValue] == 60
+        ) {
         NSString *more = @"<div class=\"more\">点击查看</div>";
         html = [html stringByReplacingOccurrencesOfString:@"${more}" withString:more];
     } else {
@@ -104,7 +107,10 @@
         
 //        供应商查询变更指令详情APP
         if ( [self.params[@"msgtypeid"] integerValue] == 10 ||
-             [self.params[@"msgtypeid"] integerValue] == 20 ) {
+             [self.params[@"msgtypeid"] integerValue] == 20 ||
+            [self.params[@"msgtypeid"] integerValue] == 50 ||
+            [self.params[@"msgtypeid"] integerValue] == 60
+            ) {
             [self loadData];
         }
         
@@ -120,6 +126,10 @@
         funname = @"供应商查询变更指令详情APP";
     } else if ( [self.params[@"msgtypeid"] integerValue] == 20 ) {
         funname = @"供应商变更签证明细APP";
+    } else if ( [self.params[@"msgtypeid"] integerValue] == 50 ) {
+        funname = @"供应商查询完工确认单信息APP";
+    } else if ( [self.params[@"msgtypeid"] integerValue] == 60 ) {
+        funname = @"供应商查询结算申报信息APP";
     }
     
     if ( !funname ) {
@@ -163,10 +173,16 @@
                 pageName = @"DeclareFormVC";
             } else if ( [self.params[@"msgtypeid"] integerValue] == 20 ) {
                 pageName = @"SignFormVC";
+            } else if ( [self.params[@"msgtypeid"] integerValue] == 50 ) {
+                // 完工确认
+                pageName = @"WorkDoneFormVC";
+            } else if ( [self.params[@"msgtypeid"] integerValue] == 60 ) {
+                // 结算申报
+                pageName = @"AccountFinalFormVC";
             }
             
             if (pageName) {
-                UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:pageName
+                UIViewController *vc = [[AWMediator sharedInstance] openNavVCWithName:pageName
                                                                             params:item];
                 [self presentViewController:vc animated:YES completion:nil];
             }

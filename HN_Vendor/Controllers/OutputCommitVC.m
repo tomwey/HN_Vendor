@@ -38,7 +38,7 @@
     [self.contentView addSubview:textView];
     self.textView = textView;
     textView.font = AWSystemFontWithSize(15, NO);
-    textView.placeholder = @"输入意见（可选）";
+    textView.placeholder = @"输入意见";
     
     textView.layer.borderColor = AWColorFromRGB(216, 216, 216).CGColor;
     textView.layer.borderWidth = 0.6;
@@ -46,6 +46,11 @@
 
 - (void)commit
 {
+    if ( [[self.textView.text trim] length] == 0 ) {
+        [self.contentView showHUDWithText:@"意见不能为空" offset:CGPointMake(0,20)];
+        return;
+    }
+    
     [HNProgressHUDHelper showHUDAddedTo:self.contentView animated:YES];
     
     [self.textView resignFirstResponder];

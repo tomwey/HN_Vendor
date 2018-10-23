@@ -2894,13 +2894,15 @@
     
     self.navBar.title = @"附件列表";
     
-    __weak typeof(self) me = self;
-    [self addRightItemWithTitle:@"确定"
-                           size:CGSizeMake(60, 40)
-                       callback:^{
-//                           NSLog(@"%@, %@", me.attachmentIDs, me.params[@"controlData"]);
-                           [me saveCallback];
-                       }];
+    if ( ![self.params[@"readonly"] boolValue] ) {
+        __weak typeof(self) me = self;
+        [self addRightItemWithTitle:@"确定"
+                               size:CGSizeMake(60, 40)
+                           callback:^{
+                               //                           NSLog(@"%@, %@", me.attachmentIDs, me.params[@"controlData"]);
+                               [me saveCallback];
+                           }];
+    }
     
     self.dataSource = [self.params[@"attachments"] mutableCopy];
 

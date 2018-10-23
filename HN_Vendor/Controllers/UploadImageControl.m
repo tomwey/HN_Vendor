@@ -734,11 +734,16 @@
 
 - (void)decodeImage:(id)data
 {
-    CGImageRef img = YYCGImageCreateDecodedCopy(data[@"data"], data[@"uti"], YES);
+//    CGImageRef img = YYCGImageCreateDecodedCopy(data[@"data"], data[@"uti"], YES);
+    
+    UIImage *image = [UIImage imageWithData:data[@"data"]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIImage *image = [UIImage imageWithCGImage:img];
-        [[[self class] sharedCache] setObject:image forKey:[data[@"data"] md5Hash]];
+//        UIImage *image = [UIImage imageWithCGImage:img];
+        
+        if ( image ) {
+            [[[self class] sharedCache] setObject:image forKey:[data[@"data"] md5Hash]];
+        }
         
         [self setBackgroundImage:image forState:[data[@"state"] integerValue]];
     });
