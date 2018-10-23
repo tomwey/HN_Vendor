@@ -59,6 +59,8 @@
 
 @property (nonatomic, strong) UIView *confirmHistoryContainer;
 
+@property (nonatomic, strong) UIView *sureDescContainer;
+
 @property (nonatomic, weak) UIButton *currentConfirmBtn;
 
 @end
@@ -483,7 +485,6 @@
                 [self.contentView showHUDWithText:item[@"hint"] succeed:NO];
             }
         }
-        
     }
 }
 
@@ -616,15 +617,60 @@
         
         [self initCommitButton];
         
+        [self initSureDesc];
+        
         [self initConfirmHis];
         
         [self updateDates];
     }
 }
 
+- (void)initSureDesc
+{
+    self.sureDescContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.fixedControlContainer.bottom + 10, self.contentView.width, 30)];
+    
+    [self.scrollView addSubview:self.sureDescContainer];
+    
+    UIView *tag = [[UIView alloc] initWithFrame:CGRectMake(15, 9, 4, 12)];
+    [self.sureDescContainer addSubview:tag];
+    tag.backgroundColor = MAIN_THEME_COLOR;
+    
+    UILabel *label = AWCreateLabel(CGRectMake(tag.right + 5, 0, 180, 30), @"产值复核说明",
+                                   NSTextAlignmentLeft,
+                                   AWSystemFontWithSize(15, YES),
+                                   AWColorFromHex(@"#333333"));
+    [self.sureDescContainer addSubview:label];
+    
+    NSString *memo = HNStringFromObject(self.params[@"surecompletememo"], @"");
+    if (memo.length == 0) {
+        UILabel *errorLabel = AWCreateLabel(CGRectMake(15, label.bottom + 10,
+                                                       self.contentView.width - 30, 50),
+                                            @"无数据显示", NSTextAlignmentCenter,
+                                            AWSystemFontWithSize(14, NO), AWColorFromHex(@"#cccccc"));
+        [self.sureDescContainer addSubview:errorLabel];
+        errorLabel.adjustsFontSizeToFitWidth = YES;
+        
+        self.sureDescContainer.height = errorLabel.bottom + 5;
+    } else {
+        UILabel *label2 = AWCreateLabel(CGRectMake(15, label.bottom + 10,
+                                 self.contentView.width - 30, 5000),
+                      memo, NSTextAlignmentLeft,
+                      AWSystemFontWithSize(14, NO), AWColorFromHex(@"#666666"));
+        [self.sureDescContainer addSubview:label2];
+        label2.numberOfLines = 0;
+        
+        [label2 sizeToFit];
+        
+        label2.width = self.contentView.width - 30;
+        label2.top   = label.bottom + 10;
+        
+        self.sureDescContainer.height = label2.bottom + 10;
+    }
+}
+
 - (void)initConfirmHis
 {
-    self.confirmHistoryContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.fixedControlContainer.bottom + 10, self.contentView.width, 100)];
+    self.confirmHistoryContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.sureDescContainer.bottom + 10, self.contentView.width, 100)];
     
     [self.scrollView addSubview:self.confirmHistoryContainer];
     
@@ -868,7 +914,9 @@
     
     self.fixedControlContainer.height = self.confirmDescText.bottom;
     
-    self.confirmHistoryContainer.top = self.fixedControlContainer.bottom + 10;
+    self.sureDescContainer.top = self.fixedControlContainer.bottom + 10;
+    
+    self.confirmHistoryContainer.top = self.sureDescContainer.bottom + 10;
     
     self.scrollView.contentSize = CGSizeMake(self.contentView.width, self.confirmHistoryContainer.bottom + 5);
 }
