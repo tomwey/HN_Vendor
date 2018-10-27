@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary *searchConditions;
 
+@property (nonatomic, strong) DeclareListView *listView;
+
 @end
 
 @implementation DeclareListVC
@@ -42,12 +44,33 @@
 //    UIButton *addBtn = HNAddButton(22, self, @selector(add:));
 //    [self.navBar addFluidBarItem:addBtn atPosition:FluidBarItemPositionTitleRight];
     
-    [self addSegmentControls];
+//    [self addSegmentControls];
+//
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(startLoadingData)
+//                                                 name:@"kReloadDeclareDataNotification"
+//                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(startLoadingData)
-                                                 name:@"kReloadDeclareDataNotification"
-                                               object:nil];
+    [self loadData];
+}
+
+- (void)loadData
+{
+    __weak typeof(self) me = self;
+    self.listView.userData = @{ @"state": @"10", @"owner": me };
+    
+    [self.listView startLoading:^(BOOL succeed, NSError *error) {
+        
+    }];
+}
+
+- (DeclareListView *)listView
+{
+    if ( !_listView ) {
+        _listView = [[DeclareListView alloc] initWithFrame:self.contentView.bounds];
+        [self.contentView addSubview:_listView];
+    }
+    return _listView;
 }
 
 - (void)addSegmentControls

@@ -955,7 +955,7 @@
 - (void)addDateButtons
 {
     UIView *dateView = [[UIView alloc] initWithFrame:CGRectMake(0, self.currentBottom2,
-                                                                self.contentView.width, 80)];
+                                                                self.contentView.width, 40)];
     [self.fixedControlContainer addSubview:dateView];
     
     self.dateView = dateView;
@@ -1010,38 +1010,38 @@
     
     date1Btn.tag = 10011;
     
-    UILabel *label2 = AWCreateLabel(CGRectMake(0, 0, 88, 34),
-                                    @"计划付款日期",
-                                    NSTextAlignmentLeft,
-                                    AWSystemFontWithSize(14, NO),
-                                    AWColorFromRGB(74, 74, 74));
-    [self.dateView addSubview:label2];
-    
-    label2.position = CGPointMake(15, label1.bottom);
-    
-    UIButton *date2Btn = AWCreateTextButton(CGRectMake(0, 0, 118, 40),
-                                            date2,
-                                            label1.textColor,
-                                            self,
-                                            @selector(openDatePicker2:));
-    [self.dateView addSubview:date2Btn];
-    
-    self.date2Btn = date2Btn;
-    
-    date2Btn.titleLabel.font = label2.font;
-    
-    date2Btn.tag = 10012;
-    
-    triangle = AWCreateImageView(@"icon_triangle.png");
-    [date2Btn addSubview:triangle];
-    triangle.frame = CGRectMake(0, 0, 16, 16);
-    triangle.image = [[UIImage imageNamed:@"icon_triangle.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    triangle.tintColor = AWColorFromHex(@"#666666");
-    triangle.position = CGPointMake(date2Btn.width - triangle.width - 2,
-                                    date2Btn.height / 2 - triangle.height / 2 - 1);
-    
-    date2Btn.position = CGPointMake(label2.right, label2.midY - date2Btn.height / 2);
+//    UILabel *label2 = AWCreateLabel(CGRectMake(0, 0, 88, 34),
+//                                    @"计划付款日期",
+//                                    NSTextAlignmentLeft,
+//                                    AWSystemFontWithSize(14, NO),
+//                                    AWColorFromRGB(74, 74, 74));
+//    [self.dateView addSubview:label2];
+//
+//    label2.position = CGPointMake(15, label1.bottom);
+//
+//    UIButton *date2Btn = AWCreateTextButton(CGRectMake(0, 0, 118, 40),
+//                                            date2,
+//                                            label1.textColor,
+//                                            self,
+//                                            @selector(openDatePicker2:));
+//    [self.dateView addSubview:date2Btn];
+//
+//    self.date2Btn = date2Btn;
+//
+//    date2Btn.titleLabel.font = label2.font;
+//
+//    date2Btn.tag = 10012;
+//
+//    triangle = AWCreateImageView(@"icon_triangle.png");
+//    [date2Btn addSubview:triangle];
+//    triangle.frame = CGRectMake(0, 0, 16, 16);
+//    triangle.image = [[UIImage imageNamed:@"icon_triangle.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//
+//    triangle.tintColor = AWColorFromHex(@"#666666");
+//    triangle.position = CGPointMake(date2Btn.width - triangle.width - 2,
+//                                    date2Btn.height / 2 - triangle.height / 2 - 1);
+//
+//    date2Btn.position = CGPointMake(label2.right, label2.midY - date2Btn.height / 2);
     
     self.currentBottom2 = self.dateView.bottom + 20;
 }
