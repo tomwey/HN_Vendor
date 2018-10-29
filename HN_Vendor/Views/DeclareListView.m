@@ -43,11 +43,12 @@
                       @"param4": params[@"project_id"] ?: @"0",
                       @"param5": @"0",
                       @"param6": params[@"keyword"] ?: @"",
-                      @"param7": [params[@"state"] ?: @"-1" description],
+                      @"param7": [params[@"data_type"] ?: @"-1" description],
                       @"param8": params[@"begin_time"] ?: @"",
                       @"param9": params[@"end_time"] ?: @"",
                       @"param10": [params[@"status"] ?: @"-1" description],
-                      @"param11": @"-1"
+                      @"param11": @"-1",
+                      @"param12": [params[@"state"] ?: @"-1" description],
                       };
     
     __weak typeof(self) me = self;

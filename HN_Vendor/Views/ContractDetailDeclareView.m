@@ -40,7 +40,8 @@
               @"param8": @"",
               @"param9": @"",
               @"param10": @"-1",
-              @"param11": @"-1"
+              @"param11": @"-1",
+              @"param12": @"-1"
               } completion:^(id result, NSError *error) {
                   [me handleResult:result error:error];
               }];

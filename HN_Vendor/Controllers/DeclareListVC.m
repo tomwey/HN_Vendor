@@ -57,7 +57,7 @@
 - (void)loadData
 {
     __weak typeof(self) me = self;
-    self.listView.userData = @{ @"state": @"10", @"owner": me };
+    self.listView.userData = @{ @"data_type": @"10", @"owner": me };
     
     [self.listView startLoading:^(BOOL succeed, NSError *error) {
         
