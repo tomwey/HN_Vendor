@@ -58,19 +58,20 @@
                             @"color": @"#5F79C7",
                             @"size": @"{24,24}"
                             },
-                        @{
-                            @"icon": @"icon_sign_2.png",
-                            @"name": @"签证申报",
-                            @"page": @"SignListVC",
-                            @"color": @"#D59C55",
-                            @"size": @"{26,26}"
-                            },
+                        
                         @{
                             @"icon": @"icon_wgqr.png",
                             @"name": @"完工确认",
                             @"page": @"WorkDoneConfirmVC",
                             @"color": /*@"213,156,85"*/@"#7FB762",
                             @"size": @"{30,30}"
+                            },
+                        @{
+                            @"icon": @"icon_sign_2.png",
+                            @"name": @"签证申报",
+                            @"page": @"SignListVC",
+                            @"color": @"#D59C55",
+                            @"size": @"{26,26}"
                             },
                         
                         @{
