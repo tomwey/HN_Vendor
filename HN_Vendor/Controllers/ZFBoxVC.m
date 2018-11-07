@@ -262,7 +262,7 @@
               @"param1": [userInfo[@"supid"] ?: @"0" description],
               @"param2": [userInfo[@"loginname"] ?: @"" description],
               @"param3": [userInfo[@"symbolkeyid"] ?: @"0" description],
-              @"param4": @"4",
+              @"param4": @"5",
               @"param5": visaID,
               @"param6": [self.params[@"supchangeid"] ?: @"0" description],
               @"param7": [self.params[@"contractid"] ?: @"0" description],

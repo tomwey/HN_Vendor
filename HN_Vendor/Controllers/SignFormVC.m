@@ -305,7 +305,7 @@
     CGFloat width = self.contentView.width / 2.0;
     CGFloat left = 0;
     
-    if ( [self.params[@"state_num"] integerValue] == 5 ) {
+    if ( self.params[@"state_num"] && ([self.params[@"state_num"] integerValue] == 0 || [self.params[@"state_num"] integerValue] == 5 ) ) {
         width = self.contentView.width / 3.0;
         
         UIButton *zfBtn = AWCreateTextButton(CGRectMake(0, 0, width, 50),
