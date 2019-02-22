@@ -166,7 +166,7 @@
     NSString *state = self.swipeView.currentPage == 0 ? @"0" : @"10";
     
     __weak typeof(self) me = self;
-    listView.userData = @{ @"state": state, @"owner": me, @"funname": @"供应商查询变更签证列表APP" };
+    listView.userData = @{ @"state": state, @"data_type": state, @"owner": me, @"funname": @"供应商查询变更签证列表APP" };
     
     [listView startLoading:^(BOOL succeed, NSError *error) {
         

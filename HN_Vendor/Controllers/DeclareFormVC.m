@@ -198,13 +198,23 @@
         } else {
             self.disableFormInputs = YES;
             
-            if ( [self.params[@"canconfirm"] boolValue] ) {
+            if ([self.params[@"canconfirm"] boolValue] && [self.params[@"canvisa"] boolValue] && ![self.userData isEqualToString:@"1"]) {
+                [self addVisaAndConfirmButtons];
+            } else if ( [self.params[@"canconfirm"] boolValue] ) {
                 [self addConfirmButton];
+            } else if ( [self.params[@"canvisa"] boolValue] ) {
+                if (![self.userData isEqualToString:@"1"]) {
+                    [self addVisaButton];
+                }
             }
             
-            if ( [self.params[@"canvisa"] boolValue] && ![self.userData isEqualToString:@"1"] ) {
-                [self addVisaButton];
-            }
+//            if ( [self.params[@"canconfirm"] boolValue] ) {
+//                [self addConfirmButton];
+//            }
+//
+//            if ( [self.params[@"canvisa"] boolValue] && ![self.userData isEqualToString:@"1"] ) {
+//                [self addVisaButton];
+//            }
         }
         
         if ( [self.params[@"state_num"] integerValue] == 60 ) {
@@ -396,6 +406,46 @@
     
     UIViewController *vc = [[AWMediator sharedInstance] openVCWithName:@"ZFBoxVC" params:newParams];
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)addVisaAndConfirmButtons
+{
+    CGFloat width = self.contentView.width / 2.0;
+    CGFloat left = 0;
+    
+    UIButton *commitBtn = AWCreateTextButton(CGRectMake(0, 0, width,
+                                                        50),
+                                             @"发起完工确认",
+                                             MAIN_THEME_COLOR,
+                                             self,
+                                             @selector(confirmClick));
+    [self.contentView addSubview:commitBtn];
+    commitBtn.backgroundColor = [UIColor whiteColor];
+    commitBtn.position = CGPointMake(left, self.contentView.height - 50);
+    
+//    self.commitButton = commitBtn;
+    
+    UIButton *moreBtn = AWCreateTextButton(CGRectMake(0, 0, width,
+                                                      50),
+                                           @"发起签证",
+                                           [UIColor whiteColor],
+                                           self,
+                                           @selector(visaClick));
+    [self.contentView addSubview:moreBtn];
+    moreBtn.backgroundColor = MAIN_THEME_COLOR;
+    moreBtn.position = CGPointMake(commitBtn.right, self.contentView.height - 50);
+    
+//    self.saveButton = moreBtn;
+    
+    UIView *hairLine = [AWHairlineView horizontalLineWithWidth:moreBtn.width
+                                                         color:IOS_DEFAULT_CELL_SEPARATOR_LINE_COLOR
+                                                        inView:moreBtn];
+    hairLine.position = CGPointMake(0,0);
+    
+    //    commitBtn.left = 0;
+    //    moreBtn.left = commitBtn.right;
+    
+    self.tableView.height -= moreBtn.height;
 }
 
 - (void)addToolButtons
