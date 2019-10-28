@@ -54,7 +54,7 @@
     self.contentView.backgroundColor = AWColorFromRGB(239, 239, 239);
     
     UIImageView *header = AWCreateImageView(nil);
-    header.image = AWImageNoCached(@"work-header.jpg");
+    header.image = AWImageNoCached(@"work-header.png");
     header.frame = CGRectMake(0, 0, self.contentView.width,
                               self.contentView.width * header.image.size.height /
                               header.image.size.width);

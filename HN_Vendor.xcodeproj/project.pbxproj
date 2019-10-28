@@ -58,6 +58,7 @@
 		9947AB461FF229B30091A2AD /* DeclareFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947AB451FF229B30091A2AD /* DeclareFormVC.m */; };
 		9949475820F3587300A0768A /* ForgetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9949475720F3587300A0768A /* ForgetPasswordVC.m */; };
 		9949F51920FCA60C00955CFC /* UpdatePasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */; };
+		994DEA0D2366F11F00D7E8FC /* work-header.png in Resources */ = {isa = PBXBuildFile; fileRef = 994DEA0C2366F11F00D7E8FC /* work-header.png */; };
 		994E1BA9205B533D005333C0 /* SignOptionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BA8205B533D005333C0 /* SignOptionsVC.m */; };
 		994E1BAC205B5CB0005333C0 /* SignOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E1BAB205B5CB0005333C0 /* SignOptionCell.m */; };
 		995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 995540661FDFDBCB00DC0134 /* CTPersistanceAsyncExecutor.m */; };
@@ -805,6 +806,7 @@
 		9949475720F3587300A0768A /* ForgetPasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordVC.m; sourceTree = "<group>"; };
 		9949F51720FCA60C00955CFC /* UpdatePasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdatePasswordVC.h; sourceTree = "<group>"; };
 		9949F51820FCA60C00955CFC /* UpdatePasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdatePasswordVC.m; sourceTree = "<group>"; };
+		994DEA0C2366F11F00D7E8FC /* work-header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "work-header.png"; sourceTree = "<group>"; };
 		994E1BA7205B533D005333C0 /* SignOptionsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionsVC.h; sourceTree = "<group>"; };
 		994E1BA8205B533D005333C0 /* SignOptionsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignOptionsVC.m; sourceTree = "<group>"; };
 		994E1BAA205B5CB0005333C0 /* SignOptionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignOptionCell.h; sourceTree = "<group>"; };
@@ -3428,6 +3430,7 @@
 			isa = PBXGroup;
 			children = (
 				9926DB18215DCA9900CFD170 /* icon_checkbox_no@2x.png */,
+				994DEA0C2366F11F00D7E8FC /* work-header.png */,
 				9926DB19215DCA9900CFD170 /* icon_checkbox_no@3x.png */,
 				9926DB16215DCA9800CFD170 /* icon_checkbox_yes@2x.png */,
 				9926DB17215DCA9900CFD170 /* icon_checkbox_yes@3x.png */,
@@ -4004,6 +4007,7 @@
 				995546A51FDFDBCD00DC0134 /* tab_contact_click@3x.png in Resources */,
 				995546411FDFDBCD00DC0134 /* btn_search2@2x.png in Resources */,
 				995546AF1FDFDBCD00DC0134 /* tab_oa@3x.png in Resources */,
+				994DEA0D2366F11F00D7E8FC /* work-header.png in Resources */,
 				990FBD74200C9FB60075DC6E /* icon_contract@3x.png in Resources */,
 				99573EF72045463200007D94 /* hnapp-qrcode.jpg in Resources */,
 				995544DE1FDFDBCC00DC0134 /* ionicons.ttf in Resources */,
