@@ -113,6 +113,13 @@
                             @"page": @"ReportListVC",
                             @"color": @"#D59C55",
                             @"size": @"{26,26}"
+                            },
+                        @{
+                            @"icon": @"icon_report_2.png",
+                            @"name": @"质检系统",
+                            @"page": @"QMSHomeVC",
+                            @"color": @"#D59C55",
+                            @"size": @"{26,26}"
                             }
                         ];
     

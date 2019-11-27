@@ -216,7 +216,7 @@
      POST:nil
      params:@{
               @"dotype": @"GetData",
-              @"funname": @"供应商登录APP",
+              @"funname": @"供应商登录APP新",
               @"param1": [[self.userField.text trim] lowercaseString],
               @"param2": [[NSString stringWithFormat:@"%@%@", self.passField.text, NB_KEY] md5Hash],
               @"param3": [[[UIDevice currentDevice] identifierForVendor] UUIDString],

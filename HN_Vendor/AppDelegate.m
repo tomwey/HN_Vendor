@@ -169,7 +169,7 @@
     UIViewController *rootVC = nil;
     
     id currentUser = [[UserService sharedInstance] currentUser];
-    if (currentUser) {
+    if (currentUser && currentUser[@"accountid"]) {
         BOOL hasChangedPwd = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasChangedPWD"];
         if (hasChangedPwd || [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"]) {
             rootVC = self.appRootController;

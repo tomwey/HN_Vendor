@@ -686,6 +686,21 @@
 		998E43061FEB9C8D0040E013 /* DeclareSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43051FEB9C8D0040E013 /* DeclareSearchVC.m */; };
 		998E43091FEBA1C80040E013 /* DeclareSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */; };
 		99B474ED217976C300C8FC4B /* UIImage+AWCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B474EC217976C300C8FC4B /* UIImage+AWCompress.m */; };
+		99C0EBA92373F1A30031FE14 /* QMSHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBA82373F1A30031FE14 /* QMSHomeVC.m */; };
+		99C0EBCA2373F1BC0031FE14 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBAD2373F1BB0031FE14 /* GCDWebServer.m */; };
+		99C0EBCB2373F1BC0031FE14 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBAF2373F1BB0031FE14 /* GCDWebServerConnection.m */; };
+		99C0EBCC2373F1BC0031FE14 /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBB12373F1BB0031FE14 /* GCDWebServerFunctions.m */; };
+		99C0EBCD2373F1BC0031FE14 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBB52373F1BB0031FE14 /* GCDWebServerRequest.m */; };
+		99C0EBCE2373F1BC0031FE14 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBB72373F1BB0031FE14 /* GCDWebServerResponse.m */; };
+		99C0EBCF2373F1BC0031FE14 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBBA2373F1BB0031FE14 /* GCDWebServerDataRequest.m */; };
+		99C0EBD02373F1BC0031FE14 /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBBC2373F1BB0031FE14 /* GCDWebServerFileRequest.m */; };
+		99C0EBD12373F1BC0031FE14 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBBE2373F1BB0031FE14 /* GCDWebServerMultiPartFormRequest.m */; };
+		99C0EBD22373F1BC0031FE14 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBC02373F1BB0031FE14 /* GCDWebServerURLEncodedFormRequest.m */; };
+		99C0EBD32373F1BC0031FE14 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBC32373F1BB0031FE14 /* GCDWebServerDataResponse.m */; };
+		99C0EBD42373F1BC0031FE14 /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBC52373F1BB0031FE14 /* GCDWebServerErrorResponse.m */; };
+		99C0EBD52373F1BC0031FE14 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBC72373F1BB0031FE14 /* GCDWebServerFileResponse.m */; };
+		99C0EBD62373F1BC0031FE14 /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C0EBC92373F1BB0031FE14 /* GCDWebServerStreamedResponse.m */; };
+		99C0EBD92374167A0031FE14 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 99C0EBD82374167A0031FE14 /* www */; };
 		99CA508E214A425800DA083E /* icon_wgqr@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA508C214A425700DA083E /* icon_wgqr@3x.png */; };
 		99CA508F214A425800DA083E /* icon_wgqr@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CA508D214A425800DA083E /* icon_wgqr@2x.png */; };
 		99CA5093214A43AE00DA083E /* WorkVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CA5091214A43AD00DA083E /* WorkVC2.m */; };
@@ -1870,6 +1885,37 @@
 		998E43081FEBA1C80040E013 /* DeclareSearchResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeclareSearchResultVC.m; sourceTree = "<group>"; };
 		99B474EB217976C300C8FC4B /* UIImage+AWCompress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+AWCompress.h"; sourceTree = "<group>"; };
 		99B474EC217976C300C8FC4B /* UIImage+AWCompress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AWCompress.m"; sourceTree = "<group>"; };
+		99C0EBA72373F1A20031FE14 /* QMSHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMSHomeVC.h; sourceTree = "<group>"; };
+		99C0EBA82373F1A30031FE14 /* QMSHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMSHomeVC.m; sourceTree = "<group>"; };
+		99C0EBAC2373F1BB0031FE14 /* GCDWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServer.h; sourceTree = "<group>"; };
+		99C0EBAD2373F1BB0031FE14 /* GCDWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServer.m; sourceTree = "<group>"; };
+		99C0EBAE2373F1BB0031FE14 /* GCDWebServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerConnection.h; sourceTree = "<group>"; };
+		99C0EBAF2373F1BB0031FE14 /* GCDWebServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerConnection.m; sourceTree = "<group>"; };
+		99C0EBB02373F1BB0031FE14 /* GCDWebServerFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFunctions.h; sourceTree = "<group>"; };
+		99C0EBB12373F1BB0031FE14 /* GCDWebServerFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFunctions.m; sourceTree = "<group>"; };
+		99C0EBB22373F1BB0031FE14 /* GCDWebServerHTTPStatusCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerHTTPStatusCodes.h; sourceTree = "<group>"; };
+		99C0EBB32373F1BB0031FE14 /* GCDWebServerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerPrivate.h; sourceTree = "<group>"; };
+		99C0EBB42373F1BB0031FE14 /* GCDWebServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerRequest.h; sourceTree = "<group>"; };
+		99C0EBB52373F1BB0031FE14 /* GCDWebServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerRequest.m; sourceTree = "<group>"; };
+		99C0EBB62373F1BB0031FE14 /* GCDWebServerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerResponse.h; sourceTree = "<group>"; };
+		99C0EBB72373F1BB0031FE14 /* GCDWebServerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerResponse.m; sourceTree = "<group>"; };
+		99C0EBB92373F1BB0031FE14 /* GCDWebServerDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataRequest.h; sourceTree = "<group>"; };
+		99C0EBBA2373F1BB0031FE14 /* GCDWebServerDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerDataRequest.m; sourceTree = "<group>"; };
+		99C0EBBB2373F1BB0031FE14 /* GCDWebServerFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileRequest.h; sourceTree = "<group>"; };
+		99C0EBBC2373F1BB0031FE14 /* GCDWebServerFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFileRequest.m; sourceTree = "<group>"; };
+		99C0EBBD2373F1BB0031FE14 /* GCDWebServerMultiPartFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerMultiPartFormRequest.h; sourceTree = "<group>"; };
+		99C0EBBE2373F1BB0031FE14 /* GCDWebServerMultiPartFormRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerMultiPartFormRequest.m; sourceTree = "<group>"; };
+		99C0EBBF2373F1BB0031FE14 /* GCDWebServerURLEncodedFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerURLEncodedFormRequest.h; sourceTree = "<group>"; };
+		99C0EBC02373F1BB0031FE14 /* GCDWebServerURLEncodedFormRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerURLEncodedFormRequest.m; sourceTree = "<group>"; };
+		99C0EBC22373F1BB0031FE14 /* GCDWebServerDataResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataResponse.h; sourceTree = "<group>"; };
+		99C0EBC32373F1BB0031FE14 /* GCDWebServerDataResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerDataResponse.m; sourceTree = "<group>"; };
+		99C0EBC42373F1BB0031FE14 /* GCDWebServerErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerErrorResponse.h; sourceTree = "<group>"; };
+		99C0EBC52373F1BB0031FE14 /* GCDWebServerErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerErrorResponse.m; sourceTree = "<group>"; };
+		99C0EBC62373F1BB0031FE14 /* GCDWebServerFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileResponse.h; sourceTree = "<group>"; };
+		99C0EBC72373F1BB0031FE14 /* GCDWebServerFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFileResponse.m; sourceTree = "<group>"; };
+		99C0EBC82373F1BB0031FE14 /* GCDWebServerStreamedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerStreamedResponse.h; sourceTree = "<group>"; };
+		99C0EBC92373F1BB0031FE14 /* GCDWebServerStreamedResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerStreamedResponse.m; sourceTree = "<group>"; };
+		99C0EBD82374167A0031FE14 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		99CA508C214A425700DA083E /* icon_wgqr@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_wgqr@3x.png"; sourceTree = "<group>"; };
 		99CA508D214A425800DA083E /* icon_wgqr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_wgqr@2x.png"; sourceTree = "<group>"; };
 		99CA5091214A43AD00DA083E /* WorkVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkVC2.m; sourceTree = "<group>"; };
@@ -2010,6 +2056,7 @@
 		995540621FDFDBCB00DC0134 /* 3rdLib */ = {
 			isa = PBXGroup;
 			children = (
+				99C0EBAA2373F1BB0031FE14 /* GCDWebServer */,
 				995540631FDFDBCB00DC0134 /* CTPersistance */,
 				995540AE1FDFDBCB00DC0134 /* FontAwesomeKit */,
 				995540C51FDFDBCB00DC0134 /* FSCalendar */,
@@ -2798,6 +2845,8 @@
 		995541E01FDFDBCB00DC0134 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				99C0EBA72373F1A20031FE14 /* QMSHomeVC.h */,
+				99C0EBA82373F1A30031FE14 /* QMSHomeVC.m */,
 				9926DB20215E17F400CFD170 /* OutputCommitVC.h */,
 				9926DB21215E17F500CFD170 /* OutputCommitVC.m */,
 				9926DAEE215B8F9A00CFD170 /* OutputConfirmListVC.h */,
@@ -3350,6 +3399,7 @@
 		9955437D1FDFDBCC00DC0134 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				99C0EBD82374167A0031FE14 /* www */,
 				9955437E1FDFDBCC00DC0134 /* Configs */,
 				995543801FDFDBCC00DC0134 /* flowd.tpl */,
 				995543811FDFDBCC00DC0134 /* Images */,
@@ -3835,6 +3885,65 @@
 			path = AWImageCompress;
 			sourceTree = "<group>";
 		};
+		99C0EBAA2373F1BB0031FE14 /* GCDWebServer */ = {
+			isa = PBXGroup;
+			children = (
+				99C0EBAB2373F1BB0031FE14 /* Core */,
+				99C0EBB82373F1BB0031FE14 /* Requests */,
+				99C0EBC12373F1BB0031FE14 /* Responses */,
+			);
+			path = GCDWebServer;
+			sourceTree = "<group>";
+		};
+		99C0EBAB2373F1BB0031FE14 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				99C0EBAC2373F1BB0031FE14 /* GCDWebServer.h */,
+				99C0EBAD2373F1BB0031FE14 /* GCDWebServer.m */,
+				99C0EBAE2373F1BB0031FE14 /* GCDWebServerConnection.h */,
+				99C0EBAF2373F1BB0031FE14 /* GCDWebServerConnection.m */,
+				99C0EBB02373F1BB0031FE14 /* GCDWebServerFunctions.h */,
+				99C0EBB12373F1BB0031FE14 /* GCDWebServerFunctions.m */,
+				99C0EBB22373F1BB0031FE14 /* GCDWebServerHTTPStatusCodes.h */,
+				99C0EBB32373F1BB0031FE14 /* GCDWebServerPrivate.h */,
+				99C0EBB42373F1BB0031FE14 /* GCDWebServerRequest.h */,
+				99C0EBB52373F1BB0031FE14 /* GCDWebServerRequest.m */,
+				99C0EBB62373F1BB0031FE14 /* GCDWebServerResponse.h */,
+				99C0EBB72373F1BB0031FE14 /* GCDWebServerResponse.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		99C0EBB82373F1BB0031FE14 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				99C0EBB92373F1BB0031FE14 /* GCDWebServerDataRequest.h */,
+				99C0EBBA2373F1BB0031FE14 /* GCDWebServerDataRequest.m */,
+				99C0EBBB2373F1BB0031FE14 /* GCDWebServerFileRequest.h */,
+				99C0EBBC2373F1BB0031FE14 /* GCDWebServerFileRequest.m */,
+				99C0EBBD2373F1BB0031FE14 /* GCDWebServerMultiPartFormRequest.h */,
+				99C0EBBE2373F1BB0031FE14 /* GCDWebServerMultiPartFormRequest.m */,
+				99C0EBBF2373F1BB0031FE14 /* GCDWebServerURLEncodedFormRequest.h */,
+				99C0EBC02373F1BB0031FE14 /* GCDWebServerURLEncodedFormRequest.m */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		99C0EBC12373F1BB0031FE14 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				99C0EBC22373F1BB0031FE14 /* GCDWebServerDataResponse.h */,
+				99C0EBC32373F1BB0031FE14 /* GCDWebServerDataResponse.m */,
+				99C0EBC42373F1BB0031FE14 /* GCDWebServerErrorResponse.h */,
+				99C0EBC52373F1BB0031FE14 /* GCDWebServerErrorResponse.m */,
+				99C0EBC62373F1BB0031FE14 /* GCDWebServerFileResponse.h */,
+				99C0EBC72373F1BB0031FE14 /* GCDWebServerFileResponse.m */,
+				99C0EBC82373F1BB0031FE14 /* GCDWebServerStreamedResponse.h */,
+				99C0EBC92373F1BB0031FE14 /* GCDWebServerStreamedResponse.m */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3989,6 +4098,7 @@
 				99CA509A214A4DA900DA083E /* icon_chanzhi@3x.png in Resources */,
 				9955463F1FDFDBCD00DC0134 /* btn_reset@2x.png in Resources */,
 				995546981FDFDBCD00DC0134 /* icon_xlsx@2x.png in Resources */,
+				99C0EBD92374167A0031FE14 /* www in Resources */,
 				99CA5098214A4DA900DA083E /* icon_jiesuan@2x.png in Resources */,
 				995546931FDFDBCD00DC0134 /* icon_upgrade@2x.png in Resources */,
 				9926DB08215DC81700CFD170 /* icon_approving.png in Resources */,
@@ -4162,6 +4272,7 @@
 				99E9882F1FEA445500D48248 /* ContractCell.m in Sources */,
 				995545E71FDFDBCD00DC0134 /* DGActivityIndicatorBallScaleRippleMultipleAnimation.m in Sources */,
 				995546051FDFDBCD00DC0134 /* TZAssetModel.m in Sources */,
+				99C0EBA92373F1A30031FE14 /* QMSHomeVC.m in Sources */,
 				9926DADC21548BCC00CFD170 /* AccountFinalCell.m in Sources */,
 				995545591FDFDBCC00DC0134 /* ApplyLeaveVC.m in Sources */,
 				9955454D1FDFDBCC00DC0134 /* UITableViewCell+RemoveBackground.m in Sources */,
@@ -4178,6 +4289,7 @@
 				995545861FDFDBCC00DC0134 /* LandPlanCell.m in Sources */,
 				995545241FDFDBCC00DC0134 /* TYTextContainer.m in Sources */,
 				995544C81FDFDBCC00DC0134 /* CTPersistanceQueryCommand+DataManipulations.m in Sources */,
+				99C0EBCD2373F1BC0031FE14 /* GCDWebServerRequest.m in Sources */,
 				995545091FDFDBCC00DC0134 /* PNLineChartDataItem.m in Sources */,
 				9955459F1FDFDBCC00DC0134 /* NSObject+APIService.m in Sources */,
 				995544E21FDFDBCC00DC0134 /* FSCalendar+Deprecated.m in Sources */,
@@ -4269,6 +4381,7 @@
 				995545BF1FDFDBCD00DC0134 /* SettingVC.m in Sources */,
 				995545D61FDFDBCD00DC0134 /* UIButton+AFNetworking.m in Sources */,
 				995545A61FDFDBCC00DC0134 /* OutputCatalog.m in Sources */,
+				99C0EBD52373F1BC0031FE14 /* GCDWebServerFileResponse.m in Sources */,
 				9926DB11215DC9C900CFD170 /* OutputConfirmCommitVC.m in Sources */,
 				995544E51FDFDBCC00DC0134 /* FSCalendarCalculator.m in Sources */,
 				99E155111FF0D90D006CD1A3 /* ContractDetailPayView.m in Sources */,
@@ -4318,6 +4431,7 @@
 				995546FC1FDFDBCD00DC0134 /* LandListView.m in Sources */,
 				995545821FDFDBCC00DC0134 /* LandDetailVC.m in Sources */,
 				995545141FDFDBCC00DC0134 /* TYAlertController.m in Sources */,
+				99C0EBD12373F1BC0031FE14 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				995544D21FDFDBCC00DC0134 /* CTPersistanceTable.m in Sources */,
 				995544D11FDFDBCC00DC0134 /* CTPersistanceTable+Update.m in Sources */,
 				995547041FDFDBCD00DC0134 /* OACell2.m in Sources */,
@@ -4352,6 +4466,7 @@
 				995544BE1FDFDBCC00DC0134 /* CTPersistanceAsyncExecutor.m in Sources */,
 				995545151FDFDBCC00DC0134 /* TYAlertDropDownAnimation.m in Sources */,
 				995545481FDFDBCC00DC0134 /* AWTableViewDataSource.m in Sources */,
+				99C0EBD02373F1BC0031FE14 /* GCDWebServerFileRequest.m in Sources */,
 				9955455A1FDFDBCC00DC0134 /* AppQrcodeVC.m in Sources */,
 				995545041FDFDBCC00DC0134 /* PNCircleChart.m in Sources */,
 				995546171FDFDBCD00DC0134 /* ContactInfo.m in Sources */,
@@ -4379,6 +4494,7 @@
 				995545931FDFDBCC00DC0134 /* MeetingNotesListView.m in Sources */,
 				995545471FDFDBCC00DC0134 /* AWMultipleColumnTableViewDataSource.m in Sources */,
 				995545E21FDFDBCD00DC0134 /* DGActivityIndicatorBallPulseSyncAnimation.m in Sources */,
+				99C0EBD22373F1BC0031FE14 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
 				995545A01FDFDBCC00DC0134 /* NSObject+RTIDataService.m in Sources */,
 				995545F41FDFDBCD00DC0134 /* DGActivityIndicatorRotatingSquaresAnimation.m in Sources */,
 				995544F91FDFDBCC00DC0134 /* JTSImageInfo.m in Sources */,
@@ -4401,6 +4517,7 @@
 				9949475820F3587300A0768A /* ForgetPasswordVC.m in Sources */,
 				995546E41FDFDBCD00DC0134 /* ValuesUtils.m in Sources */,
 				995545F11FDFDBCD00DC0134 /* DGActivityIndicatorLineScalePulseOutRapidAnimation.m in Sources */,
+				99C0EBCA2373F1BC0031FE14 /* GCDWebServer.m in Sources */,
 				995545A71FDFDBCC00DC0134 /* OutputCatalogVC.m in Sources */,
 				9955470F1FDFDBCD00DC0134 /* SelectControl.m in Sources */,
 				9955456D1FDFDBCC00DC0134 /* DocBreadcrumbView.m in Sources */,
@@ -4436,10 +4553,13 @@
 				995547051FDFDBCD00DC0134 /* OAListView.m in Sources */,
 				995545681FDFDBCC00DC0134 /* ContactsVC.m in Sources */,
 				9955459A1FDFDBCC00DC0134 /* MobileInputVC.m in Sources */,
+				99C0EBD32373F1BC0031FE14 /* GCDWebServerDataResponse.m in Sources */,
 				9955460C1FDFDBCD00DC0134 /* TZPhotoPreviewCell.m in Sources */,
 				995545C61FDFDBCD00DC0134 /* UploadImageControl.m in Sources */,
+				99C0EBCF2373F1BC0031FE14 /* GCDWebServerDataRequest.m in Sources */,
 				995546E51FDFDBCD00DC0134 /* AWPagerTabStrip.m in Sources */,
 				995545411FDFDBCC00DC0134 /* AWLocationManager.m in Sources */,
+				99C0EBCE2373F1BC0031FE14 /* GCDWebServerResponse.m in Sources */,
 				995546DC1FDFDBCD00DC0134 /* NetworkService.m in Sources */,
 				9955452D1FDFDBCC00DC0134 /* APIFileParam.m in Sources */,
 				995544C21FDFDBCC00DC0134 /* CTPersistanceCriteria.m in Sources */,
@@ -4462,6 +4582,7 @@
 				995546E81FDFDBCD00DC0134 /* Checkbox.m in Sources */,
 				9955450B1FDFDBCC00DC0134 /* PNPieChartDataItem.m in Sources */,
 				995545711FDFDBCC00DC0134 /* EmploySearchVC.m in Sources */,
+				99C0EBCC2373F1BC0031FE14 /* GCDWebServerFunctions.m in Sources */,
 				995545361FDFDBCC00DC0134 /* NSObject+UserData.m in Sources */,
 				995545701FDFDBCC00DC0134 /* EmployeeListVC.m in Sources */,
 				9926DB0E215DC88000CFD170 /* OutputDeclareCell.m in Sources */,
@@ -4510,10 +4631,12 @@
 				9955453F1FDFDBCC00DC0134 /* AWLoadingStateBaseView.m in Sources */,
 				995545B71FDFDBCD00DC0134 /* PlanListVC.m in Sources */,
 				99D44FA51FFCAC4200EF0558 /* PayTimeView.m in Sources */,
+				99C0EBD42373F1BC0031FE14 /* GCDWebServerErrorResponse.m in Sources */,
 				995545C21FDFDBCD00DC0134 /* TracePlanListView.m in Sources */,
 				995545EA1FDFDBCD00DC0134 /* DGActivityIndicatorBallZigZagDeflectAnimation.m in Sources */,
 				995545C01FDFDBCD00DC0134 /* SubmitVC.m in Sources */,
 				995544F81FDFDBCC00DC0134 /* JTSAnimatedGIFUtility.m in Sources */,
+				99C0EBCB2373F1BC0031FE14 /* GCDWebServerConnection.m in Sources */,
 				995544C31FDFDBCC00DC0134 /* CTPersistanceDataBase.m in Sources */,
 				994E1BA9205B533D005333C0 /* SignOptionsVC.m in Sources */,
 				995545BB1FDFDBCD00DC0134 /* RulesVC.m in Sources */,
@@ -4579,6 +4702,7 @@
 				995546FD1FDFDBCD00DC0134 /* LoadingView.m in Sources */,
 				995544C51FDFDBCC00DC0134 /* CTPersistanceMigrator.m in Sources */,
 				995545F01FDFDBCD00DC0134 /* DGActivityIndicatorLineScalePulseOutAnimation.m in Sources */,
+				99C0EBD62373F1BC0031FE14 /* GCDWebServerStreamedResponse.m in Sources */,
 				995546F11FDFDBCD00DC0134 /* EmploySearchView.m in Sources */,
 				995547101FDFDBCD00DC0134 /* SelectPicker.m in Sources */,
 				995545181FDFDBCC00DC0134 /* TYAlertView.m in Sources */,

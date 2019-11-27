@@ -203,7 +203,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",
                                        self.apiConfig.apiServer, uri]];
     
-    NSLog(@"\n-------------------- 请求信息 --------------------\n请求地址：%@ \n请求方式：POST \n请求参数：\n%@\n-------------------- 请求信息 --------------------", url, params);
+    NSLog(@"\n-------------------- 请求信息 --------------------\n请求地址：%@ \n请求方式：POST \n请求功能: %@\n请求参数：\n%@\n-------------------- 请求信息 --------------------", url, params[@"funname"], params);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
